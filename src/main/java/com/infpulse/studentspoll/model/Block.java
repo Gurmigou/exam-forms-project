@@ -3,6 +3,7 @@ package com.infpulse.studentspoll.model;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @Table(name = "block")
@@ -13,20 +14,27 @@ import java.util.List;
 @AllArgsConstructor
 public class Block {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
-    @Access(AccessType.PROPERTY)
     @Setter(AccessLevel.NONE)
-    private Long id;
+    protected Long id;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "block_list_of_fields",
-            joinColumns = @JoinColumn(name = "block_id",
-                    referencedColumnName = "list_of_fields_id"))
-    private List<Field> listOfFields;
 
-    @ManyToOne
-    @JoinColumn(name = "form_id")
-    private Form form;
+    @NotEmpty
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "blocks_fields",
+            joinColumns = {
+                    @JoinColumn(name = "block_id")
+            },
+            inverseJoinColumns = {
+                    @JoinColumn(name = "field_id")
+            }
+    )
+    protected List<Field> listOfFields;
+
+
+    protected String questionName;
+
 
 }

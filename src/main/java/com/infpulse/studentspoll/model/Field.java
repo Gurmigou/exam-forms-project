@@ -1,6 +1,7 @@
 package com.infpulse.studentspoll.model;
 
 import lombok.*;
+import org.springframework.data.annotation.Immutable;
 
 import javax.persistence.*;
 import java.util.List;
@@ -11,17 +12,17 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Immutable
 public class Field {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Setter(AccessLevel.NONE)
-    private Long id;
+    protected Long id;
 
-    @ManyToMany
-    private List<Block> listOfParentBlocks;
+    @ManyToMany(mappedBy = "listOfFields")
+    protected List<Block> listOfParentBlocks;
 
-    private Integer answerValue;
+    protected Integer answerValue;
 
-    private String stringValue;
-
+    protected String stringValue;
 }

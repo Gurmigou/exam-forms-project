@@ -1,11 +1,14 @@
 package com.infpulse.studentspoll.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeId;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.GenerationTime;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -14,20 +17,39 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString
+@Table(name = "account")
 public class User {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Setter(AccessLevel.NONE)
-    private Long id;
+    @JsonTypeId
+    protected Long id;
 
-    private String name;
+    protected String name;
 
-    private String surname;
+    protected String surname;
 
-    private String login;
+    protected String login;
 
-    private String password;
+    protected String password;
 
-    @OneToMany(mappedBy = "user")
-    private List<Form> listForms;
+    @CreationTimestamp
+    protected LocalDateTime creationTime;
+
+    @org.hibernate.annotations.Generated(GenerationTime.ALWAYS)
+    protected LocalDateTime lastUpdateTime;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
+    @ToString.Exclude
+    protected List<Form> ownedForms;
+
+    @OneToMany
+    @ToString.Exclude
+    protected List<Form> comletedForms;
+
+    public void addOwnedForm(Form form) {
+        form.setOwner(this);
+        ownedForms.add(form);
+    }
 }

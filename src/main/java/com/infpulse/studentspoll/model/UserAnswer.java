@@ -16,11 +16,14 @@ public class UserAnswer {
     @Column(name = "id", nullable = false)
     @GeneratedValue
     @Setter(AccessLevel.NONE)
-    private Long id;
+    protected Long id;
 
     @ManyToOne
-    private Form ownerForm;
+    protected User answerOwner;
+
+    @ManyToOne
+    protected Form ownerForm;
 
     @OneToMany
-    private List<Block> listOfUsersBlocks;
+    protected List<Block> listOfUsersBlocks;
 }

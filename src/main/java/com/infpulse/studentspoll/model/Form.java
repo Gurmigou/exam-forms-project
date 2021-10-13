@@ -1,8 +1,14 @@
 package com.infpulse.studentspoll.model;
 
+import com.fasterxml.jackson.annotation.JsonTypeId;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.GenerationTime;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -11,26 +17,43 @@ import java.util.List;
 @Setter
 @Getter
 @Builder
+@ToString
 public class Form {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Setter(AccessLevel.NONE)
+    @JsonTypeId
     protected Long id;
 
+    @NotEmpty
+    @Column(name = "topic_name")
+    @Size(max = 255)
     protected String topicName;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    protected User user;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "account_id")
+    protected User owner;
+
+    @Column(insertable = false, updatable = false)
+    @org.hibernate.annotations.Generated(GenerationTime.ALWAYS)
+    @Setter(AccessLevel.NONE)
+    protected LocalDateTime lastModified;
+
+    @Column(insertable = false, updatable = false)
+    @CreationTimestamp
+    @Setter(AccessLevel.NONE)
+    protected LocalDateTime createdTime;
 
     @OneToMany
+    @ToString.Exclude
     List<UserAnswer> userAnswers;
-    
+
     @Embedded
     protected Answer answer;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "form")
+    @OneToMany(cascade = CascadeType.ALL)
+    @ToString.Exclude
     protected List<Block> listOfblocks;
-    
+
 }
