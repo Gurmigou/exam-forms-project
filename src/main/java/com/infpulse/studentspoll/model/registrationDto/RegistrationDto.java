@@ -20,15 +20,17 @@ public class RegistrationDto {
     private String email;
 
     @NotBlank
-    @Size(min = 6)
+    @Size(min = 6, max = 255)
     private String password;
 
     @NotBlank
-    @Size(min = 6)
+    @Size(min = 6, max = 255)
     private String confirmPassword;
 
     @NotBlank
+    @Size(min = 3, max = 255)
     private String name;
     @NotBlank
+    @Size(min = 3, max = 255)
     private String surname;
 }
