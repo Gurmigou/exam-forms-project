@@ -54,6 +54,6 @@ public class Form {
 
     @OneToMany(cascade = CascadeType.ALL)
     @ToString.Exclude
-    protected List<Block> listOfblocks;
+    protected List<Block> listOfBlocks;
 
 }

@@ -19,7 +19,6 @@ public class Block {
     @Setter(AccessLevel.NONE)
     protected Long id;
 
-
     @NotEmpty
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
@@ -33,8 +32,5 @@ public class Block {
     )
     protected List<Field> listOfFields;
 
-
     protected String questionName;
-
-
 }
