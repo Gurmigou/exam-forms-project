@@ -38,9 +38,9 @@ public class JwtRequestTokenVerifier extends OncePerRequestFilter {
             final String jwtToken = authorizationHeader.replace("Bearer ", "");
 
             try {
-                String userLogin = jwtProvider.extractUserLogin(jwtToken);
+                String userEmail = jwtProvider.extractUserEmail(jwtToken);
                 Authentication authentication = new UsernamePasswordAuthenticationToken(
-                        userLogin,
+                        userEmail,
                         null,
                         null
                 );
