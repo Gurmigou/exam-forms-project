@@ -11,7 +11,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserAnswer {
-
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue
