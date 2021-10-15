@@ -1,4 +1,4 @@
-package com.infpulse.studentspoll.model;
+package com.infpulse.studentspoll.model.securityDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,6 +10,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AuthRequest {
-    private String login;
+    private String email;
     private String password;
 }

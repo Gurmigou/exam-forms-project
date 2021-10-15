@@ -1,7 +1,5 @@
 package com.infpulse.studentspoll.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeId;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -46,7 +44,7 @@ public class User {
 
     @OneToMany
     @ToString.Exclude
-    protected List<Form> comletedForms;
+    protected List<Form> completedForms;
 
     public void addOwnedForm(Form form) {
         form.setOwner(this);

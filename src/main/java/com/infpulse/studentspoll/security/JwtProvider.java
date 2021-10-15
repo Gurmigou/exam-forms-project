@@ -18,7 +18,7 @@ public class JwtProvider {
     @Value("${TOKEN_SECRET_KEY}")
     private String SECRET_KEY;
 
-    public String extractUserLogin(String token) {
+    public String extractUserEmail(String token) {
         return extractClaim(token, Claims::getSubject);
     }
 

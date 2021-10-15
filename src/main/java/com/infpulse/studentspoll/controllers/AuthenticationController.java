@@ -1,7 +1,7 @@
 package com.infpulse.studentspoll.controllers;
 
-import com.infpulse.studentspoll.model.AuthRequest;
-import com.infpulse.studentspoll.model.AuthResponse;
+import com.infpulse.studentspoll.model.securityDto.AuthRequest;
+import com.infpulse.studentspoll.model.securityDto.AuthResponse;
 import com.infpulse.studentspoll.security.JwtUserDetailsService;
 import com.infpulse.studentspoll.security.JwtProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +39,7 @@ public class AuthenticationController {
 //            Authentication authenticate = authenticationManager.authenticate(
 //                    new UsernamePasswordAuthenticationToken(authRequest.getLogin(), authRequest.getPassword()));
 
-            UserDetails userDetails = userDetailsService.loadUserByUsername(authRequest.getLogin());
+            UserDetails userDetails = userDetailsService.loadUserByUsername(authRequest.getEmail());
 
             String jwtToken = jwtProvider.generateToken(userDetails);
 
