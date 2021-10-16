@@ -1,4 +1,4 @@
-package com.infpulse.studentspoll.model;
+package com.infpulse.studentspoll.model.entity;
 
 import org.springframework.data.annotation.Immutable;
 

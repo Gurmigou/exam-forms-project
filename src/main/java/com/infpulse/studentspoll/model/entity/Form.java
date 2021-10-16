@@ -1,4 +1,4 @@
-package com.infpulse.studentspoll.model;
+package com.infpulse.studentspoll.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonTypeId;
 import lombok.*;
@@ -6,9 +6,11 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenerationTime;
 
 import javax.persistence.*;
+import javax.validation.constraints.Future;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -35,25 +37,32 @@ public class Form {
     @JoinColumn(name = "account_id")
     protected User owner;
 
-    @Column(insertable = false, updatable = false)
+    @Column(name = "last_modified", insertable = false, updatable = false)
     @org.hibernate.annotations.Generated(GenerationTime.ALWAYS)
     @Setter(AccessLevel.NONE)
     protected LocalDateTime lastModified;
 
-    @Column(insertable = false, updatable = false)
+    @Column(name = "created_time", insertable = false, updatable = false)
     @CreationTimestamp
     @Setter(AccessLevel.NONE)
     protected LocalDateTime createdTime;
 
+    @Column(name = "expire_date")
+    protected LocalDateTime expireDate;
+
     @OneToMany
     @ToString.Exclude
-    List<UserAnswer> userAnswers;
+    List<UserAnswer> userAnswers = new ArrayList<>();
 
     @Embedded
     protected Answer answer;
 
     @OneToMany(cascade = CascadeType.ALL)
     @ToString.Exclude
-    protected List<Block> listOfblocks;
+    protected List<Block> listOfBlocks;
+
+    public void addUserAnswer(UserAnswer userAnswer) {
+        userAnswers.add(userAnswer);
+    }
 
 }

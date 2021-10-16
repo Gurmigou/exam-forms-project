@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "TOKEN_SECRET_KEY",
+      "type": "java.lang.String",
+      "description": "Description for TOKEN_SECRET_KEY."
+  }
+] }
