@@ -1,6 +1,6 @@
 package com.infpulse.studentspoll.controllers;
 
-import com.infpulse.studentspoll.model.User;
+import com.infpulse.studentspoll.model.entity.User;
 import com.infpulse.studentspoll.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

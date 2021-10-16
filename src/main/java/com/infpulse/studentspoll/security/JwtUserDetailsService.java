@@ -1,6 +1,6 @@
 package com.infpulse.studentspoll.security;
 
-import com.infpulse.studentspoll.model.User;
+import com.infpulse.studentspoll.model.entity.User;
 import com.infpulse.studentspoll.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

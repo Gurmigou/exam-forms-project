@@ -3,7 +3,7 @@ package com.infpulse.studentspoll.service;
 import com.infpulse.studentspoll.exceptions.ConfirmPasswordIsIncorrectException;
 import com.infpulse.studentspoll.exceptions.RegistrationException;
 import com.infpulse.studentspoll.exceptions.UserAlreadyExistsException;
-import com.infpulse.studentspoll.model.User;
+import com.infpulse.studentspoll.model.entity.User;
 import com.infpulse.studentspoll.model.registrationDto.RegistrationDto;
 import com.infpulse.studentspoll.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

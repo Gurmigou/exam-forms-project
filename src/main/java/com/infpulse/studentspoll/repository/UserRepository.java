@@ -1,6 +1,6 @@
 package com.infpulse.studentspoll.repository;
 
-import com.infpulse.studentspoll.model.User;
+import com.infpulse.studentspoll.model.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

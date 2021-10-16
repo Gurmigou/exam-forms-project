@@ -1,9 +1,12 @@
-package com.infpulse.studentspoll.model;
+package com.infpulse.studentspoll.model.entity;
 
 import lombok.*;
 import org.springframework.data.annotation.Immutable;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Positive;
 import java.util.List;
 
 @Table(name = "field")
@@ -22,7 +25,8 @@ public class Field {
     @ManyToMany(mappedBy = "listOfFields")
     protected List<Block> listOfParentBlocks;
 
+    @Positive
     protected Integer answerValue;
-
+    @NotEmpty
     protected String stringValue;
 }
