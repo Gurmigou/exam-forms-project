@@ -59,11 +59,15 @@ public class FormService {
 	}
 
 	public FormDto getForm(long formId) {
+		return mapper.map(getFormEntity(formId), FormDto.class);
+	}
+
+	public Form getFormEntity(long formId) {
 		Form form = formsRepository.findById(formId).orElseThrow(() -> new NotFoundException("Form " + formId));
 		/*if (form.isDeleted) {
 			throw new NotFoundException("Form " + formId);
 		}*/
-		return mapper.map(form, FormDto.class);
+		return form;
 	}
 
 	public void deleteForm(long formId, String userName) {
