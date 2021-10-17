@@ -1,6 +1,9 @@
 package com.infpulse.studentspoll.model.registrationDto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -10,7 +13,6 @@ import javax.validation.constraints.Size;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class RegistrationDto {
     @NotBlank
     @Size(min = 5, max = 255)
@@ -18,17 +20,15 @@ public class RegistrationDto {
     private String email;
 
     @NotBlank
-    @Size(min = 6, max = 255)
+    @Size(min = 6)
     private String password;
 
     @NotBlank
-    @Size(min = 6, max = 255)
+    @Size(min = 6)
     private String confirmPassword;
 
     @NotBlank
-    @Size(min = 3, max = 255)
     private String name;
     @NotBlank
-    @Size(min = 3, max = 255)
     private String surname;
 }
