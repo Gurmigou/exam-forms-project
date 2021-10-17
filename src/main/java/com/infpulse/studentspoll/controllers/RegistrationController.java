@@ -3,6 +3,7 @@ package com.infpulse.studentspoll.controllers;
 import com.infpulse.studentspoll.exceptions.ConfirmPasswordIsIncorrectException;
 import com.infpulse.studentspoll.exceptions.RegistrationException;
 import com.infpulse.studentspoll.exceptions.UserAlreadyExistsException;
+import com.infpulse.studentspoll.model.User;
 import com.infpulse.studentspoll.model.registrationDto.RegistrationDto;
 import com.infpulse.studentspoll.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,8 @@ public class RegistrationController {
     @PostMapping("/registration")
     public ResponseEntity<?> registerUser(@RequestBody @Valid RegistrationDto registrationDto) {
         try {
-            userService.registerUser(registrationDto);
+            // TODO: 17.10.2021  
+            User user = userService.registerUser(registrationDto);
             return ResponseEntity.ok()
                     .body("You have been successfully registered");
         } catch (RegistrationException e) {
