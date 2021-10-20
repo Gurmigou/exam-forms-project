@@ -33,5 +33,7 @@ public class UserAnswer {
     protected List<Block> listOfUsersBlocks;
 
     @CreationTimestamp
-    protected LocalDateTime dateOfPassage;
+    @Column(name = "answer_date", nullable = false, insertable = false)
+    @Setter(AccessLevel.NONE)
+    protected LocalDateTime answerDate;
 }

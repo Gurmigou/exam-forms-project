@@ -81,7 +81,7 @@ public class FormService {
 
 	public List<FormDto> getOwnedForms(String userName) {
 		User user = findUserByUsername(userName);
-		List<Form> forms = formsRepository.findOwnedForms(user)/*.stream()
+		List<Form> forms = formsRepository.findAllByOwner(user)/*.stream()
 				.filter(form -> !form.isDeleted)
 				.collect(Collectors.toList())*/;
 		return mapper.map(forms, new TypeToken<List<FormDto>>() {}.getType());

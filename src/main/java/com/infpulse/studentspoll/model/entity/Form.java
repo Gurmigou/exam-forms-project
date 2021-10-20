@@ -2,11 +2,11 @@ package com.infpulse.studentspoll.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonTypeId;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenerationTime;
 
 import javax.persistence.*;
-import javax.validation.constraints.Future;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
@@ -60,6 +60,10 @@ public class Form {
     @OneToMany(cascade = CascadeType.ALL)
     @ToString.Exclude
     protected List<Block> listOfBlocks;
+
+    @Column(name = "is_deleted")
+    @ColumnDefault(value = "false")
+    protected Boolean isDeleted;
 
     public void addUserAnswer(UserAnswer userAnswer) {
         userAnswers.add(userAnswer);
