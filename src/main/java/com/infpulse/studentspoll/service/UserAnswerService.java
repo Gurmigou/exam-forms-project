@@ -5,7 +5,7 @@ import com.infpulse.studentspoll.model.entity.Form;
 import com.infpulse.studentspoll.model.entity.User;
 import com.infpulse.studentspoll.model.entity.UserAnswer;
 import com.infpulse.studentspoll.model.formDto.UserAnswerDto;
-import com.infpulse.studentspoll.model.formDto.UserForm;
+import com.infpulse.studentspoll.model.formDto.FormHeader;
 import com.infpulse.studentspoll.repository.UserAnswerRepository;
 import com.infpulse.studentspoll.repository.UserRepository;
 import org.modelmapper.ModelMapper;
@@ -23,7 +23,10 @@ public class UserAnswerService {
 	private final ModelMapper mapper;
 
 	@Autowired
-	public UserAnswerService(UserAnswerRepository answerRepository, FormService formService, UserRepository userRepository, ModelMapper mapper) {
+	public UserAnswerService(UserAnswerRepository answerRepository,
+							 FormService formService,
+							 UserRepository userRepository,
+							 ModelMapper mapper) {
 		this.answerRepository = answerRepository;
 		this.formService = formService;
 		this.userRepository = userRepository;
@@ -31,8 +34,8 @@ public class UserAnswerService {
 	}
 
 	public UserAnswerDto getUserAnswer(long formId, String userName) {
-		User user = findUserByUsername(userName);
-		UserAnswer userAnswer = answerRepository.getUserAnswer(formId, user);
+		UserAnswer userAnswer = answerRepository
+				.findUserAnswerByBelongsToForm_IdAndAnswerOwner_Login(formId, userName);
 		return mapper.map(userAnswer, UserAnswerDto.class);
 	}
 
@@ -45,7 +48,7 @@ public class UserAnswerService {
 		return mapper.map(answerRepository.save(userAnswer), UserAnswerDto.class);
 	}
 
-	public List<UserForm> getUserAnswers(String userName) {
+	public List<FormHeader> getUserAnswers(String userName) {
 		User user = findUserByUsername(userName);
 		return answerRepository.getUserAnswers(user);
 	}

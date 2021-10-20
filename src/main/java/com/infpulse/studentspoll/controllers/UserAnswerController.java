@@ -1,7 +1,7 @@
 package com.infpulse.studentspoll.controllers;
 
 import com.infpulse.studentspoll.model.formDto.UserAnswerDto;
-import com.infpulse.studentspoll.model.formDto.UserForm;
+import com.infpulse.studentspoll.model.formDto.FormHeader;
 import com.infpulse.studentspoll.service.UserAnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,7 +36,7 @@ public class UserAnswerController {
 	}
 
 	@GetMapping("/forms-answers")
-	public List<UserForm> getUserAnswers(Principal principal) {
+	public List<FormHeader> getUserAnswers(Principal principal) {
 		return userAnswerService.getUserAnswers(principal.getName());
 	}
 
