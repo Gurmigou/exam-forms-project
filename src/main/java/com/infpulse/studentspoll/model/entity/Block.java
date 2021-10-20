@@ -32,5 +32,6 @@ public class Block {
     )
     protected List<Field> listOfFields;
 
+    @Column(name = "question_name", nullable = false)
     protected String questionName;
 }

@@ -11,5 +11,5 @@ import java.util.List;
 @NoArgsConstructor
 public class UserAnswerDto {
 
-    private List<Block> usersBlocks;
+    private List<Block> listOfUsersBlocks;
 }

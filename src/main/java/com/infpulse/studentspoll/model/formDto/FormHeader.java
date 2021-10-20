@@ -1,20 +1,24 @@
 package com.infpulse.studentspoll.model.formDto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.Past;
+import javax.validation.constraints.Positive;
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @Getter
 @Setter
-public class UserForm {
+@AllArgsConstructor
+public class FormHeader {
 
     private String name;
+
     @Past
     private LocalDateTime passedDate;
-
+    @Positive
     private Long id;
 }

@@ -2,6 +2,7 @@ package com.infpulse.studentspoll.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonTypeId;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenerationTime;
 
@@ -60,6 +61,10 @@ public class Form {
     @OneToMany(cascade = CascadeType.ALL)
     @ToString.Exclude
     protected List<Block> listOfBlocks;
+
+    @Column(name = "is_deleted")
+    @ColumnDefault(value = "false")
+    protected Boolean isDeleted;
 
     public void addUserAnswer(UserAnswer userAnswer) {
         userAnswers.add(userAnswer);

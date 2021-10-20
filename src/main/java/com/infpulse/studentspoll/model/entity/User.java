@@ -2,6 +2,7 @@ package com.infpulse.studentspoll.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonTypeId;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenerationTime;
 
@@ -32,10 +33,15 @@ public class User {
 
     protected String password;
 
+    @ColumnDefault(value = "false")
+    protected Boolean isDeleted;
+
     @CreationTimestamp
+    @Column(name = "creation_time")
     protected LocalDateTime creationTime;
 
     @org.hibernate.annotations.Generated(GenerationTime.ALWAYS)
+    @Column(name = "last_updated_time")
     protected LocalDateTime lastUpdateTime;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")

@@ -1,10 +1,10 @@
 package com.infpulse.studentspoll.model.entity;
 
 import lombok.*;
+import org.hibernate.Hibernate;
 import org.springframework.data.annotation.Immutable;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Positive;
 import java.util.List;
@@ -26,7 +26,10 @@ public class Field {
     protected List<Block> listOfParentBlocks;
 
     @Positive
+    @Column(name = "answer_value")
     protected Integer answerValue;
     @NotEmpty
-    protected String stringValue;
+    @Column(name = "variant")
+    protected String variant;
+
 }
