@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Positive;
 import java.util.List;
+import java.util.Objects;
 
 @Table(name = "field")
 @Entity
@@ -32,4 +33,16 @@ public class Field {
     @Column(name = "variant")
     protected String variant;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Field field = (Field) o;
+        return id != null && Objects.equals(id, field.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getListOfParentBlocks(), getAnswerValue(), getVariant());
+    }
 }
