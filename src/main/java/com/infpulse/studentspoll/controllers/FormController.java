@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 
@@ -22,13 +23,13 @@ public class FormController {
 
 	@PostMapping("/forms/new")
 	@ResponseStatus(HttpStatus.CREATED)
-	public FormDto newForm(@RequestBody FormDto formDto, Principal principal){
+	public FormDto newForm(@RequestBody @Valid FormDto formDto, Principal principal) {
 		return formService.saveForm(formDto, principal.getName());
 	}
 
 	@PutMapping("/forms/{formId}")
 	@ResponseStatus(HttpStatus.OK)
-	public FormDto updateForm(@PathVariable long formId, @RequestBody FormDto formDto, Principal principal) {
+	public FormDto updateForm(@PathVariable long formId, @RequestBody @Valid FormDto formDto, Principal principal) {
 		return formService.updateForm(formId, formDto, principal.getName());
 	}
 
@@ -39,7 +40,7 @@ public class FormController {
 
 	@DeleteMapping("/forms/{formId}")
 	@ResponseStatus(HttpStatus.OK)
-	public void deleteForm(@PathVariable long formId, Principal principal){
+	public void deleteForm(@PathVariable long formId, Principal principal) {
 		formService.deleteForm(formId, principal.getName());
 	}
 
@@ -47,4 +48,5 @@ public class FormController {
 	public List<FormDto> getOwnedForms(Principal principal) {
 		return formService.getOwnedForms(principal.getName());
 	}
+
 }
