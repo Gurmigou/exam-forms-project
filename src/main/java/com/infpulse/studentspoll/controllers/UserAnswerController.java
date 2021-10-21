@@ -11,6 +11,7 @@ import java.security.Principal;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api")
 public class UserAnswerController {
 
 	private final UserAnswerService userAnswerService;
@@ -22,12 +23,15 @@ public class UserAnswerController {
 
 	@PostMapping("/forms/{id}")
 	@ResponseStatus(HttpStatus.CREATED)
-	public UserAnswerDto postUserAnswer(@PathVariable long id, @RequestBody UserAnswerDto userAnswerDto, Principal principal) {
+	public UserAnswerDto postUserAnswer(@PathVariable long id, @RequestBody UserAnswerDto userAnswerDto,
+	                                    Principal principal) {
 		return userAnswerService.saveAnswer(id, userAnswerDto, principal.getName());
 	}
 
 	@GetMapping("/form-view/{id}/{username}")
-	public UserAnswerDto getUserAnswer(@PathVariable long id, @PathVariable(value = "username", required = false) String userName, Principal principal) {
+	public UserAnswerDto getUserAnswer(@PathVariable long id,
+	                                   @PathVariable(value = "username", required = false) String userName,
+	                                   Principal principal) {
 		if (userName != null && !userName.isEmpty()) {
 			return userAnswerService.getUserAnswer(id, userName);
 		} else {

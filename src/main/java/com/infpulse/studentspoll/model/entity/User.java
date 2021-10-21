@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonTypeId;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.GenerationTime;
 
 import javax.persistence.*;
@@ -33,7 +34,7 @@ public class User {
 
     protected String password;
 
-    @ColumnDefault(value = "false")
+    @Column(name = "is_deleted", columnDefinition = "boolean default false", nullable = false)
     protected Boolean isDeleted;
 
     @CreationTimestamp

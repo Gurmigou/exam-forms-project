@@ -58,6 +58,7 @@ public class UserService {
                 .surname(registrationDto.getSurname())
                 .login(registrationDto.getEmail())
                 .password(passwordEncoder.encode(registrationDto.getPassword()))
+                .isDeleted(false)
                 .build();
     }
 }

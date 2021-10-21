@@ -10,6 +10,7 @@ import java.security.Principal;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api")
 public class FormController {
 
 	private final FormService formService;
