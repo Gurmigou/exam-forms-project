@@ -40,7 +40,7 @@ public class UserAnswerController {
 	}
 
 	@GetMapping("/forms-answers")
-	public List<FormHeader> getUserAnswers(Principal principal) {
+	public List<FormHeader> getPassedForms(Principal principal) {
 		return userAnswerService.getUserAnswers(principal.getName());
 	}
 
