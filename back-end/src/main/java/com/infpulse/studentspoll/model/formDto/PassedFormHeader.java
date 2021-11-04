@@ -5,23 +5,20 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Past;
-import javax.validation.constraints.Positive;
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
-@AllArgsConstructor
-public class FormHeader {
+public class PassedFormHeader {
 
-    @NotBlank
-    private String name;
+    private String formName;
 
-    @Past
+    private Integer formScore;
+
     private LocalDateTime passedDate;
 
-    @Positive
-    private Long id;
+
+
 }
