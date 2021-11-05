@@ -15,7 +15,7 @@ import java.util.function.Function;
 
 @Component
 public class JwtProvider {
-    @Value("${TOKEN_SECRET_KEY}")
+    @Value("${token-secret-key}")
     private String SECRET_KEY;
 
     public String extractUserEmail(String token) {

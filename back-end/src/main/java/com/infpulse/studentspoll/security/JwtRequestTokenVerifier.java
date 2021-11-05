@@ -37,6 +37,8 @@ public class JwtRequestTokenVerifier extends OncePerRequestFilter {
             // execute a "replace" method to remove a "Bearer " word
             final String jwtToken = authorizationHeader.replace("Bearer ", "");
 
+
+
             try {
                 String userEmail = jwtProvider.extractUserEmail(jwtToken);
                 Authentication authentication = new UsernamePasswordAuthenticationToken(
