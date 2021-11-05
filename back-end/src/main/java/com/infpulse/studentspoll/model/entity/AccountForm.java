@@ -1,11 +1,11 @@
 package com.infpulse.studentspoll.model.entity;
 
-import com.infpulse.studentspoll.model.state.State;
+import com.infpulse.studentspoll.model.state.FormState;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 @Entity
 @Getter
@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @ToString
 @AllArgsConstructor
+@Builder
 @Table(name = "account_form")
 public class AccountForm {
     @Id
@@ -33,9 +34,9 @@ public class AccountForm {
 
     @Column(name = "answer_date")
     @CreationTimestamp
-    protected LocalDateTime answerDate;
+    protected Timestamp answerDate;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "state", nullable = false)
-    protected State state;
+    protected FormState formState;
 }

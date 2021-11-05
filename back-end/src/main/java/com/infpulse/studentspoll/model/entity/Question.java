@@ -1,6 +1,6 @@
 package com.infpulse.studentspoll.model.entity;
 
-import com.infpulse.studentspoll.model.state.AnswerType;
+import com.infpulse.studentspoll.model.state.QuestionType;
 import lombok.*;
 
 import javax.persistence.*;
@@ -20,12 +20,12 @@ public class Question {
     protected Long id;
 
     @NotBlank
-    @Column(name = "question_name", nullable = false)
+    @Column(name = "question_name", nullable = false, length = 2000)
     protected String questionName;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "answer_type", nullable = false)
-    protected AnswerType answerType;
+    protected QuestionType questionType;
 
     @ManyToOne
     @JoinColumn(name = "form_id")

@@ -8,7 +8,7 @@ import javax.validation.constraints.Future;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 @Entity
 @NoArgsConstructor
@@ -27,8 +27,7 @@ public class Form {
     protected Long id;
 
     @NotEmpty
-    @Column(name = "name")
-    @Size(max = 255)
+    @Column(name = "name", length = 2000)
     protected String topicName;
 
     @Column(name = "max_attempts")
@@ -36,11 +35,11 @@ public class Form {
     protected Integer maxAttempts;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    protected User formOwner;
+    @JoinColumn(name = "account_id")
+    protected User owner;
 
     @Future
     @Column(name = "expire_date")
-    protected LocalDateTime expireDateTime;
+    protected Timestamp expireDateTime;
 
 }
