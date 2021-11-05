@@ -4,5 +4,10 @@
       "name": "TOKEN_SECRET_KEY",
       "type": "java.lang.String",
       "description": "Description for TOKEN_SECRET_KEY."
-  }
-] }
+    },
+    {
+      "name": "token-secret-key",
+      "type": "java.lang.String",
+      "description": "Description for token-secret-key."
+    }
+  ] }
