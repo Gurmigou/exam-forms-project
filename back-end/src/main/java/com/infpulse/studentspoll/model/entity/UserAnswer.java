@@ -22,7 +22,7 @@ public class UserAnswer {
     protected Question parentQuestion;
 
     @Column(name = "answer", length = 2500, nullable = false)
-    protected String answer;
+    protected UserAnswerObject answer;
 
     @ManyToOne
     @JoinColumn(name = "account_forms_id")

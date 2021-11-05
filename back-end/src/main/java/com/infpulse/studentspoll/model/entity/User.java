@@ -6,7 +6,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenerationTime;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 @Entity
 @Getter
@@ -31,15 +31,15 @@ public class User {
 
     protected String password;
 
-    @Column(name = "is_deleted", columnDefinition = "boolean default false", nullable = false)
+    @Column(name = "is_deleted", nullable = false)
     protected Boolean isDeleted;
 
     @CreationTimestamp
     @Column(name = "creation_time")
-    protected LocalDateTime creationTime;
+    protected Timestamp creationTime;
 
     @org.hibernate.annotations.Generated(GenerationTime.ALWAYS)
     @Column(name = "last_updated_time")
-    protected LocalDateTime lastUpdateTime;
+    protected Timestamp lastUpdateTime;
 
 }

@@ -28,7 +28,9 @@ public class RegistrationDto {
     private String confirmPassword;
 
     @NotBlank
+    @Size(max = 255)
     private String name;
     @NotBlank
+    @Size(max = 255)
     private String surname;
 }

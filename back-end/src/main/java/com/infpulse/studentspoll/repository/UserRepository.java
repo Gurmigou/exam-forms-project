@@ -1,7 +1,6 @@
 package com.infpulse.studentspoll.repository;
 
 import com.infpulse.studentspoll.model.entity.User;
-import com.infpulse.studentspoll.model.formDto.UserInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -22,9 +21,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "UPDATE User user SET user.isDeleted = TRUE WHERE user.email = :email")
     void setDeleted(@Param(value = "email") String email);
 
-    @Query(value = "SELECT email AS email, name AS name, surname AS surname," +
-            "isDeleted AS isDeleted, creationTime AS creationTime, lasLoginTime AS lasLoginTime " +
-            "FROM User user WHERE user.email = :email")
-    Optional<UserInfo> fetchUserInfo(@Param(value = "email") String email);
+//    @Query(value = "SELECT email AS email, name AS name, surname AS surname," +
+//            "isDeleted AS isDeleted, creationTime AS creationTime, lasLoginTime AS lasLoginTime " +
+//            "FROM User user WHERE user.email = :email")
+//    Optional<UserInfo> fetchUserInfo(@Param(value = "email") String email);
 
 }

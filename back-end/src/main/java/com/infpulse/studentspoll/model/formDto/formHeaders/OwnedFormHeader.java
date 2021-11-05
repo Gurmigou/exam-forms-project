@@ -1,6 +1,6 @@
-package com.infpulse.studentspoll.model.formDto;
+package com.infpulse.studentspoll.model.formDto.formHeaders;
 
-import com.infpulse.studentspoll.model.state.State;
+import com.infpulse.studentspoll.model.state.FormState;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,12 +19,13 @@ public class OwnedFormHeader {
     private Long id;
 
     @NotBlank
+    @Size(max = 2000)
     private String topicName;
 
     @Future
     private LocalDateTime expireDate;
 
     @NotNull
-    private State state;
+    private FormState formState;
 
 }

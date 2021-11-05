@@ -1,4 +1,4 @@
-package com.infpulse.studentspoll.model.formDto;
+package com.infpulse.studentspoll.model.formDto.userInfo;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

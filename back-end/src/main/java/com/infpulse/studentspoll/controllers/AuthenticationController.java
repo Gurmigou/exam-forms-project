@@ -1,9 +1,9 @@
 package com.infpulse.studentspoll.controllers;
 
-import com.infpulse.studentspoll.security.JwtProvider;
-import com.infpulse.studentspoll.security.JwtUserDetailsService;
 import com.infpulse.studentspoll.model.securityDto.AuthRequest;
 import com.infpulse.studentspoll.model.securityDto.AuthResponse;
+import com.infpulse.studentspoll.security.JwtProvider;
+import com.infpulse.studentspoll.security.JwtUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
