@@ -20,7 +20,7 @@ public class PossibleAnswer {
     protected Long id;
 
     @Column(name = "answer", nullable = false)
-    protected String answer;
+    protected String possibleAnswer;
 
     @Column(name = "answer_value", nullable = false)
     @PositiveOrZero

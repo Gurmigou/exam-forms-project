@@ -32,7 +32,7 @@ public class Form {
 
     @Column(name = "max_attempts")
     @Positive
-    protected Integer maxAttempts;
+    protected Integer attempts;
 
     @ManyToOne
     @JoinColumn(name = "account_id")

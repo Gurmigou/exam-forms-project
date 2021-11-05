@@ -14,14 +14,14 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class OwnedFormDto {
+public class FormDto {
 
     @Size(max = 2000)
     @NotBlank
     private String topicName;
 
     @Positive
-    private Integer maxAttempts;
+    private Integer attempts;
 
     @Future
     private Timestamp expireDateTime;
