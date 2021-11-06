@@ -84,7 +84,7 @@ class FormRepositoryTest extends DBTestSetup {
         testEntityManager.persist(accountForm3);
         testEntityManager.persist(accountForm4);
 
-        List<OwnedFormHeader> testList = formRepository.getOwnedFormHeaders(owner);
+        List<OwnedFormHeader> testList = formRepository.getOwnedFormHeaders(owner.getEmail());
 
         assertThat(testList).isNotEmpty();
     }
