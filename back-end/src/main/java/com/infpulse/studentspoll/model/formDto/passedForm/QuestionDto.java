@@ -26,5 +26,5 @@ public class QuestionDto {
 
     @NotEmpty
     @NotNull
-    private List<PossibleAnswerDto> fieldDtoList;
+    private List<PossibleAnswerDto> possibleAnswersDto;
 }

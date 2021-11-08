@@ -42,13 +42,13 @@ class FormRepositoryTest extends DBTestSetup {
         Form form = Form.builder()
                 .owner(owner)
                 .topicName("testTopic")
-                .maxAttempts(120)
+                .attempts(120)
                 .expireDateTime(new Timestamp(System.currentTimeMillis()))
                 .build();
         Form secondForm = Form.builder()
                 .owner(owner)
                 .topicName("testTopic2")
-                .maxAttempts(120)
+                .attempts(120)
                 .expireDateTime(new Timestamp(System.currentTimeMillis()))
                 .build();
         AccountForm accountForm = AccountForm.builder()

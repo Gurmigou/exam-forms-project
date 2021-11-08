@@ -22,5 +22,5 @@ public class PossibleAnswerDto {
     @NotNull
     private AnswerStatus answerStatus;
     @PositiveOrZero
-    private Integer value;
+    private Integer answerValue;
 }

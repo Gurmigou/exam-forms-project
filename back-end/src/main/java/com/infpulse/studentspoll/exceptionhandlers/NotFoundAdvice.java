@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @ControllerAdvice
-public class FormNotFoundAdvice {
+public class NotFoundAdvice {
 
 	@ResponseBody
 	@ExceptionHandler(NotFoundException.class)
