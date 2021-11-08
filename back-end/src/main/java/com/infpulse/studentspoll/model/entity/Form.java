@@ -7,7 +7,6 @@ import javax.persistence.*;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Positive;
-import javax.validation.constraints.Size;
 import java.sql.Timestamp;
 
 @Entity

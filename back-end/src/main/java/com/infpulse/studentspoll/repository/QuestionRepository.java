@@ -2,6 +2,7 @@ package com.infpulse.studentspoll.repository;
 
 import com.infpulse.studentspoll.model.entity.Form;
 import com.infpulse.studentspoll.model.entity.Question;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

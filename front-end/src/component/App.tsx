@@ -16,7 +16,7 @@ function App() {
     <div className="App">
         <Router>
             {/*не совсем ясно, как только конкретным компонентам добавить навигацию */}
-            {/*<Navigation/>*/}
+            <Navigation/>
             <Switch>
                 <Route exact path="/" component={MainPage}/>
                 <Route exact path="/login" component={Login}/>
