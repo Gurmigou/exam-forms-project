@@ -1,5 +1,6 @@
 package com.infpulse.studentspoll.service;
 
+import com.infpulse.studentspoll.exceptions.NoPermissionException;
 import com.infpulse.studentspoll.exceptions.NotFoundException;
 import com.infpulse.studentspoll.model.entity.Form;
 import com.infpulse.studentspoll.model.entity.PossibleAnswer;
@@ -102,60 +103,19 @@ public class FormService {
         return formsRepository.getPassedFormHeader(email);
     }
 
-   /*
-
-    private FormDto saveForm(FormDto formDto, User user) {
-        Form form = mapper.map(formDto, Form.class);
-        form.setOwner(user);
-        return mapper.map(formsRepository.save(form), FormDto.class);
-    }
-
-    public FormDto updateForm(long formId, FormDto formDto, String userName) {
-        User user = findUserByUsername(userName);
-        Optional<Form> oldForm = formsRepository.findById(formId);
-        if (oldForm.isPresent()) {
-            Form form = oldForm.get();
-            if (!form.getOwner().equals(user) || form.getIsDeleted()) {
-                throw new NoPermissionException("Form " + oldForm.get().getId());
-            }
-            mapper.map(formDto, form);
-            return mapper.map(formsRepository.save(form), FormDto.class);
-        } else {
-            return saveForm(formDto, user);
-        }
-    }
-
-    public FormDto getForm(long formId) {
-        return mapper.map(getFormEntity(formId), FormDto.class);
-    }
-
-    public Form getFormEntity(long formId) {
-        Form form = formsRepository.findById(formId).orElseThrow(() -> new NotFoundException("Form " + formId));
-        if (form.getIsDeleted()) {
-            throw new NotFoundException("Form " + formId);
-        }
-        return form;
-    }
-
-    public void deleteForm(long formId, String userName) {
-        Form form = formsRepository.findById(formId).orElseThrow(() -> new NotFoundException("Form " + formId));
-        if (form.getOwner().getLogin().equals(userName)) {
-            formsRepository.setDeleted(formId);
-        } else {
-            throw new NoPermissionException("Form " + formId);
-        }
-    }
-
-    public List<FormDto> getOwnedForms(String userName) {
-        User user = findUserByUsername(userName);
-        List<Form> forms = formsRepository.findAllByOwner(user).stream()
-                .filter(form -> !form.getIsDeleted())
-                .collect(Collectors.toList());
-        return mapper.map(forms, new TypeToken<List<FormDto>>() {}.getType());
-    }
-    */
+	public void deleteForm(long formId, String email) {
+		User user = findUserByEmail(email);
+		Form form = formsRepository.findById(formId).orElseThrow(() -> new NotFoundException("Form " + formId));
+		if (form.getOwner().getEmail().equals(user.getEmail())) {
+			formsRepository.delete(form);
+		} else {
+			throw new NoPermissionException("Form " + formId + " for user " + user.getEmail());
+		}
+	}
 
 	private User findUserByEmail(String userName) {
 		return userRepository.findByEmail(userName).orElseThrow(() -> new NotFoundException("User " + userName));
 	}
+
+
 }

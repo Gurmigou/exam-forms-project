@@ -44,4 +44,11 @@ public class FormController {
 		return formService.getForm(formId);
 	}
 
+	@DeleteMapping("/forms/{formId}")
+	@ResponseStatus(HttpStatus.OK)
+	public void deleteForm(@PathVariable long formId, Principal principal) {
+		formService.deleteForm(formId, principal.getName());
+	}
+
+
 }
