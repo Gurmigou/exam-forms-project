@@ -1,5 +1,6 @@
 package com.infpulse.studentspoll.controllers;
 
+import com.infpulse.studentspoll.model.formDto.formHeaders.AvailableFormHeader;
 import com.infpulse.studentspoll.model.formDto.formHeaders.OwnedFormHeader;
 import com.infpulse.studentspoll.model.formDto.formHeaders.PassedFormHeader;
 import com.infpulse.studentspoll.model.formDto.ownedFormDto.FormDto;
@@ -35,7 +36,7 @@ public class FormController {
 	}
 
 	@GetMapping("/forms/available")
-	public List<PassedFormHeader> availableForms(Principal principal) {
+	public List<AvailableFormHeader> availableForms(Principal principal) {
 		return formService.getAvailableForms(principal.getName());
 	}
 

@@ -6,8 +6,8 @@ import com.infpulse.studentspoll.model.entity.Form;
 import com.infpulse.studentspoll.model.entity.PossibleAnswer;
 import com.infpulse.studentspoll.model.entity.Question;
 import com.infpulse.studentspoll.model.entity.User;
+import com.infpulse.studentspoll.model.formDto.formHeaders.AvailableFormHeader;
 import com.infpulse.studentspoll.model.formDto.formHeaders.OwnedFormHeader;
-import com.infpulse.studentspoll.model.formDto.formHeaders.PassedFormHeader;
 import com.infpulse.studentspoll.model.formDto.ownedFormDto.FormDto;
 import com.infpulse.studentspoll.model.formDto.passedForm.PossibleAnswerDto;
 import com.infpulse.studentspoll.model.formDto.passedForm.QuestionDto;
@@ -54,7 +54,7 @@ public class FormService {
 	public void saveQuestions(List<QuestionDto> questionsDto, Form form) {
 		for (QuestionDto questionDto : questionsDto) {
 			Question question = mapper.map(questionDto, Question.class);
-			question.setParentForm(form);
+			question.setOwnerForm(form);
 			question = questionRepository.save(question);
 			savePossibleAnswers(questionDto.getPossibleAnswersDto(), question);
 		}
@@ -80,7 +80,7 @@ public class FormService {
 
 	public List<QuestionDto> getQuestions(Form form) {
 		List<QuestionDto> questionsDto = new LinkedList<>();
-		List<Question> questions = questionRepository.findAllByForm(form);
+		List<Question> questions = questionRepository.findAllByOwnerForm(form);
 		for (Question question : questions) {
 			QuestionDto questionDto = mapper.map(question, QuestionDto.class);
 			questionDto.setPossibleAnswersDto(getPossibleAnswers(question));
@@ -99,7 +99,7 @@ public class FormService {
         return formsRepository.getOwnedFormHeaders(email);
     }
 
-    public List<PassedFormHeader> getAvailableForms(String email) {
+    public List<AvailableFormHeader> getAvailableForms(String email) {
         return formsRepository.getPassedFormHeader(email);
     }
 
