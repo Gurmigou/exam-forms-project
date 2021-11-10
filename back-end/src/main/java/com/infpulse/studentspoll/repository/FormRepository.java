@@ -14,23 +14,23 @@ import java.util.List;
 @Repository
 public interface FormRepository extends JpaRepository<Form, Long> {
 
-    @Query(value = "SELECT f.id AS id, f.topicName AS topicName, " +
-            "f.expireDateTime AS expireDate, a.formState AS state " +
+    @Query(value = "SELECT new com.infpulse.studentspoll.model.formDto.formHeaders.OwnedFormHeader " +
+            "(f.id, f.topicName, f.expireDateTime, a.formState) " +
             "FROM Form f INNER JOIN AccountForm a " +
             "ON f.id = a.form.id " +
             "WHERE f.owner.email = :email")
     List<OwnedFormHeader> getOwnedFormHeaders(@Param("email") String email);
 
-    @Query(value = "SELECT f.id AS id, f.topicName AS topicName, " +
-            "a.resultScore AS formScore, a.answerDate AS answerDate " +
+    @Query(value = "SELECT new com.infpulse.studentspoll.model.formDto.formHeaders.AvailableFormHeader " +
+            "(f.id, f.topicName, a.resultScore, a.answerDate) "  +
             "FROM Form f INNER JOIN AccountForm a " +
             "ON f.id = a.form.id " +
             "WHERE a.user.email = :email")
     List<AvailableFormHeader> getPassedFormHeader(@Param("email") String email);
 
-    @Query(value = "SELECT af.user.name, af.user.surname, af.answerDate, af.resultScore " +
+    @Query(value = "SELECT new com.infpulse.studentspoll.model.formDto.formHeaders.UserFormValuation " +
+            "(af.user.name, af.user.surname, af.answerDate, af.resultScore) " +
             "FROM AccountForm af " +
             "WHERE af.form.owner.email = :formOwnerEmail")
     List<UserFormValuation> getUserFormValuationList(@Param("formOwnerEmail") String email);
-
 }

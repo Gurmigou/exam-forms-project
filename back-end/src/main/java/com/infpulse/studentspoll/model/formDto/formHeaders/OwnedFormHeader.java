@@ -27,5 +27,4 @@ public class OwnedFormHeader {
 
     @NotNull
     private FormState formState;
-
 }

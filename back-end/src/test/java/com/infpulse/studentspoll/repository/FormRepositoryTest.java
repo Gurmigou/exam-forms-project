@@ -13,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -43,13 +44,13 @@ class FormRepositoryTest extends DBTestSetup {
                 .owner(owner)
                 .topicName("testTopic")
                 .attempts(120)
-                .expireDateTime(new Timestamp(System.currentTimeMillis()))
+                .expireDateTime(LocalDateTime.now().plusWeeks(1))
                 .build();
         Form secondForm = Form.builder()
                 .owner(owner)
                 .topicName("testTopic2")
                 .attempts(120)
-                .expireDateTime(new Timestamp(System.currentTimeMillis()))
+                .expireDateTime(LocalDateTime.now().plusWeeks(1))
                 .build();
         AccountForm accountForm = AccountForm.builder()
                 .form(form)
