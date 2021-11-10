@@ -19,11 +19,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Modifying
     @Query(value = "UPDATE User user SET user.isDeleted = TRUE WHERE user.email = :email")
-    void setDeleted(@Param(value = "email") String email);
+    void setDeleted(@Param("email") String email);
 
-    @Query(value = "SELECT user.email, user.name, user.surname," +
-            "user.isDeleted, user.creationTime, user.lastUpdateTime AS lastLoginTime " +
+    @Query(value = "SELECT new com.infpulse.studentspoll.model.formDto.userInfo.UserInfo " +
+            "(user.email, user.name, user.surname, user.isDeleted, user.creationTime, user.lastUpdateTime) " +
             "FROM User user WHERE user.email = :email")
-    Optional<UserInfo> fetchUserInfo(@Param(value = "email") String email);
+    Optional<UserInfo> fetchUserInfo(@Param("email") String email);
 
 }
