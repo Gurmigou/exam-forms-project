@@ -2,11 +2,13 @@ package com.infpulse.studentspoll.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonTypeId;
 import lombok.*;
+import org.apache.tomcat.jni.Local;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenerationTime;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -36,10 +38,10 @@ public class User {
 
     @CreationTimestamp
     @Column(name = "creation_time")
-    protected Timestamp creationTime;
+    protected LocalDateTime creationTime;
 
     @org.hibernate.annotations.Generated(GenerationTime.ALWAYS)
     @Column(name = "last_updated_time")
-    protected Timestamp lastUpdateTime;
+    protected LocalDateTime lastUpdateTime;
 
 }
