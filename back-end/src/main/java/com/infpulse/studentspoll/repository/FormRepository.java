@@ -1,9 +1,9 @@
 package com.infpulse.studentspoll.repository;
 
 import com.infpulse.studentspoll.model.entity.Form;
+import com.infpulse.studentspoll.model.formDto.formHeaders.AvailableFormHeader;
 import com.infpulse.studentspoll.model.formDto.formHeaders.OwnedFormHeader;
-import com.infpulse.studentspoll.model.formDto.formHeaders.PassedFormHeader;
-import org.springframework.context.annotation.Profile;
+import com.infpulse.studentspoll.model.formDto.formHeaders.UserFormValuation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -26,5 +26,11 @@ public interface FormRepository extends JpaRepository<Form, Long> {
             "FROM Form f INNER JOIN AccountForm a " +
             "ON f.id = a.form.id " +
             "WHERE a.user.email = :email")
-    List<PassedFormHeader> getPassedFormHeader(@Param("email") String email);
+    List<AvailableFormHeader> getPassedFormHeader(@Param("email") String email);
+
+    @Query(value = "SELECT af.user.name, af.user.surname, af.answerDate, af.resultScore " +
+            "FROM AccountForm af " +
+            "WHERE af.form.owner.email = :formOwnerEmail")
+    List<UserFormValuation> getUserFormValuationList(@Param("formOwnerEmail") String email);
+
 }
