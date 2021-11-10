@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @ToString
-public class PassedFormHeader {
+public class AvailableFormHeader {
 
     @Positive
     private Long id;

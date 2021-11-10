@@ -6,6 +6,7 @@ import com.infpulse.studentspoll.model.entity.Form;
 import com.infpulse.studentspoll.model.entity.PossibleAnswer;
 import com.infpulse.studentspoll.model.entity.Question;
 import com.infpulse.studentspoll.model.entity.User;
+import com.infpulse.studentspoll.model.formDto.formHeaders.AvailableFormHeader;
 import com.infpulse.studentspoll.model.formDto.formHeaders.OwnedFormHeader;
 import com.infpulse.studentspoll.model.formDto.formHeaders.PassedFormHeader;
 import com.infpulse.studentspoll.model.formDto.ownedFormDto.FormDto;
@@ -99,7 +100,7 @@ public class FormService {
         return formsRepository.getOwnedFormHeaders(email);
     }
 
-    public List<PassedFormHeader> getAvailableForms(String email) {
+    public List<AvailableFormHeader> getAvailableForms(String email) {
         return formsRepository.getPassedFormHeader(email);
     }
 
