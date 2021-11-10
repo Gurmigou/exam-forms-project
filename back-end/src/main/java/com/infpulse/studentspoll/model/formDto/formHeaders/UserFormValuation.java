@@ -1,17 +1,26 @@
 package com.infpulse.studentspoll.model.formDto.formHeaders;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.sql.Timestamp;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.PositiveOrZero;
+import java.time.LocalDateTime;
 
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 public class UserFormValuation {
+    @NotBlank
     private String userName;
+    @NotBlank
     private String surname;
-    private Timestamp answerDate;
+    @Past
+    private LocalDateTime answerDate;
+    @PositiveOrZero
     private Integer resultScore;
 }
