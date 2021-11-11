@@ -19,19 +19,12 @@
       <configuration>
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="Hibernate" />
-        <datasource-mapping>
-          <factory-entry name="entityManagerFactory" />
-        </datasource-mapping>
+        <datasource-mapping />
         <naming-strategy-map />
       </configuration>
     </facet>
     <facet type="Spring" name="Spring">
-      <configuration>
-        <fileset id="fileset" name="SecurityConfiguration" removed="false">
-          <file>file://$MODULE_DIR$/src/main/java/com/infpulse/studentspoll/config/SecurityConfiguration.java</file>
-        </fileset>
-        <fileset id="spring_boot_com.infpulse.studentspoll.StudentsPollApplication" profiles="test" autodetected="true" />
-      </configuration>
+      <configuration />
     </facet>
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_16">

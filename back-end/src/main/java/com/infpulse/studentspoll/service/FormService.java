@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FormService {
@@ -43,12 +44,13 @@ public class FormService {
 		this.mapper = mapper;
 	}
 
-	public void saveForm(FormDto formDto, String email) {
+	public Form saveForm(FormDto formDto, String email) {
 		User user = findUserByEmail(email);
 		Form form = mapper.map(formDto, Form.class);
 		form.setOwner(user);
 		form = formsRepository.save(form);
 		saveQuestions(formDto.getQuestionDtoList(), form);
+		return form;
 	}
 
 	public void saveQuestions(List<QuestionDto> questionsDto, Form form) {
@@ -71,14 +73,17 @@ public class FormService {
 	}
 
 	public FormDto getForm(long formId) {
-		Form form = formsRepository.findById(formId)
-				.orElseThrow(() -> new NotFoundException("Form " + formId));
-		FormDto formDto = mapper.map(form, FormDto.class);
-		formDto.setQuestionDtoList(getQuestions(form));
-		return formDto;
+		Optional<Form> form = formsRepository.findById(formId);
+		if (form.isPresent()) {
+			FormDto formDto = mapper.map(form.get(), FormDto.class);
+			formDto.setQuestionDtoList(getQuestions(form));
+			return formDto;
+		} else {
+			return null;
+		}
 	}
 
-	public List<QuestionDto> getQuestions(Form form) {
+	public List<QuestionDto> getQuestions(Optional<Form> form) {
 		List<QuestionDto> questionsDto = new LinkedList<>();
 		List<Question> questions = questionRepository.findAllByOwnerForm(form);
 		for (Question question : questions) {
@@ -95,13 +100,13 @@ public class FormService {
 		}.getType());
 	}
 
-    public List<OwnedFormHeader> getOwnedForms(String email) {
-        return formsRepository.getOwnedFormHeaders(email);
-    }
+	public List<OwnedFormHeader> getOwnedForms(String email) {
+		return formsRepository.getOwnedFormHeaders(email);
+	}
 
-    public List<AvailableFormHeader> getAvailableForms(String email) {
-        return formsRepository.getPassedFormHeader(email);
-    }
+	public List<AvailableFormHeader> getAvailableForms(String email) {
+		return formsRepository.getPassedFormHeader(email);
+	}
 
 	public void deleteForm(long formId, String email) {
 		User user = findUserByEmail(email);
@@ -116,6 +121,4 @@ public class FormService {
 	private User findUserByEmail(String userName) {
 		return userRepository.findByEmail(userName).orElseThrow(() -> new NotFoundException("User " + userName));
 	}
-
-
 }
