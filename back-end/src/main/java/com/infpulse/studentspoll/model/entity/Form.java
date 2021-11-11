@@ -8,6 +8,7 @@ import javax.validation.constraints.Future;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Positive;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @NoArgsConstructor
@@ -37,8 +38,8 @@ public class Form {
     @JoinColumn(name = "account_id")
     protected User owner;
 
-    @Future
+//    @Future
     @Column(name = "expire_date")
-    protected Timestamp expireDateTime;
+    protected LocalDateTime expireDateTime;
 
 }
