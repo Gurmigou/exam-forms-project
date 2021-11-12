@@ -1,0 +1,11 @@
+.registration {
+    margin-top: 15vh;
+}
+
+.registration-inner {
+    max-width: 45rem;
+}
+
+#create-account-button {
+    margin-top: 15px;
+}

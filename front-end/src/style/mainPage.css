@@ -53,6 +53,7 @@
 .main-page-component {
     background: white;
     height: 270px;
+    width: 20rem;
     opacity: 0.85;
     border-radius: 10px;
     color: rgb(66, 28, 175);

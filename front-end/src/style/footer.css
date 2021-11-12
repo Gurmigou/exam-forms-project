@@ -1,0 +1,77 @@
+.footer {
+    background: #464c98;
+    width: 100%;
+    display: flex;
+    position: fixed;
+    bottom: 0;
+
+    justify-content: center;
+    height: 9rem;
+    color: #e3e3e3;
+    font-weight: lighter;
+    font-size: 14px;
+}
+
+.footer-block {
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.footer-block-links {
+    height: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.footer-block-links-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.footer-nav {
+    margin-top: 5px;
+    display: flex;
+}
+
+.footer-nav-link {
+    margin: 0 1vw;
+    text-decoration: none;
+    color: #d3d3d3;
+}
+
+#real-link {
+    color: white;
+}
+
+#git-hub-link {
+    color: white;
+}
+
+.footer-block-about {
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+#separate-line-block {
+    display: flex;
+    justify-content: center;
+}
+
+#separate-line {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    padding: 0;
+    width: 25rem;
+}
+
+.fa-github {
+    width: 20px;
+}

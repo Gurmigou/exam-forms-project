@@ -1,11 +1,11 @@
 import React from "react";
 
-function Registration() {
+function AboutProject() {
     return (
         <div>
-            Registration
+
         </div>
     )
 }
 
-export default Registration
+export default AboutProject;

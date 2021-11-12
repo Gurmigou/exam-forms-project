@@ -2,8 +2,8 @@ import React from 'react';
 import '../style/App.css';
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom"
 import MainPage from './mainpage/MainPage';
-import Registration from "./Registration";
-import Login from "./Login";
+import Registration from "./security/Registration";
+import Login from "./security/Login";
 import AccountSettings from "./AccountSettings";
 import UserFormList from "./UserFormList";
 import FormEditor from "./FormEditor";
@@ -19,6 +19,7 @@ import "primeflex/primeflex.css";
 
 import { InputText } from "primereact/inputtext";
 import {Button} from "primereact/button";
+import Footer from "./Footer";
 
 function App() {
   return (
@@ -28,10 +29,15 @@ function App() {
             {/*<Navigation/>*/}
             <Switch>
                 <Route exact path="/" component={MainPage}/>
+
                 <Route exact path="/nav" component={Navigation}/>
+                <Route exact path="/footer" component={Footer}/>
+
                 <Route exact path="/login" component={Login}/>
                 <Route exact path="/registration" component={Registration}/>
+
                 <Route exact path="/user/account" component={AccountSettings}/>
+
                 <Route exact path="/user/form-list" component={UserFormList}/>
                 <Route exact path="/form/construct" component={FormEditor}/>
                 <Route exact path="/form/:id" component={Form}/>
