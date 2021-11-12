@@ -44,7 +44,7 @@ public class FormService {
 		this.mapper = mapper;
 	}
 
-	public Form saveForm(FormDto formDto, String email) {
+	public Form saveForm(FormDto formDto, java.lang.String email) {
 		User user = findUserByEmail(email);
 		Form form = mapper.map(formDto, Form.class);
 		form.setOwner(user);
@@ -76,16 +76,16 @@ public class FormService {
 		Optional<Form> form = formsRepository.findById(formId);
 		if (form.isPresent()) {
 			FormDto formDto = mapper.map(form.get(), FormDto.class);
-			formDto.setQuestionDtoList(getQuestions(form));
+			formDto.setQuestionDtoList(getQuestions(form.get().getId()));
 			return formDto;
 		} else {
 			return null;
 		}
 	}
 
-	public List<QuestionDto> getQuestions(Optional<Form> form) {
+	public List<QuestionDto> getQuestions(long formId) {
 		List<QuestionDto> questionsDto = new LinkedList<>();
-		List<Question> questions = questionRepository.findAllByOwnerForm(form);
+		List<Question> questions = questionRepository.findAllByOwnerForm(formId);
 		for (Question question : questions) {
 			QuestionDto questionDto = mapper.map(question, QuestionDto.class);
 			questionDto.setPossibleAnswersDto(getPossibleAnswers(question));
@@ -100,15 +100,15 @@ public class FormService {
 		}.getType());
 	}
 
-	public List<OwnedFormHeader> getOwnedForms(String email) {
+	public List<OwnedFormHeader> getOwnedForms(java.lang.String email) {
 		return formsRepository.getOwnedFormHeaders(email);
 	}
 
-	public List<AvailableFormHeader> getAvailableForms(String email) {
+	public List<AvailableFormHeader> getAvailableForms(java.lang.String email) {
 		return formsRepository.getPassedFormHeader(email);
 	}
 
-	public void deleteForm(long formId, String email) {
+	public void deleteForm(long formId, java.lang.String email) {
 		User user = findUserByEmail(email);
 		Form form = formsRepository.findById(formId).orElseThrow(() -> new NotFoundException("Form " + formId));
 		if (form.getOwner().getEmail().equals(user.getEmail())) {
@@ -118,7 +118,7 @@ public class FormService {
 		}
 	}
 
-	private User findUserByEmail(String userName) {
+	private User findUserByEmail(java.lang.String userName) {
 		return userRepository.findByEmail(userName).orElseThrow(() -> new NotFoundException("User " + userName));
 	}
 }

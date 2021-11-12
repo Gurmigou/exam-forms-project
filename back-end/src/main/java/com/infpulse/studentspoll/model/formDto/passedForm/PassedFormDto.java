@@ -8,7 +8,7 @@ import lombok.Setter;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Positive;
-import java.security.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @AllArgsConstructor
@@ -16,12 +16,12 @@ import java.util.List;
 @Getter
 @Setter
 public class PassedFormDto {
-    @NotBlank
-    private String topicName;
-    @Positive
-    private Integer formScore;
+	@NotBlank
+	private String topicName;
+	@Positive
+	private Integer formScore;
 
-    private Timestamp answerDate;
-    @NotEmpty
-    private List<QuestionDto> formQuestions;
+	private LocalDateTime answerDate;
+	@NotEmpty
+	private List<QuestionDto> formQuestions;
 }

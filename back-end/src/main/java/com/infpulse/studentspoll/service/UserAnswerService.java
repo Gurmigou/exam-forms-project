@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.OptionalLong;
@@ -41,7 +42,7 @@ public class UserAnswerService {
 	}
 
 
-	public AccountForm submitAnswer(SubmitAnswerDto submitAnswerDto, String email) {
+	public AccountForm submitAnswer(SubmitAnswerDto submitAnswerDto, java.lang.String email) {
 		User user = findUserByEmail(email);
 		Form form = getForm(submitAnswerDto.getFormId());
 		AccountForm accountForm = AccountForm.builder()
@@ -54,16 +55,92 @@ public class UserAnswerService {
 		return accountForm;
 	}
 
-	public PassedFormDto getAnswer(long formId, String email, LocalDateTime date) {
-		Form form = getForm(formId);
-		List<UserAnswer> userAnswers = userAnswerRepository.findAnswersByEmailAndDate(email, date);
-		return buildPassedForm(userAnswers, form);
+	public PassedFormDto getAnswer(long formId, java.lang.String email, LocalDateTime date) {
+		AccountForm accountForm = accountFormRepository
+				.findAccountFormByEmailAndFormIdAndDate(email, formId, date)
+				.orElseThrow(() -> new NotFoundException("Account form for user - " + email + " and form "
+						+ formId + " and date " + date));
+
+		return buildPassedForm(accountForm);
 	}
 
-	private PassedFormDto buildPassedForm(List<UserAnswer> userAnswers, Form form) {
-		for (UserAnswer userAnswer : userAnswers) {
+	private PassedFormDto buildPassedForm(AccountForm accountForm) {
+		PassedFormDto passedFormDto = new PassedFormDto();
+		passedFormDto.setTopicName(accountForm.getForm().getTopicName());
+		passedFormDto.setAnswerDate(accountForm.getAnswerDate());
+		passedFormDto.setFormScore(accountForm.getResultScore());
+		passedFormDto.setFormQuestions(buildFormQuestions(accountForm));
+		return passedFormDto;
+	}
 
+	private List<QuestionDto> buildFormQuestions(AccountForm accountForm) {
+		List<Question> questions = questionRepository.findAllByOwnerForm(accountForm.getForm().getId());
+		List<QuestionDto> questionDtoList = new ArrayList<>(questions.size());
+		for (Question question : questions) {
+			QuestionDto questionDto = new QuestionDto();
+			questionDto.setQuestionName(question.getQuestionName());
+			questionDto.setQuestionType(question.getQuestionType());
+			questionDto.setPossibleAnswersDto(buildUserAnswers(accountForm.getId(), question));
+			questionDtoList.add(questionDto);
 		}
+		return questionDtoList;
+	}
+
+	private List<PossibleAnswerDto> buildUserAnswers(long accountFormId, Question question) {
+		UserAnswer userAnswer = userAnswerRepository
+				.findAnswerByAccountFormIdAndParentQuestionId(accountFormId, question.getId());
+		List<PossibleAnswerDto> possibleAnswerDtoList;
+		switch (question.getQuestionType()) {
+			case SINGLE -> {
+				if (checkIsEmpty(userAnswer.getAnswer())) {
+					possibleAnswerDtoList = Collections.emptyList();
+				} else {
+					Long answerId = ((OptionalLong) userAnswer.getAnswer().getAnswer()).getAsLong();
+					PossibleAnswer answer = userAnswerRepository
+							.findPossibleAnswerByQuestionIdAndAnswerId(question.getId(), answerId);
+					PossibleAnswerDto possibleAnswerDto = new PossibleAnswerDto();
+					possibleAnswerDto.setAnswerValue(answer.getAnswerValue());
+					possibleAnswerDto.setPossibleAnswer(answer.getPossibleAnswer());
+					possibleAnswerDtoList = List.of(possibleAnswerDto);
+				}
+			}
+			case MULTI -> {
+				if (checkIsEmpty(userAnswer.getAnswer())) {
+					possibleAnswerDtoList = Collections.emptyList();
+				} else {
+					List<Long> answersId = (List<Long>) userAnswer.getAnswer().getAnswer();
+					possibleAnswerDtoList = new ArrayList<>(answersId.size());
+					for (long answerId : answersId) {
+						PossibleAnswer answer = userAnswerRepository
+								.findPossibleAnswerByQuestionIdAndAnswerId(question.getId(), answerId);
+						PossibleAnswerDto possibleAnswerDto = new PossibleAnswerDto();
+						possibleAnswerDto.setAnswerValue(answer.getAnswerValue());
+						possibleAnswerDto.setPossibleAnswer(answer.getPossibleAnswer());
+						possibleAnswerDtoList.add(possibleAnswerDto);
+					}
+				}
+			}
+			case OPEN -> {
+				PossibleAnswerDto possibleAnswerDto = new PossibleAnswerDto();
+				possibleAnswerDto.setPossibleAnswer((java.lang.String) userAnswer.getAnswer().getAnswer());
+				possibleAnswerDtoList = List.of(possibleAnswerDto);
+			}
+			default -> possibleAnswerDtoList = Collections.emptyList();
+		}
+		return possibleAnswerDtoList;
+	}
+
+	private boolean checkIsEmpty(UserAnswerObject<?> userAnswerObject) {
+		if (userAnswerObject.getType().equals(QuestionType.SINGLE)) {
+			{
+				OptionalLong optionalLong = (OptionalLong) userAnswerObject.getAnswer();
+				return optionalLong.isEmpty();
+			}
+		} else if (userAnswerObject.getType().equals(QuestionType.MULTI)) {
+			List<Long> longs = (List<Long>) userAnswerObject.getAnswer();
+			return longs.isEmpty();
+		}
+		return false;
 	}
 
 	private void parseAnswersList(List<QuestionDto> questionDtoList, Form form, AccountForm accountForm) {
@@ -79,11 +156,11 @@ public class UserAnswerService {
 		userAnswer.setAccountForm(accountForm);
 		switch (question.getQuestionType()) {
 			case SINGLE -> userAnswer
-					.setAnswer(singleUserAnswerObject(question.getId(), questionDto.getPossibleAnswersDto()));
+					.setAnswer(buildSingleUserAnswerObject(question.getId(), questionDto.getPossibleAnswersDto()));
 			case MULTI -> userAnswer
-					.setAnswer(multiUserAnswerObject(question.getId(), questionDto.getPossibleAnswersDto()));
+					.setAnswer(buildMultiUserAnswerObject(question.getId(), questionDto.getPossibleAnswersDto()));
 			case OPEN -> {
-				UserAnswerObject<String> userAnswerObject = new UserAnswerObject<>();
+				UserAnswerObject<java.lang.String> userAnswerObject = new UserAnswerObject<>();
 				userAnswerObject.setType(QuestionType.OPEN);
 				userAnswerObject.setAnswer(questionDto.getPossibleAnswersDto().get(0).getPossibleAnswer());
 				userAnswer.setAnswer(userAnswerObject);
@@ -92,28 +169,28 @@ public class UserAnswerService {
 		userAnswerRepository.save(userAnswer);
 	}
 
-	private UserAnswerObject<OptionalLong> singleUserAnswerObject(long questionId,
-	                                                              List<PossibleAnswerDto> possibleAnswerDtoList) {
+	private UserAnswerObject<OptionalLong> buildSingleUserAnswerObject(long questionId,
+	                                                                   List<PossibleAnswerDto> possibleAnswerDtoList) {
 		UserAnswerObject<OptionalLong> userAnswerObject = new UserAnswerObject<>();
 		userAnswerObject.setType(QuestionType.SINGLE);
 		if (possibleAnswerDtoList.isEmpty()) {
 			userAnswerObject.setAnswer(OptionalLong.empty());
 		} else {
 			PossibleAnswer possibleAnswer = userAnswerRepository
-					.findAnswerByQuestionIdAndPossibleAnswer(questionId, possibleAnswerDtoList.get(0));
+					.findAnswerByQuestionIdAndPossibleAnswer(questionId, possibleAnswerDtoList.get(0).getPossibleAnswer());
 			userAnswerObject.setAnswer(OptionalLong.of(possibleAnswer.getId()));
 		}
 		return userAnswerObject;
 	}
 
-	private UserAnswerObject<List<Long>> multiUserAnswerObject(long questionId,
-	                                                           List<PossibleAnswerDto> possibleAnswerDtoList) {
+	private UserAnswerObject<List<Long>> buildMultiUserAnswerObject(long questionId,
+	                                                                List<PossibleAnswerDto> possibleAnswerDtoList) {
 		UserAnswerObject<List<Long>> userAnswerObject = new UserAnswerObject<>();
 		userAnswerObject.setType(QuestionType.MULTI);
 		if (possibleAnswerDtoList.isEmpty()) {
 			userAnswerObject.setAnswer(Collections.emptyList());
 		} else {
-			List<String> possibleAnswersNames = possibleAnswerDtoList.stream()
+			List<java.lang.String> possibleAnswersNames = possibleAnswerDtoList.stream()
 					.map(PossibleAnswerDto::getPossibleAnswer).collect(Collectors.toList());
 			userAnswerObject.setAnswer(answerRepository
 					.findPossibleAnswersIdsByQuestionIdAndPossibleAnswers(questionId, possibleAnswersNames));
@@ -121,14 +198,14 @@ public class UserAnswerService {
 		return userAnswerObject;
 	}
 
-	private Question getQuestion(long formId, String questionName) {
+	private Question getQuestion(long formId, java.lang.String questionName) {
 		return questionRepository
 				.findQuestionByFormIdAndQuestionName(formId, questionName)
-				.orElseThrow(() -> new NotFoundException("Not found question - " +
+				.orElseThrow(() -> new NotFoundException("Question - " +
 						questionName + "for form - " + formId));
 	}
 
-	private User findUserByEmail(String userName) {
+	private User findUserByEmail(java.lang.String userName) {
 		return userRepository.findByEmail(userName).orElseThrow(() -> new NotFoundException("User " + userName));
 	}
 
