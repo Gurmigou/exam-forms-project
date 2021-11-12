@@ -16,8 +16,8 @@ function MainPage() {
             </div>
             <div className="main-page-components-box">
                 <div className="main-page-components-box-inner">
-                    <MainPageComponent title={"A new form"} index={1} buttonText={"Create"} onClickRoute={"/form/construct"}/>
-                    <MainPageComponent title={"A form list"} index={2} buttonText={"Watch"} onClickRoute={"/user/form-list"}/>
+                    <MainPageComponent title={"New form"} index={1} buttonText={"Create"} onClickRoute={"/form/construct"}/>
+                    <MainPageComponent title={"Form list"} index={2} buttonText={"Watch"} onClickRoute={"/user/form-list"}/>
                 </div>
             </div>
         </div>

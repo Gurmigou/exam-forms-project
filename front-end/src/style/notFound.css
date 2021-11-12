@@ -1,0 +1,50 @@
+.not-found-block {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    margin-top: 2vw;
+}
+
+.not-found-block-inner {
+    height: 75vh;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.not-found-image {
+    height: 75%;
+    width: 75%;
+    display: flex;
+    justify-content: center;
+}
+
+.not-found-image-inner {
+    width: 20vw;
+    height: auto;
+    background-size: cover;
+    background-position: center;
+    background-image: url("../img/not-fount-page.jpg");
+}
+
+.not-found-text {
+    height: 25%;
+    width: 75%;
+    font-size: 2rem;
+}
+
+#text {
+    font-size: 2rem;
+    font-weight: bold;
+    display: block;
+    padding-top: 15px;
+    color: rgb(67, 36, 180);
+}
+
+#text:hover {
+    color: rgb(64, 36, 245);
+}
+
+#link-to-main {
+    text-decoration: none;
+}

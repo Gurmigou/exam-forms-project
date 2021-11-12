@@ -9,3 +9,13 @@
 #create-account-button {
     margin-top: 15px;
 }
+
+#route-to-main-icon {
+    margin-right: 10px;
+    color: #5258b6;
+}
+
+#route-to-main-text {
+    text-decoration: none;
+    color: #6e5efe;
+}

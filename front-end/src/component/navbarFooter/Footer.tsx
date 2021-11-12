@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "../style/footer.css"
+import "../../style/footer.css"
 
 function Footer() {
     return (
@@ -21,7 +21,7 @@ function Footer() {
                                 <div className="footer-nav-link">
                                     <a>|</a>
                                 </div>
-                                <Link id="real-link" className="footer-nav-link" to="/account">
+                                <Link id="real-link" className="footer-nav-link" to="/user/account">
                                     <a>Account</a>
                                 </Link>
                                 <div className="footer-nav-link">

@@ -1,24 +1,28 @@
 import React from "react";
 import {InputText} from "primereact/inputtext";
-import {Checkbox} from "primereact/checkbox";
 import {Button} from "primereact/button";
+import {Link} from "react-router-dom";
 import "../../style/registration.css"
 
 function Registration() {
     const singInButtonStyle: object = {
-        // background: "#018b4f"
         background: '#4f1efe'
     }
 
-    const textStyle: object = {
-        // color: "#05963f"
-        color: '#6e5efe'
-    }
+    // const textStyle: object = {
+    //     color: '#6e5efe'
+    // }
 
     return (
         <div>
             <div className="registration flex align-items-center justify-content-center">
                 <div className="registration-inner surface-card p-4 shadow-2 border-round lg:w-6">
+                    <div className="text-900 text-5xl font-bold mb-3">
+                        <Link id="route-to-main-text" to="/">
+                            <i id="route-to-main-icon" className="far fa-file-alt"/>
+                            <a >Edulse</a>
+                        </Link>
+                    </div>
                     <div className="text-center mb-5">
                         <div className="text-900 text-3xl font-medium mb-3">Registration</div>
                         <span className="text-600 font-medium line-height-3">Create an account and work with forms quickly and easily!</span>

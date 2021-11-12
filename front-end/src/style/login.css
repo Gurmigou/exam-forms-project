@@ -5,3 +5,18 @@
 .login-inner {
     max-width: 45rem;
 }
+
+#login-to-registration-link {
+    text-decoration: none;
+    color: #6568f4;
+}
+
+#route-to-main-icon {
+    margin-right: 10px;
+    color: #5258b6;
+}
+
+#route-to-main-text {
+    text-decoration: none;
+    color: #6e5efe;
+}
