@@ -3,14 +3,13 @@
     width: 100%;
     display: flex;
     flex: 1;
-    margin-top: 5vw;
+    /*margin-top: 3vw;*/
     justify-content: center;
     height: 9rem;
     color: #e3e3e3;
     font-weight: lighter;
     font-size: 14px;
     box-shadow: 0 0 10px rgba(0,0,0,0.4);
-
 }
 
 .footer-block {
