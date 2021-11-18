@@ -2,11 +2,10 @@ version: "3.8"
 services:
   students-test-server:
     container_name: students-test-server
-    image: "students_test.jar"
-    build:
-      dockerfile: Dockerfile
+    image: "back-end/students_test.jar"
+    build: back-end/.
     depends_on:
-      - db
+      - students-test-db
     env_file:
       - .env
     environment:
