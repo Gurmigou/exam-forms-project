@@ -10,4 +10,7 @@ public interface PossibleAnswerRepository extends JpaRepository<PossibleAnswer, 
 
 	//Should return all possible answers that belong to question
 	List<PossibleAnswer> findAllByQuestion(Question question);
+
+	//should find id's of possible answers by question id and possibleAnswer
+	List<Long> findPossibleAnswersIdsByQuestionIdAndPossibleAnswers(long questionId, List<String> possibleAnswersNames);
 }

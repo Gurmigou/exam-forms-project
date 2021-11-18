@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.*;
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 @NoArgsConstructor
 @Getter
@@ -23,7 +23,7 @@ public class OwnedFormHeader {
     private String topicName;
 
     @Future
-    private LocalDateTime expireDate;
+    private Timestamp expireDate;
 
     @NotNull
     private FormState formState;
