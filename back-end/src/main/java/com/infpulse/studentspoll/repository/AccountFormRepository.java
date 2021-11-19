@@ -12,7 +12,7 @@ import java.util.Optional;
 @Repository
 public interface AccountFormRepository extends JpaRepository<AccountForm, Long> {
 
-    @Query("SELECT AccountForm AS ac FROM AccountForm " +
+    @Query("SELECT ac FROM AccountForm ac " +
             "WHERE ac.id = :id AND ac.user.email = :email AND ac.answerDate = :date")
     Optional<AccountForm> findAccountFormByEmailAndFormIdAndDate(@Param("email") String email,
                                                                  @Param("id") Long id,

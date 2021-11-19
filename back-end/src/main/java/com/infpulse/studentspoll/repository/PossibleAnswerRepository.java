@@ -16,19 +16,19 @@ public interface PossibleAnswerRepository extends JpaRepository<PossibleAnswer, 
     //Should return all possible answers that belong to question
     List<PossibleAnswer> findAllByQuestion(Question question);
 
-    @Query("SELECT PossibleAnswer AS pa FROM PossibleAnswer " +
+    @Query("SELECT pa FROM PossibleAnswer pa " +
             "WHERE pa.id = :id AND pa.possibleAnswer = :possibleAnswer")
     Optional<PossibleAnswer> findAnswerByQuestionIdAndPossibleAnswer(@Param("id") Long id,
                                                      @Param("possibleAnswer") String possibleAnswer);
 
-    @Query("SELECT PossibleAnswer AS pa FROM PossibleAnswer " +
+    @Query("SELECT pa FROM PossibleAnswer pa " +
             "WHERE pa.question.id = :questionId AND pa.id = :answerId")
     PossibleAnswer findPossibleAnswerByQuestionIdAndAnswerId(@Param("questionId") long questionId,
                                                              @Param("answerId") long answerId);
 
     //should find id's of possible answers by question id and possibleAnswer
-    @Query("SELECT PossibleAnswer.id FROM PossibleAnswer " +
-            "WHERE PossibleAnswer.id = :qid AND PossibleAnswer.possibleAnswer IN :pNames")
+    @Query("SELECT pa.id FROM PossibleAnswer pa " +
+            "WHERE pa.id = :qid AND pa.possibleAnswer IN :pNames")
     List<Long> findPossibleAnswersIdsByQuestionIdAndByPossibleAnswers(@Param("qid") long questionId,
                                                                       @Param("pNames") List<String> possibleAnswersNames);
 }
