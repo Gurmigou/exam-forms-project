@@ -12,6 +12,7 @@ import javax.validation.constraints.PositiveOrZero;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Immutable
 public class PossibleAnswer {
     @Id
