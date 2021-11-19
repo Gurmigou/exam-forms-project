@@ -9,12 +9,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/api")
 @CrossOrigin("*")
 public class AuthenticationController {
     private final JwtUserDetailsService userDetailsService;
@@ -28,7 +26,7 @@ public class AuthenticationController {
         this.jwtProvider = jwtProvider;
     }
 
-    @PostMapping("/api/auth")
+    @PostMapping("/auth")
     public ResponseEntity<?> createAuthJwtToken(@RequestBody AuthRequest authRequest) {
         try {
             UserDetails userDetails = userDetailsService.loadUserByUsername(authRequest.getEmail());

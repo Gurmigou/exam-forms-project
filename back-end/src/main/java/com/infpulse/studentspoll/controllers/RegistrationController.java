@@ -26,8 +26,7 @@ public class RegistrationController {
     public ResponseEntity<?> registerUser(@RequestBody @Valid RegistrationDto registrationDto) {
         try {
             userService.registerUser(registrationDto);
-            return ResponseEntity.ok()
-                    .body("You have been successfully registered");
+            return ResponseEntity.ok("You have been successfully registered");
         } catch (RegistrationException e) {
             return ResponseEntity
                     .badRequest()

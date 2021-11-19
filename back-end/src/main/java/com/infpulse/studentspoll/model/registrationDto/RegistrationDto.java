@@ -15,22 +15,22 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 public class RegistrationDto {
     @NotBlank
-    @Size(min = 5, max = 255)
     @Email
     private String email;
 
+    @Size(min = 8)
     @NotBlank
-    @Size(min = 6)
     private String password;
 
+    @Size(min = 8)
     @NotBlank
-    @Size(min = 6)
     private String confirmPassword;
 
+    @Size(min = 1, max = 255)
     @NotBlank
-    @Size(max = 255)
     private String name;
+
+    @Size(min = 1, max = 255)
     @NotBlank
-    @Size(max = 255)
     private String surname;
 }
