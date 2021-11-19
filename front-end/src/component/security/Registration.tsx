@@ -12,8 +12,8 @@ function Registration() {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
 
-    const[invalidFields, setInvalidFields] = useState([{fieldName: "", reason: ""}]);
-    const[redirect, setRedirect] = useState(false);
+    const [invalidFields, setInvalidFields] = useState([{fieldName: "", reason: ""}]);
+    const [redirect, setRedirect] = useState(false);
 
     const validateEmail = (email: string): boolean => {
         const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

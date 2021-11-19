@@ -8,8 +8,6 @@ import UserFormList from "./appComponents/UserFormList";
 import FormEditor from "./appComponents/FormEditor";
 import FormResults from "./appComponents/FormResults";
 import Form from "./appComponents/Form";
-import Navigation from "./navbarFooter/Navigation";
-import Footer from "./navbarFooter/Footer";
 import NotFound from "./info/NotFound";
 
 import 'primereact/resources/themes/lara-light-indigo/theme.css';

@@ -6,7 +6,7 @@
     max-width: 45rem;
 }
 
-#login-to-registration-link {
+#login-to-registration-link, #remember-me-link {
     text-decoration: none;
     color: #6568f4;
 }
@@ -19,4 +19,12 @@
 #route-to-main-text {
     text-decoration: none;
     color: #6e5efe;
+}
+
+.p-field {
+    margin-top: 15px;
+}
+
+.login-controls {
+    margin-top: 20px;
 }

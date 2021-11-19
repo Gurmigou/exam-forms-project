@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -30,13 +31,14 @@ public class AuthenticationController {
     public ResponseEntity<?> createAuthJwtToken(@RequestBody AuthRequest authRequest) {
         try {
             UserDetails userDetails = userDetailsService.loadUserByUsername(authRequest.getEmail());
-
             String jwtToken = jwtProvider.generateToken(userDetails);
 
             return ResponseEntity.ok(new AuthResponse(jwtToken));
 
-        } catch (BadCredentialsException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } catch (BadCredentialsException | UsernameNotFoundException e) {
+            return ResponseEntity
+                    .badRequest()
+                    .body("Email or password is incorrect.");
         }
     }
 }
