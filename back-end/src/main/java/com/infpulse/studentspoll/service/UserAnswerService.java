@@ -130,6 +130,7 @@ public class UserAnswerService {
 		return possibleAnswerDtoList;
 	}
 
+	@SuppressWarnings("unchecked")
 	private boolean checkIsEmpty(UserAnswerObject<?> userAnswerObject) {
 		if (userAnswerObject.getType().equals(QuestionType.SINGLE)) {
 			{
@@ -193,7 +194,7 @@ public class UserAnswerService {
 			List<java.lang.String> possibleAnswersNames = possibleAnswerDtoList.stream()
 					.map(PossibleAnswerDto::getPossibleAnswer).collect(Collectors.toList());
 			userAnswerObject.setAnswer(answerRepository
-					.findPossibleAnswersIdsByQuestionIdAndPossibleAnswers(questionId, possibleAnswersNames));
+					.findPossibleAnswersIdsByQuestionIdAndByPossibleAnswers(questionId, possibleAnswersNames));
 		}
 		return userAnswerObject;
 	}
