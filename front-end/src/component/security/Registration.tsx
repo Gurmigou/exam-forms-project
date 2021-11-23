@@ -3,7 +3,7 @@ import {InputText} from "primereact/inputtext";
 import {Button} from "primereact/button";
 import {Link, Redirect} from "react-router-dom";
 import "../../style/registration.css"
-import axios from "axios";
+import {getErrorMessage, isError, register, userSend, validateRegistration} from "../../utils/security/securityUtils";
 
 function Registration() {
     const [email, setEmail] = useState("");
@@ -14,78 +14,6 @@ function Registration() {
 
     const [invalidFields, setInvalidFields] = useState([{fieldName: "", reason: ""}]);
     const [redirect, setRedirect] = useState(false);
-
-    const validateEmail = (email: string): boolean => {
-        const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return re.test(String(email).toLowerCase());
-    }
-
-    const onRegistrationClicked = () => {
-        const validationError: boolean = validate();
-
-        if (!validationError) {
-            setInvalidFields([{fieldName: "", reason: ""}]);
-
-            axios.post("http://localhost:8080/api/registration", {
-                email: email,
-                name: name,
-                surname: surname,
-                password: password,
-                confirmPassword: confirmPassword
-            }).then(() => setRedirect(true))
-              .catch(r => setInvalidFields(old =>[...old, {fieldName: "Email", reason: r.response.data}]));
-        }
-    }
-
-    const validate = (): boolean => {
-        let error: boolean = false;
-
-        const arr = [
-            {name: "Email", value: email},
-            {name: "Name", value: name},
-            {name: "Surname", value: surname},
-            {name: "Password", value: password},
-            {name: "Confirm password", value: confirmPassword}
-        ];
-
-        arr.forEach(e => {
-            if (e.value === "") {
-                error = true;
-                setInvalidFields(old => [...old, {fieldName: e.name, reason: e.name + " is required."}])
-            }
-        });
-
-        if (email !== "" && !validateEmail(email)) {
-            error = true;
-            setInvalidFields(old => [...old, {fieldName: "Email", reason: "Invalid email address. E.g. example@email.com."}])
-        }
-
-        if (password !== "" && confirmPassword !== "") {
-            if (password !== confirmPassword) {
-                error = true;
-                setInvalidFields(old => [...old, {fieldName: "Confirm password", reason: "Password and confirm password are different."}])
-
-            }
-            else if (password.length < 8) {
-                error = true;
-                setInvalidFields(old => [...old, {fieldName: "Password", reason: "Password must be at least 8 characters."}])
-            }
-        }
-
-        return error;
-    }
-
-    const getErrorMessage = (fieldName: string): string => {
-        for (let i = 0; i < invalidFields.length; i++) {
-            if (invalidFields[i].fieldName === fieldName)
-                return invalidFields[i].reason;
-        }
-        return "";
-    }
-
-    const isError = (fieldName: string): boolean => {
-        return getErrorMessage(fieldName) !== "";
-    }
 
     if (redirect)
         return <Redirect to="/login"/>
@@ -116,40 +44,42 @@ function Registration() {
                         <div className="p-field p-fluid">
                             <label htmlFor="email" className="block text-900 font-medium mb-2">Email</label>
                             <InputText id="email" type="email" aria-describedby="username-help"
-                                       className={isError("Email") ? "p-invalid p-mr-2" : "p-mr-2"}
+                                       className={isError(invalidFields, "Email") ? "p-invalid p-mr-2" : "p-mr-2"}
                                        value={email} onChange={e => setEmail(e.target.value)}/>
-                            <small id="username-help" className="p-error">{getErrorMessage("Email")}</small>
+                            <small id="username-help" className="p-error">{getErrorMessage(invalidFields, "Email")}</small>
                         </div>
 
                         <div className="p-field p-fluid">
-                            <label htmlFor="email" className="block text-900 font-medium mb-2">Name</label>
+                            <label className="block text-900 font-medium mb-2">Name</label>
                             <InputText type="text" aria-describedby="username-help"
-                                       className={isError("Name") ? "p-invalid p-mr-2" : "p-mr-2"}
+                                       className={isError(invalidFields, "Name") ? "p-invalid p-mr-2" : "p-mr-2"}
                                        value={name} onChange={e => setName(e.target.value)}/>
-                            <small id="username-help" className="p-error">{getErrorMessage("Name")}</small>
+                            <small id="username-help" className="p-error">{getErrorMessage(invalidFields, "Name")}</small>
                         </div>
                         <div className="p-field p-fluid">
-                            <label htmlFor="email" className="block text-900 font-medium mb-2">Surname</label>
+                            <label className="block text-900 font-medium mb-2">Surname</label>
                             <InputText type="text" aria-describedby="username-help"
-                                       className={isError("Surname") ? "p-invalid p-mr-2" : "p-mr-2"}
+                                       className={isError(invalidFields, "Surname") ? "p-invalid p-mr-2" : "p-mr-2"}
                                        value={surname} onChange={e => setSurname(e.target.value)}/>
-                            <small id="username-help" className="p-error">{getErrorMessage("Surname")}</small>
+                            <small id="username-help" className="p-error">{getErrorMessage(invalidFields, "Surname")}</small>
                         </div>
                         <div className="p-field p-fluid">
                             <label htmlFor="password" className="block text-900 font-medium mb-2">Password</label>
                             <InputText id="password" type="password" aria-describedby="username-help"
-                                       className={isError("Password") ? "p-invalid p-mr-2" : "p-mr-2"}
+                                       className={isError(invalidFields, "Password") ? "p-invalid p-mr-2" : "p-mr-2"}
                                        value={password} onChange={e => setPassword(e.target.value)}/>
-                            <small id="username-help" className="p-error">{getErrorMessage("Password")}</small>
+                            <small id="username-help" className="p-error">{getErrorMessage(invalidFields, "Password")}</small>
                         </div>
                         <div className="p-field p-fluid">
                             <label htmlFor="password" className="block text-900 font-medium mb-2">Confirm password</label>
                             <InputText id="password" type="password" aria-describedby="username-help"
-                                       className={isError("Confirm password") ? "p-invalid p-mr-2" : "p-mr-2"}
+                                       className={isError(invalidFields, "Confirm password") ? "p-invalid p-mr-2" : "p-mr-2"}
                                        value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)}/>
-                            <small id="username-help" className="p-error">{getErrorMessage("Confirm password")}</small>
+                            <small id="username-help" className="p-error">{getErrorMessage(invalidFields, "Confirm password")}</small>
                         </div>
-                        <Button label="Create account" onClick={onRegistrationClicked}
+                        <Button label="Create account" onClick={() => register(
+                            validateRegistration(email, name, surname, password, confirmPassword, setInvalidFields), setInvalidFields,
+                            setRedirect, userSend(email, name, surname, password, confirmPassword))}
                                 style={{background: '#4f1efe'}} icon="pi pi-user" id="create-account-button" className="w-full" />
                     </div>
                 </div>
