@@ -39,10 +39,10 @@ public class UserService {
 
     public UserInfo updateUser(String email, EditUserDto editUser) throws ConfirmPasswordIsIncorrectException {
         User user = findUser(email).orElseThrow(() -> new IllegalStateException(String.format(
-                "User with email %s doesn't exist", email)));
+                "User with email %s doesn't exist.", email)));
 
         if (editUser.getOldPassword() != null && !passwordEncoder.matches(editUser.getOldPassword(), user.getPassword())) {
-            throw new ConfirmPasswordIsIncorrectException("Entered password is incorrect");
+            throw new ConfirmPasswordIsIncorrectException("Entered password is incorrect.");
         }
 
         if (editUser.getNewName() != null)

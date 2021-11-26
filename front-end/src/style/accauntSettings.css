@@ -42,6 +42,10 @@
     font-size: 24px;
 }
 
+.edit-container-with-error {
+    width: 75%;
+}
+
 .edit-container-right {
     width: 50%;
     display: flex;
@@ -73,6 +77,10 @@
         height: 120px;
     }
 
+    .edit-account-block {
+        margin-bottom: 30vh;
+    }
+
     #current-account-info-text {
         font-size: 24px;
     }
@@ -95,6 +103,10 @@
 
     .edit-container-right {
         align-items: center;
+    }
+
+    .edit-container-with-error {
+        width: 95%;
     }
 
     .edit-input {

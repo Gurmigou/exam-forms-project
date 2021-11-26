@@ -4,6 +4,7 @@ import {Button} from "primereact/button";
 import {InputText} from "primereact/inputtext";
 import "../../../style/accauntSettings.css"
 import axios from "axios";
+import {updateProfile} from "../../../utils/account/accountUtils";
 import {getAuthHeader} from "../../../utils/security/securityUtils";
 
 function AccountSettings() {
@@ -15,6 +16,11 @@ function AccountSettings() {
     const [oldPassword, setOldPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
 
+    const [oldPasswordError, setOldPasswordError] = useState(false);
+    const [oldPasswordErrorMessage, setOldPasswordErrorMessage] = useState("");
+    const [newPasswordError, setNewPasswordError] = useState(false);
+    const [newPasswordErrorMessage, setNewPasswordErrorMessage] = useState("");
+
     useEffect(() => {
         axios.get("http://localhost:8080/api/user", {
             headers: getAuthHeader()
@@ -24,31 +30,10 @@ function AccountSettings() {
         });
     }, []);
 
-    const updateProfile = () => {
-        if (newName !== "" || newSurname !== "" || (oldPassword !== "" && newPassword !== "")) {
-            const tmp = {
-                name: newName ? newName : null,
-                newSurname : newSurname ? newSurname : null,
-                oldPassword : oldPassword ? oldPassword : null,
-                newPassword : newPassword ? newPassword : null
-            }
-
-            console.log("PUT")
-            console.log(tmp)
-
-            axios.put("http://localhost:8080/api/user", {
-                newName: newName ? newName : null,
-                newSurname : newSurname ? newSurname : null,
-                oldPassword : oldPassword ? oldPassword : null,
-                newPassword : newPassword ? newPassword : null
-            },{
-                headers: getAuthHeader()
-            }).then(response => {
-                setName(response.data.name);
-                setSurname(response.data.surname);
-            }).catch(e => console.log(e))
-        }
-    }
+    useEffect(() => {
+        console.log("Old " + oldPasswordError);
+        console.log("New " + newPasswordError);
+    }, [oldPasswordError, newPasswordError])
 
     return (
         <Layout>
@@ -92,8 +77,16 @@ function AccountSettings() {
                                     </div>
                                 </div>
                                 <div className="edit-container-right">
-                                    <InputText type="password" className="edit-input" value={oldPassword}
-                                               onChange={e => setOldPassword(e.target.value)}/>
+                                    <div className="p-field p-fluid edit-container-with-error">
+                                        <InputText id="password" type="password"
+                                                   aria-describedby="username-help"
+                                                   className={"edit-input " + (oldPasswordError ?
+                                                       "p-invalid p-mr-2" : "p-mr-2")}
+                                                   value={oldPassword}
+                                                   onChange={e => setOldPassword(e.target.value)}/>
+                                        <small id="username-help"
+                                        className="p-error">{oldPasswordErrorMessage}</small>
+                                    </div>
                                 </div>
                             </div>
                             <div className="edit-value">
@@ -103,12 +96,23 @@ function AccountSettings() {
                                     </div>
                                 </div>
                                 <div className="edit-container-right">
-                                    <InputText type="password" className="edit-input" value={newPassword}
-                                               onChange={e => setNewPassword(e.target.value)}/>
+                                    <div className="p-field p-fluid edit-container-with-error">
+                                        <InputText id="password" type="password"
+                                                   aria-describedby="username-help"
+                                                   className={"edit-input " + (newPasswordError ?
+                                                       "p-invalid p-mr-2" : "p-mr-2")}
+                                                   value={newPassword}
+                                                   onChange={e => setNewPassword(e.target.value)}/>
+                                        <small id="username-help"
+                                               className="p-error">{newPasswordErrorMessage}</small>
+                                    </div>
                                 </div>
                             </div>
                             <div className="button-container">
-                                <Button id="button-apply" label="Apply" onClick={updateProfile}/>
+                                <Button id="button-apply" label="Apply" onClick={() => updateProfile(
+                                    newName, newSurname, oldPassword, newPassword,
+                                    setName, setSurname, setOldPasswordError, setOldPasswordErrorMessage,
+                                    setNewPasswordError, setNewPasswordErrorMessage)}/>
                             </div>
                         </div>
                     </div>
