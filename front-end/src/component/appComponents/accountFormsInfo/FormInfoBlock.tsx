@@ -10,13 +10,13 @@ import "../../../style/accauntFormInfo.css"
  * @constructor
  */
 function FormInfoBlock({state, formsPassed, formsOwned}) {
-    // 2021-11-30T14:08:59.124Z
     const formatDate = (date: string): string => {
-        const substringDate: string = date.substring(11);
+        const substringDate: string = date.substring(0, 10);
         console.log(substringDate)
         const dateObj = new Date(substringDate);
         const day: number = dateObj.getDay();
         const month: number = dateObj.getMonth();
+        console.log(`${day < 10 ? "0" + day : day}-${month < 10 ? "0" + month : month}-${dateObj.getFullYear()}`);
         return `${day < 10 ? "0" + day : day}-${month < 10 ? "0" + month : month}-${dateObj.getFullYear()}`;
     }
 
@@ -38,8 +38,8 @@ function FormInfoBlock({state, formsPassed, formsOwned}) {
                             :
                             formsOwned.map(record =>
                                 <FormInfoRecord key={uuid()} state={false} id={record.id}
-                                                topicName={record.topicName} answerDate={formatDate(record.expireDate)}
-                                                expireDate={null} score={0}/>)
+                                                topicName={record.topicName} answerDate={null}
+                                                expireDate={formatDate(record.expireDate)} score={0}/>)
                     }
                 </div>
             </div>

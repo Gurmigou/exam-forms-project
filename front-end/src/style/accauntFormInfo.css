@@ -47,9 +47,19 @@
     padding-left: 50px;
 }
 
+#user-form-text-link {
+    text-decoration: none;
+    color: black;
+}
+
+#user-form-text-link:hover {
+    color: #373ea4;
+}
+
 #user-form-score {
     display: flex;
     align-self: center;
+    font-size: 18px;
 }
 
 .form-info-record-block {
@@ -102,6 +112,28 @@
 }
 
 #score-color-red {
-    background: #f21010;
+    background: #f64343;
+}
+
+#score-color-blue {
+    background: #6568f4;
 }
 /*--- form-info-record ---*/
+
+@media screen and (max-width: 960px) {
+      .form-info-block-content {
+        width: 100%;
+        height: 100%;
+    }
+
+    .form-info-block-record-list {
+        height: 70%;
+        display: flex;
+        font-size: 3vh;
+        flex-direction: column;
+        align-items: center;
+        background: rgba(184, 213, 252, 0.68);
+        box-shadow: 0 0 5px rgba(0,0,0,0.2);
+        border-radius: 10px;
+    }
+}

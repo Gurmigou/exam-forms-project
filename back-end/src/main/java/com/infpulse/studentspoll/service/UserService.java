@@ -4,6 +4,8 @@ import com.infpulse.studentspoll.exceptions.ConfirmPasswordIsIncorrectException;
 import com.infpulse.studentspoll.exceptions.RegistrationException;
 import com.infpulse.studentspoll.exceptions.UserAlreadyExistsException;
 import com.infpulse.studentspoll.model.entity.User;
+import com.infpulse.studentspoll.model.formDto.userInfo.EditUserDto;
+import com.infpulse.studentspoll.model.formDto.userInfo.UserInfo;
 import com.infpulse.studentspoll.model.securityDto.RegistrationDto;
 import com.infpulse.studentspoll.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +29,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public Optional<User> getUser(String email) {
+    public Optional<User> findUser(String email) {
         return userRepository.findByEmail(email);
     }
 
@@ -35,7 +37,31 @@ public class UserService {
         return userRepository.existsUserByEmail(email);
     }
 
-    public User registerUser(RegistrationDto registrationDto) throws RegistrationException {
+    public UserInfo updateUser(String email, EditUserDto editUser) throws ConfirmPasswordIsIncorrectException {
+        User user = findUser(email).orElseThrow(() -> new IllegalStateException(String.format(
+                "User with email %s doesn't exist", email)));
+
+        if (editUser.getOldPassword() != null && !passwordEncoder.matches(editUser.getOldPassword(), user.getPassword())) {
+            throw new ConfirmPasswordIsIncorrectException("Entered password is incorrect");
+        }
+
+        if (editUser.getNewName() != null)
+            user.setName(editUser.getNewName());
+        if (editUser.getNewSurname() != null)
+            user.setSurname(editUser.getNewSurname());
+        if (editUser.getNewPassword() != null)
+            user.setPassword(passwordEncoder.encode(editUser.getNewPassword()));
+
+        User updatedUser = saveUser(user);
+        return mapToUserInfo(updatedUser);
+    }
+
+    public UserInfo getUserInfo(String email) {
+        return userRepository.fetchUserInfo(email).orElseThrow(() -> new IllegalStateException(String.format(
+                "User with email %s doesn't exist", email)));
+    }
+
+    public void registerUser(RegistrationDto registrationDto) throws RegistrationException {
         if (!registrationDto.getPassword().equals(registrationDto.getConfirmPassword())) {
             throw new ConfirmPasswordIsIncorrectException(String.format(
                     "Password and confirm password are not equal: %s != %s",
@@ -49,7 +75,7 @@ public class UserService {
         }
 
         User user = mapToUser(registrationDto);
-        return saveUser(user);
+        saveUser(user);
     }
 
     private User mapToUser(RegistrationDto registrationDto) {
@@ -59,6 +85,14 @@ public class UserService {
                 .email(registrationDto.getEmail())
                 .password(passwordEncoder.encode(registrationDto.getPassword()))
                 .isDeleted(false)
+                .build();
+    }
+
+    private UserInfo mapToUserInfo(User user) {
+        return UserInfo.builder()
+                .name(user.getName())
+                .surname(user.getSurname())
+                .email(user.getEmail())
                 .build();
     }
 }

@@ -17,11 +17,11 @@ function FormInfoRecord({state, id, topicName, answerDate, expireDate, score}) {
                 <div className="form-info-record-title">
                     <h3 id="user-form-text">
                         {state ?
-                            <Link to={`form/${id}/view-result`}>
+                            <Link id="user-form-text-link" to={`/form/${id}/view-result`}>
                                 {topicName}
                             </Link>
                             :
-                            <Link to={`form/${id}/stats`}>
+                            <Link id="user-form-text-link" to={`/form/${id}/view-stats`}>
                                 {topicName}
                             </Link>
                         }
@@ -35,7 +35,8 @@ function FormInfoRecord({state, id, topicName, answerDate, expireDate, score}) {
                     </h3>
                 </div>
             </div>
-            <div className="form-info-record-score" id="score-color-yellow">
+            <div className="form-info-record-score"
+                 id={!state ? "score-color-blue" : score < 36 ? "score-color-red" : score < 90 ? "score-color-yellow" : "score-color-green"}>
                 <h3 id="user-form-score">
                     {
                         state ? score : <i className="fas fa-chart-line"/>

@@ -3,14 +3,14 @@ import {BrowserRouter as Router, Route, Switch} from "react-router-dom"
 import MainPage from './mainpage/MainPage';
 import Registration from "./security/Registration";
 import Login from "./security/Login";
-import AccountSettings from "./appComponents/AccountSettings";
+import AccountSettings from "./appComponents/account/AccountSettings";
 import UserFormList from "./appComponents/accountFormsInfo/UserFormList";
 import FormEditor from "./appComponents/FormEditor";
 import FormResults from "./appComponents/FormResults";
 import Form from "./appComponents/Form";
 import NotFound from "./info/NotFound";
 import AboutProject from "./info/AboutProject";
-import FormStatistics from "./appComponents/FormStatistics";
+import FormStatistics from "./appComponents/formAnalytics/FormStatistics";
 
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primereact/resources/primereact.min.css';
@@ -43,7 +43,7 @@ function App() {
                     <Route exact path="/form/construct" component={FormEditor}/>
                     <Route exact path="/form/:id" component={Form}/>
                     <Route exact path="/form/:id/view-result" component={FormResults}/>
-                    <Route exact path="/form/:id/stats" component={FormStatistics}/>
+                    <Route exact path="/form/:id/view-stats" component={FormStatistics}/>
                     <Route path="*" component={NotFound}/>
                 </Switch>
             </Router>
