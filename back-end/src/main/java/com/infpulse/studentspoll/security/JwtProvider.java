@@ -22,14 +22,16 @@ public class JwtProvider {
         return extractClaim(token, Claims::getSubject);
     }
 
-    public Date extractExpirationDate(String token) {
-        return extractClaim(token, Claims::getExpiration);
-    }
-
     public String generateToken(UserDetails userDetails) {
         // здесь можно добавить пары ключ-значения
         Map<String, Object> claims = new HashMap<>();
         return createToken(claims, userDetails.getUsername());
+    }
+
+    public String generateToken(String email) {
+        // здесь можно добавить пары ключ-значения
+        Map<String, Object> claims = new HashMap<>();
+        return createToken(claims, email);
     }
 
     private String createToken(Map<String, Object> claims, String subject) {

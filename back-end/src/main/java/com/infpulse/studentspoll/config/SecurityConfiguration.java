@@ -30,7 +30,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter implemen
                 .cors()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/api/auth",
+                .antMatchers("/api/login",
                         "/api/registration",
                         "/swagger-ui.html",
                         "/swagger-resources/**",

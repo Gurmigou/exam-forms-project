@@ -6,8 +6,8 @@ import {logout} from "../../utils/redux/reduxUtils";
 import {useDispatch, useSelector} from "react-redux";
 
 function MainPage() {
-    const isAuth = useSelector((state: any) => state.isAuth)
-    const dispatch = useDispatch()
+    const isAuth = useSelector((state: any) => state.isAuth);
+    const dispatch = useDispatch();
 
     return (
         <div className="main-page">

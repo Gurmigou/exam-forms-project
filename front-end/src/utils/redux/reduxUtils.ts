@@ -19,7 +19,8 @@ export const reducer = (state = defaultState, action): object => {
                 isAuth: true
             }
         case LOG_OUT:
-            // localStorage.removeItem("token");
+            // remove jwt token from the local storage
+            localStorage.removeItem("token");
             return {
                 ...state,
                 currentUser: {},
@@ -30,7 +31,7 @@ export const reducer = (state = defaultState, action): object => {
     }
 }
 
-export const setUser = (user: {email: string, password: string, token: string}) => ({type: SET_USER, payload: user});
+export const setUser = (user: {email: string}) => ({type: SET_USER, payload: user});
 export const logout = () => ({type: LOG_OUT});
 
 export const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)));

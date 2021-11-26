@@ -4,10 +4,9 @@ import com.infpulse.studentspoll.exceptions.ConfirmPasswordIsIncorrectException;
 import com.infpulse.studentspoll.exceptions.RegistrationException;
 import com.infpulse.studentspoll.exceptions.UserAlreadyExistsException;
 import com.infpulse.studentspoll.model.entity.User;
-import com.infpulse.studentspoll.model.registrationDto.RegistrationDto;
+import com.infpulse.studentspoll.model.securityDto.RegistrationDto;
 import com.infpulse.studentspoll.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
