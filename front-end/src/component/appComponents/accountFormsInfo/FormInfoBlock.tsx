@@ -11,8 +11,9 @@ import "../../../style/accauntFormInfo.css"
  */
 function FormInfoBlock({state, formsPassed, formsOwned}) {
     // 2021-11-30T14:08:59.124Z
-    const formatData = (date: string): string => {
+    const formatDate = (date: string): string => {
         const substringDate: string = date.substring(11);
+        console.log(substringDate)
         const dateObj = new Date(substringDate);
         const day: number = dateObj.getDay();
         const month: number = dateObj.getMonth();
@@ -32,12 +33,12 @@ function FormInfoBlock({state, formsPassed, formsOwned}) {
                         state ?
                             formsPassed.map(record =>
                                 <FormInfoRecord key={uuid()} state={true} id={record.id}
-                                                topicName={record.topicName} answerDate={record.answerDate}
+                                                topicName={record.topicName} answerDate={formatDate(record.answerDate)}
                                                 expireDate={null} score={record.formScore}/>)
                             :
                             formsOwned.map(record =>
                                 <FormInfoRecord key={uuid()} state={false} id={record.id}
-                                                topicName={record.topicName} answerDate={record.expireDate}
+                                                topicName={record.topicName} answerDate={formatDate(record.expireDate)}
                                                 expireDate={null} score={0}/>)
                     }
                 </div>
