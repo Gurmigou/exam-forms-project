@@ -5,6 +5,8 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class AuthResponse {
+public class ReloginResponseDto {
     private final String jwtToken;
+    private final String email;
+    private final Boolean isAuth;
 }

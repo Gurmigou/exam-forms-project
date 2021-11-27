@@ -1,4 +1,4 @@
-package com.infpulse.studentspoll.model.registrationDto;
+package com.infpulse.studentspoll.model.securityDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

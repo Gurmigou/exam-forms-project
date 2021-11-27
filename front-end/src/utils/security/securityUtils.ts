@@ -7,13 +7,11 @@ export const validateEmail = (email: string): boolean => {
 }
 
 export const isError = (invalidFields: {fieldName: string, reason: string}[], fieldName: string): boolean => {
-    console.log("IS ERROR: " + getErrorMessage(invalidFields, fieldName) !== "");
     return getErrorMessage(invalidFields, fieldName) !== "";
 }
 
 export const getErrorMessage = (invalidFields: {fieldName: string, reason: string}[], fieldName: string): string => {
     for (let i = 0; i < invalidFields.length; i++) {
-        console.log(i + ") " + invalidFields[i].fieldName);
         if (invalidFields[i].fieldName === fieldName)
             return invalidFields[i].reason;
     }
@@ -38,29 +36,6 @@ export const userSend = (email: string, name: string, surname: string, password:
         confirmPassword: confirmPassword
     }
 }
-
-// export const validateLogin = (email: string, password: string, setInvalidFields): boolean => {
-//     let isValid: boolean = true;
-//
-//     if (email === "") {
-//         console.log("1")
-//         isValid = false;
-//         setInvalidFields(old => [...old, {fieldName: "Email", reason: "Email is required."}])
-//     }
-//     if (password === "") {
-//         console.log("2")
-//         isValid = false;
-//         setInvalidFields(old => [...old, {fieldName: "Password", reason: "Password is required."}])
-//     }
-//
-//     if (email !== "" && !validateEmail(email)) {
-//         console.log("3")
-//         isValid = false;
-//         setInvalidFields(old => [...old, {fieldName: "Email", reason: "Invalid email address. E.g. example@email.com."}])
-//     }
-//
-//     return isValid;
-// }
 
 export const validateRegistration = (email: string, name: string, surname: string, password: string, confirmPassword: string, setInvalidFields): boolean => {
     let isValid: boolean = true;
@@ -100,73 +75,19 @@ export const validateRegistration = (email: string, name: string, surname: strin
     return isValid;
 }
 
-// export const login = (isValid: boolean, setInvalidFields, setRedirect, user: {email: string, password: string}) => {
-//     return async dispatch => {
-//         // if (isValid) {
-//         //     setInvalidFields([{fieldName: "", reason: ""}]);
-//         //
-//         //     let response;
-//         //     try {
-//         //         console.log("USER:" + user.email + " " + user.password);
-//         //
-//         //         response = await axios.post("http://localhost:8080/api/auth", user);
-//         //
-//         //         dispatch(setUser({
-//         //             email: user.email,
-//         //             password: user.password,
-//         //             token: response.data.jwtToken
-//         //         }));
-//         //
-//         //         console.log(response);
-//         //
-//         //         // localStorage.setItem("token:", response.data.jwtToken);
-//         //
-//         //         setRedirect(true);
-//         //     } catch (e) {
-//         //         setInvalidFields(old => [...old, {fieldName: "Email", reason: response.response.data},
-//         //             {fieldName: "Password", reason: response.response.data}])
-//         //     }
-//         // }
-//
-//         if (isValid) {
-//             axios.post("http://localhost:8080/api/auth", user)
-//                  .then(response => {
-//                      dispatch(setUser({
-//                          email: user.email,
-//                          password: user.password,
-//                          token: response.data.jwtToken
-//                      }));
-//                      setRedirect(true);
-//             })
-//                 .catch(r => setInvalidFields(old =>[...old, {fieldName: "Email", reason: r.response.data},
-//                     {fieldName: "Password", reason: r.response.data}]));
-//         } else {
-//             setInvalidFields([{fieldName: "", reason: ""}]);
-//         }
-//     }
-// }
-
-
-export const onLoginClicked = (user, dispatch, setRedirect, setInvalidFields) => {
-    const validationError: boolean = validate(user.email, user.password, setInvalidFields);
-
-    if (!validationError) {
+export const register = (isValid: boolean, setInvalidFields, setRedirect, user:
+    {email: string, name: string, surname: string, password: string, confirmPassword: string}): void =>
+{
+    if (isValid) {
         setInvalidFields([{fieldName: "", reason: ""}]);
 
-        axios.post("http://localhost:8080/api/auth", user)
-             .then(response => {
-            dispatch(setUser({
-                email: user.email,
-                password: user.password,
-                token: response.data.jwtToken
-            }));
-            setRedirect(true);
-        }).catch(r => setInvalidFields(old =>[...old, {fieldName: "Email", reason: r.response.data},
-            {fieldName: "Password", reason: r.response.data}]));
+        axios.post("http://localhost:8080/api/registration", user)
+            .then(() => setRedirect(true))
+            .catch(r => setInvalidFields(old =>[...old, {fieldName: "Email", reason: r.response.data}]));
     }
 }
 
-export const validate = (email: string, password: string, setInvalidFields): boolean => {
+export const validateLogin = (email: string, password: string, setInvalidFields): boolean => {
     let error: boolean = false;
 
     if (email === "") {
@@ -186,22 +107,43 @@ export const validate = (email: string, password: string, setInvalidFields): boo
     return error;
 }
 
+export const login = (user, dispatch, setRedirect, setInvalidFields) => {
+    const validationError: boolean = validateLogin(user.email, user.password, setInvalidFields);
 
-
-export const register = (isValid: boolean, setInvalidFields, setRedirect, user:
-    {email: string, name: string, surname: string, password: string, confirmPassword: string}): void =>
-{
-    if (isValid) {
+    if (!validationError) {
         setInvalidFields([{fieldName: "", reason: ""}]);
 
-        axios.post("http://localhost:8080/api/registration", user)
-             .then(() => setRedirect(true))
-             .catch(r => setInvalidFields(old =>[...old, {fieldName: "Email", reason: r.response.data}]));
+        axios.post("http://localhost:8080/api/login", user)
+             .then(response => {
+                 console.log(response)
+                 dispatch(setUser({
+                     email: user.email,
+                 }));
+                 // save jwt token at the local storage
+                 localStorage.setItem("token", response.data.jwtToken);
+                 setRedirect(true);
+             }).catch(r => setInvalidFields(old =>[...old, {fieldName: "Email", reason: r.response.data},
+                    {fieldName: "Password", reason: r.response.data}]));
     }
 }
 
-export const getAuthHeader = (token: string): object => {
+export const relogin = (dispatch) => {
+    axios.get("http://localhost:8080/api/auth", {
+        headers: getAuthHeader()
+    }).then(response => {
+        console.log("RELOGIN")
+        dispatch(setUser({
+            email: response.data.email
+        }))
+        localStorage.setItem("token", response.data.jwtToken);
+    }).catch(e => {
+        console.log(e);
+        localStorage.removeItem("token");
+    })
+}
+
+export const getAuthHeader = (): any => {
     return {
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${localStorage.getItem("token")}`
     }
 }

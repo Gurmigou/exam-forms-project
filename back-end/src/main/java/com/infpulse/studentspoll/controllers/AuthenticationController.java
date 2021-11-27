@@ -1,7 +1,8 @@
 package com.infpulse.studentspoll.controllers;
 
-import com.infpulse.studentspoll.model.securityDto.AuthRequest;
-import com.infpulse.studentspoll.model.securityDto.AuthResponse;
+import com.infpulse.studentspoll.model.securityDto.LoginRequestDto;
+import com.infpulse.studentspoll.model.securityDto.ReloginResponseDto;
+import com.infpulse.studentspoll.model.securityDto.TokenTransferDto;
 import com.infpulse.studentspoll.security.JwtProvider;
 import com.infpulse.studentspoll.security.JwtUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 @RestController
 @RequestMapping("/api")
@@ -30,22 +33,34 @@ public class AuthenticationController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @PostMapping("/auth")
-    public ResponseEntity<?> createAuthJwtToken(@RequestBody AuthRequest authRequest) {
+    @PostMapping("/login")
+    public ResponseEntity<?> loginUsingEmail(@RequestBody LoginRequestDto loginRequest) {
         try {
-            UserDetails userDetails = userDetailsService.loadUserByUsername(authRequest.getEmail());
+            UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getEmail());
 
-            if (!passwordEncoder.matches(authRequest.getPassword(), userDetails.getPassword()))
+            if (!passwordEncoder.matches(loginRequest.getPassword(), userDetails.getPassword()))
                 throw new BadCredentialsException("");
 
             String jwtToken = jwtProvider.generateToken(userDetails);
 
-            return ResponseEntity.ok(new AuthResponse(jwtToken));
+            return ResponseEntity.ok(new TokenTransferDto(jwtToken));
 
         } catch (BadCredentialsException | UsernameNotFoundException e) {
             return ResponseEntity
                     .badRequest()
                     .body("Email or password is incorrect.");
+        }
+    }
+
+    @GetMapping("/auth")
+    public ResponseEntity<?> authenticateUsingJwtToken(Principal principal) {
+        try {
+            String jwtToken = jwtProvider.generateToken(principal.getName());
+            return ResponseEntity.ok(new ReloginResponseDto(jwtToken, principal.getName(), true));
+        } catch (Exception e) {
+            return ResponseEntity
+                    .badRequest()
+                    .body("Jwt token is invalid.");
         }
     }
 }

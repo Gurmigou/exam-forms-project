@@ -25,5 +25,4 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "(user.email, user.name, user.surname, user.isDeleted, user.creationTime, user.lastUpdateTime) " +
             "FROM User user WHERE user.email = :email")
     Optional<UserInfo> fetchUserInfo(@Param("email") String email);
-
 }

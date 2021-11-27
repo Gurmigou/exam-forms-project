@@ -1,11 +1,9 @@
 package com.infpulse.studentspoll.controllers;
 
 import com.infpulse.studentspoll.exceptions.RegistrationException;
-import com.infpulse.studentspoll.model.entity.User;
-import com.infpulse.studentspoll.model.registrationDto.RegistrationDto;
+import com.infpulse.studentspoll.model.securityDto.RegistrationDto;
 import com.infpulse.studentspoll.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
