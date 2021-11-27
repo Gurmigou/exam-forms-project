@@ -22,7 +22,7 @@ public class AccountForm {
     @Column(name = "id", nullable = false)
     protected Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "account_id")
     protected User user;
 

@@ -12,6 +12,8 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -20,7 +22,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class FormRepositoryTest extends DBTestSetup {
-
     protected FormRepository formRepository;
     protected TestEntityManager testEntityManager;
 
@@ -28,6 +29,14 @@ class FormRepositoryTest extends DBTestSetup {
     public FormRepositoryTest(FormRepository formRepository, TestEntityManager testEntityManager) {
         this.formRepository = formRepository;
         this.testEntityManager = testEntityManager;
+    }
+
+    @PersistenceContext
+    private EntityManager entityManager;
+
+    @Test
+    void test() {
+        System.out.println("PRINTED:" + entityManager);
     }
 
     @Test

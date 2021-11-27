@@ -16,6 +16,7 @@ import java.util.Objects;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin("*")
 public class UserAnswerController {
 
 	private final UserAnswerService userAnswerService;

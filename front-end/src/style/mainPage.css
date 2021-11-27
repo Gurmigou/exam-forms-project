@@ -85,3 +85,7 @@
 .main-page-component-button {
     text-decoration: none;
 }
+
+#main-page-component-button-item {
+    width: 100px;
+}

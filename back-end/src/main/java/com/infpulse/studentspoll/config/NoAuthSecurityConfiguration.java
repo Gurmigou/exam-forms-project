@@ -26,13 +26,15 @@ public class NoAuthSecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .csrf().disable()
+                .cors()
+                .and()
                 .authorizeRequests().anyRequest().permitAll()
                 .and()
-                .addFilterBefore(new TestJwtRequestTokenVerifier(), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new TestProfileJwtRequestTokenVerifier(), UsernamePasswordAuthenticationFilter.class);
     }
 }
 
-class TestJwtRequestTokenVerifier extends OncePerRequestFilter {
+class TestProfileJwtRequestTokenVerifier extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,

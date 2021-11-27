@@ -23,7 +23,7 @@ public class StudentsPollApplication {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(10);
+        return new BCryptPasswordEncoder(5);
     }
 
     public static void main(String[] args) {

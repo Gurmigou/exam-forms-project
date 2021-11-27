@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom"
 import MainPage from './mainpage/MainPage';
 import Registration from "./security/Registration";
@@ -8,8 +8,6 @@ import UserFormList from "./appComponents/UserFormList";
 import FormEditor from "./appComponents/FormEditor";
 import FormResults from "./appComponents/FormResults";
 import Form from "./appComponents/Form";
-import Navigation from "./navbarFooter/Navigation";
-import Footer from "./navbarFooter/Footer";
 import NotFound from "./info/NotFound";
 
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
@@ -19,9 +17,8 @@ import "primeflex/primeflex.css";
 import '../style/App.css';
 import AboutProject from "./info/AboutProject";
 
-
 function App() {
-  return (
+    return (
     <div className="App">
         <Router>
             <Switch>

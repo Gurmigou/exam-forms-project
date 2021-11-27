@@ -10,7 +10,7 @@ function MainPageComponent(props: {title: string, index: number, buttonText: str
             </div>
             <div className="main-page-component-button-block">
                 <Link className="main-page-component-button" to={props.onClickRoute}>
-                    <Button label={props.buttonText}/>
+                    <Button id="main-page-component-button-item" label={props.buttonText}/>
                 </Link>
             </div>
         </div>
