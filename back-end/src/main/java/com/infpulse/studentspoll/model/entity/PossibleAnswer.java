@@ -23,7 +23,7 @@ public class PossibleAnswer {
     @Column(name = "answer", nullable = false)
     protected String possibleAnswer;
 
-    @Column(name = "answer_value", nullable = false)
+    @Column(name = "answer_score", nullable = false)
     @PositiveOrZero
     protected Integer answerValue;
 

@@ -25,4 +25,7 @@ public class AvailableFormHeader {
     @Past
     private LocalDateTime answerDate;
 
+    @Positive
+    private Integer formMaxResult;
+
 }
