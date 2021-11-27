@@ -38,8 +38,12 @@ public class Form {
     @JoinColumn(name = "account_id")
     protected User owner;
 
-//    @Future
+    @Future
     @Column(name = "expire_date")
     protected LocalDateTime expireDateTime;
+
+    @Positive
+    @Column(name = "max_result")
+    protected Integer formMaxResult;
 
 }

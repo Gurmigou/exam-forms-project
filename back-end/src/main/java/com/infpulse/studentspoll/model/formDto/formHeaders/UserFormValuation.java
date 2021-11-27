@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Past;
+import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 import java.time.LocalDateTime;
 
@@ -23,4 +24,6 @@ public class UserFormValuation {
     private LocalDateTime answerDate;
     @PositiveOrZero
     private Integer resultScore;
+    @Positive
+    private Integer formMaxResult;
 }
