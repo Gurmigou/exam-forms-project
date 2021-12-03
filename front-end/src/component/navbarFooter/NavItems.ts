@@ -1,6 +1,6 @@
 export const NavItems: { title: string, url: string, cName: string }[]  = [
     {
-        title: 'Creat form',
+        title: 'Create form',
         url: '/form/construct',
         cName: 'nav-links'
     },
