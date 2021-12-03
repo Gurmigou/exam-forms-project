@@ -5,7 +5,7 @@ import Registration from "./security/Registration";
 import Login from "./security/Login";
 import AccountSettings from "./appComponents/account/AccountSettings";
 import UserFormList from "./appComponents/accountFormsInfo/UserFormList";
-import FormEditor from "./appComponents/FormEditor";
+import FormEditor from "./appComponents/formEditor/FormEditor";
 import FormResults from "./appComponents/FormResults";
 import Form from "./appComponents/Form";
 import NotFound from "./info/NotFound";

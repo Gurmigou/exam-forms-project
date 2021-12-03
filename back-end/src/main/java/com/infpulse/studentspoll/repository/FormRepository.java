@@ -22,7 +22,7 @@ public interface FormRepository extends JpaRepository<Form, Long> {
     List<OwnedFormHeader> getOwnedFormHeaders(@Param("email") String email);
 
     @Query(value = "SELECT new com.infpulse.studentspoll.model.formDto.formHeaders.AvailableFormHeader " +
-            "(f.id, f.topicName, a.resultScore, a.answerDate, f.formMaxResult) "  +
+            "(f.id, f.topicName, a.resultScore, a.answerDate, f.formMaxResult) " +
             "FROM Form f INNER JOIN AccountForm a " +
             "ON f.id = a.form.id " +
             "WHERE a.user.email = :email")
@@ -32,6 +32,7 @@ public interface FormRepository extends JpaRepository<Form, Long> {
             "(af.user.name, af.user.surname, af.answerDate, af.resultScore, f.formMaxResult) " +
             "FROM AccountForm af INNER JOIN Form f " +
             "ON f.id = af.form.id " +
-            "WHERE af.form.owner.email = :formOwnerEmail")
-    List<UserFormValuation> getUserFormValuationList(@Param("formOwnerEmail") String email);
+            "WHERE af.form.owner.email = :formOwnerEmail AND f.id = :formId")
+    List<UserFormValuation> getUserFormValuationList(@Param("formOwnerEmail") String email,
+                                                     @Param("formId") long id);
 }

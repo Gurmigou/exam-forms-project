@@ -109,6 +109,10 @@ public class FormService {
 		return formsRepository.getPassedFormHeader(email);
 	}
 
+	public Object getFormValuation(String name, long formId) {
+		return formsRepository.getUserFormValuationList(name, formId);
+	}
+
 	public void deleteForm(long formId, java.lang.String email) {
 		User user = findUserByEmail(email);
 		Form form = formsRepository.findById(formId).orElseThrow(() -> new NotFoundException("Form " + formId));
