@@ -27,6 +27,7 @@ public class StudentsPollApplication {
     }
 
     public static void main(String[] args) {
+
         SpringApplication.run(StudentsPollApplication.class, args);
     }
 }

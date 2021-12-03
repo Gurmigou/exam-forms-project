@@ -61,7 +61,7 @@ public class UserService {
                 "User with email %s doesn't exist", email)));
     }
 
-    public void registerUser(RegistrationDto registrationDto) throws RegistrationException {
+    public User registerUser(RegistrationDto registrationDto) throws RegistrationException {
         if (!registrationDto.getPassword().equals(registrationDto.getConfirmPassword())) {
             throw new ConfirmPasswordIsIncorrectException(String.format(
                     "Password and confirm password are not equal: %s != %s",
@@ -75,7 +75,7 @@ public class UserService {
         }
 
         User user = mapToUser(registrationDto);
-        saveUser(user);
+        return saveUser(user);
     }
 
     private User mapToUser(RegistrationDto registrationDto) {

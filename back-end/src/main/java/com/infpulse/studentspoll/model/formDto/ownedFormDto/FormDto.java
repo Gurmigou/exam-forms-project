@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.*;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -24,7 +24,7 @@ public class FormDto {
     private Integer attempts;
 
     @Future
-    private Timestamp expireDateTime;
+    private LocalDateTime expireDateTime;
 
     @NotEmpty
     List<QuestionDto> questionDtoList;

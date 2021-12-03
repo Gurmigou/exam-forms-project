@@ -1,6 +1,5 @@
 package com.infpulse.studentspoll.controllers;
 
-import com.infpulse.studentspoll.model.entity.User;
 import com.infpulse.studentspoll.model.formDto.userInfo.EditUserDto;
 import com.infpulse.studentspoll.model.formDto.userInfo.UserInfo;
 import com.infpulse.studentspoll.service.UserService;
