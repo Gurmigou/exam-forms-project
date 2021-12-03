@@ -30,7 +30,9 @@ public class UserAnswerController {
 		this.emailService = emailService;
 	}
 
-
+	/**
+	 * Saves the answers of the form that the user has passed (when clicking on ex. SUBMIT FORM)
+	 */
 	@PostMapping("/answers/new")
 	public ResponseEntity<?> saveAnswer(@RequestBody @Valid SubmitAnswerDto submitAnswerDto, Principal principal) {
 		AccountForm accountForm = userAnswerService.submitAnswer(submitAnswerDto, principal.getName());
@@ -42,10 +44,16 @@ public class UserAnswerController {
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 
-	@GetMapping("/answers/{formId}/{userEmail}/{date}")
-	public ResponseEntity<?> getAnswer(@PathVariable long formId, @PathVariable String userEmail,
-									   @PathVariable LocalDateTime date) {
-		PassedFormDto passedFormDto = userAnswerService.getAnswer(formId, userEmail, date);
+	/**
+	 * @param formId the id of the form
+	 * @param date the date when the form was passed
+	 * @return a result (analytics) of the form that the user with email {@code principal.getName()} has passed
+	 */
+	@GetMapping("/answers/{formId}/{date}")
+	public ResponseEntity<?> getAnswer(@PathVariable long formId, @PathVariable LocalDateTime date,
+									   Principal principal)
+	{
+		PassedFormDto passedFormDto = userAnswerService.getAnswer(formId, principal.getName(), date);
 		if (Objects.nonNull(passedFormDto)) {
 			return ResponseEntity.ok(passedFormDto);
 		} else {

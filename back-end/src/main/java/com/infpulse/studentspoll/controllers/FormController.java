@@ -24,6 +24,9 @@ public class FormController {
         this.formService = formService;
     }
 
+    /**
+     * Creates a form
+     */
     @PostMapping("/forms/new")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<?> newForm(@RequestBody @Valid FormDto formDto, Principal principal) {
@@ -35,21 +38,33 @@ public class FormController {
         }
     }
 
+    /**
+     * @return a list of forms that the user has created
+     */
     @GetMapping("/forms/owned")
     public ResponseEntity<?> ownedForms(Principal principal) {
         return ResponseEntity.ok(formService.getOwnedForms(principal.getName()));
     }
 
+    /**
+     * @return a list of forms that the user has passed
+     */
     @GetMapping("/forms/available")
     public ResponseEntity<?> availableForms(Principal principal) {
         return ResponseEntity.ok(formService.getAvailableForms(principal.getName()));
     }
 
+    /**
+     * @return a result list of students who passed the form with id {@code formId}
+     */
     @GetMapping("/forms/valuation/{formId}")
     public ResponseEntity<?> userFormValuation(Principal principal, @PathVariable long formId) {
         return ResponseEntity.ok(formService.getFormValuation(principal.getName(), formId));
     }
 
+    /**
+     * @return a form as a test for the students
+     */
     @GetMapping("/forms/{formId}")
     public ResponseEntity<?> getForm(@PathVariable long formId) {
         FormDto formDto = formService.getForm(formId);
@@ -60,6 +75,9 @@ public class FormController {
         }
     }
 
+    /**
+     * Deletes a form by id
+     */
     @DeleteMapping("/forms/{formId}")
     public ResponseEntity<?> deleteForm(@PathVariable long formId, Principal principal) {
         formService.deleteForm(formId, principal.getName());
