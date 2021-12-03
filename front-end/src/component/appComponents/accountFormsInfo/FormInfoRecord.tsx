@@ -10,7 +10,15 @@ import "../../../style/accauntFormInfo.css"
  * @param expireDate
  * @param score
  */
-function FormInfoRecord({state, id, topicName, answerDate, expireDate, score}) {
+function FormInfoRecord({state, id, topicName, answerDate, expireDate, gotScore, maxScore}) {
+    const less = (n1: number, n2: number): boolean => {
+        console.log("n1: " + n1);
+        console.log("n2: " + n2);
+        console.log(n1 < n2 || Math.abs(n1 - n2) < 0.0001);
+
+        return n1 < n2 || Math.abs(n1 - n2) < 0.0001;
+    }
+
     return (
         <div className="form-info-record-block">
             <div className="form-info-record-info">
@@ -36,10 +44,11 @@ function FormInfoRecord({state, id, topicName, answerDate, expireDate, score}) {
                 </div>
             </div>
             <div className="form-info-record-score"
-                 id={!state ? "score-color-blue" : score < 36 ? "score-color-red" : score < 90 ? "score-color-yellow" : "score-color-green"}>
+                 id={!state ? "score-color-blue" : less(gotScore, 0.6) ?
+                     "score-color-red" : less(gotScore / maxScore, 0.75) ? "score-color-yellow" : "score-color-green"}>
                 <h3 id="user-form-score">
                     {
-                        state ? score : <i className="fas fa-chart-line"/>
+                        state ? gotScore : <i className="fas fa-chart-line"/>
                     }
                 </h3>
             </div>

@@ -1,8 +1,6 @@
 package com.infpulse.studentspoll.controllers;
 
 import com.infpulse.studentspoll.model.entity.Form;
-import com.infpulse.studentspoll.model.formDto.formHeaders.AvailableFormHeader;
-import com.infpulse.studentspoll.model.formDto.formHeaders.OwnedFormHeader;
 import com.infpulse.studentspoll.model.formDto.ownedFormDto.FormDto;
 import com.infpulse.studentspoll.service.FormService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
-import java.util.List;
 import java.util.Objects;
 
 @RestController
@@ -63,6 +60,4 @@ public class FormController {
 		formService.deleteForm(formId, principal.getName());
 		return ResponseEntity.ok().build();
 	}
-
-
 }

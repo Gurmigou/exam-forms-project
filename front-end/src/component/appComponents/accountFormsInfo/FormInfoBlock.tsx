@@ -12,11 +12,10 @@ import "../../../style/accauntFormInfo.css"
 function FormInfoBlock({state, formsPassed, formsOwned}) {
     const formatDate = (date: string): string => {
         const substringDate: string = date.substring(0, 10);
-        console.log(substringDate)
         const dateObj = new Date(substringDate);
         const day: number = dateObj.getDay();
         const month: number = dateObj.getMonth();
-        console.log(`${day < 10 ? "0" + day : day}-${month < 10 ? "0" + month : month}-${dateObj.getFullYear()}`);
+
         return `${day < 10 ? "0" + day : day}-${month < 10 ? "0" + month : month}-${dateObj.getFullYear()}`;
     }
 
@@ -34,12 +33,12 @@ function FormInfoBlock({state, formsPassed, formsOwned}) {
                             formsPassed.map(record =>
                                 <FormInfoRecord key={uuid()} state={true} id={record.id}
                                                 topicName={record.topicName} answerDate={formatDate(record.answerDate)}
-                                                expireDate={null} score={record.formScore}/>)
+                                                expireDate={null} gotScore={record.formScore} maxScore={record.formMaxResult}/>)
                             :
                             formsOwned.map(record =>
                                 <FormInfoRecord key={uuid()} state={false} id={record.id}
                                                 topicName={record.topicName} answerDate={null}
-                                                expireDate={formatDate(record.expireDate)} score={0}/>)
+                                                expireDate={formatDate(record.expireDate)} gotScore={0} maxScore={0}/>)
                     }
                 </div>
             </div>

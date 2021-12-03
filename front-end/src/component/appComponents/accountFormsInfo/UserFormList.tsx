@@ -9,6 +9,7 @@ function UserFormList() {
     const [passedForms, setPassedForms] = useState([{
         answerDate: "",
         formScore: 0,
+        formMaxResult: 0,
         id: 0,
         topicName: ""
     }])
@@ -24,66 +25,56 @@ function UserFormList() {
         {
             answerDate: "2021-11-26T14:08:59.124Z",
             formScore: 20,
+            formMaxResult: 100,
             id: 1,
             topicName: "Math test"
         },
         {
             answerDate: "2021-11-26T14:08:59.124Z",
-            formScore: 95,
+            formScore: 75,
+            formMaxResult: 100,
             id: 2,
             topicName: "Algorithms and data structures"
         },
         {
             answerDate: "2021-11-26T14:08:59.124Z",
-            formScore: 65,
+            formScore: 36,
+            formMaxResult: 100,
             id: 3,
             topicName: "How to become rich and start investing test"
         },
         {
             answerDate: "2021-11-26T14:08:59.124Z",
-            formScore: 95,
+            formScore: 31,
+            formMaxResult: 100,
+            id: 2,
+            topicName: "Algorithms and data structures"
+        },
+        {
+            answerDate: "2021-11-26T14:08:59.124Z",
+            formScore: 55,
+            formMaxResult: 100,
             id: 2,
             topicName: "Algorithms and data structures"
         },
         {
             answerDate: "2021-11-26T14:08:59.124Z",
             formScore: 95,
+            formMaxResult: 100,
             id: 2,
             topicName: "Algorithms and data structures"
         },
         {
             answerDate: "2021-11-26T14:08:59.124Z",
-            formScore: 95,
+            formScore: 0,
+            formMaxResult: 100,
             id: 2,
             topicName: "Algorithms and data structures"
         },
         {
             answerDate: "2021-11-26T14:08:59.124Z",
-            formScore: 95,
-            id: 2,
-            topicName: "Algorithms and data structures"
-        },
-        {
-            answerDate: "2021-11-26T14:08:59.124Z",
-            formScore: 95,
-            id: 2,
-            topicName: "Algorithms and data structures"
-        },
-        {
-            answerDate: "2021-11-26T14:08:59.124Z",
-            formScore: 95,
-            id: 2,
-            topicName: "Algorithms and data structures"
-        },
-        {
-            answerDate: "2021-11-26T14:08:59.124Z",
-            formScore: 95,
-            id: 2,
-            topicName: "Algorithms and data structures"
-        },
-        {
-            answerDate: "2021-11-26T14:08:59.124Z",
-            formScore: 95,
+            formScore: 45,
+            formMaxResult: 50,
             id: 2,
             topicName: "Algorithms and data structures"
         }
@@ -103,6 +94,8 @@ function UserFormList() {
             topicName: "English module 1 test"
         }
     ]
+    // formScore
+    // formMaxResult
 
     useEffect(() => {
         axios.get("http://localhost:8080/api/forms/available", {
