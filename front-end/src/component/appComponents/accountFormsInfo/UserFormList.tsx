@@ -94,17 +94,20 @@ function UserFormList() {
             topicName: "English module 1 test"
         }
     ]
-    // formScore
-    // formMaxResult
 
     useEffect(() => {
-        axios.get("http://localhost:8080/api/forms/available", {
-            headers: getAuthHeader()
-        }).then(response => setPassedForms(arr1)/*setPassedForms(response.data)*/);
-
-        axios.get("http://localhost:8080/api/forms/owned", {
-            headers: getAuthHeader()
-        }).then(response => setOwnedForms(arr2)/*setOwnedForms(response.data)*/);
+        // axios.get("http://localhost:8080/api/forms/available", {
+        //     headers: getAuthHeader()
+        // }).then(response => {
+        //     console.log("AAdasdasdasd")
+        //     setPassedForms(arr1)
+        // }/*setPassedForms(response.data)*/);
+        //
+        // axios.get("http://localhost:8080/api/forms/owned", {
+        //     headers: getAuthHeader()
+        // }).then(response => setOwnedForms(arr2)/*setOwnedForms(response.data)*/);
+        setPassedForms(arr1);
+        setOwnedForms(arr2);
     }, []);
 
     return (

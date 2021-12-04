@@ -4,18 +4,14 @@ import "../../../style/accauntFormInfo.css"
 
 /**
  * @param state state == TRUE - show available forms, state == FALSE - show owned forms
- * @param id
- * @param topicName
- * @param answerDate
- * @param expireDate
- * @param score
+ * @param id skipped
+ * @param topicName skipped
+ * @param answerDate skipped
+ * @param expireDate skipped
  */
-function FormInfoRecord({state, id, topicName, answerDate, expireDate, gotScore, maxScore}) {
-    const less = (n1: number, n2: number): boolean => {
-        console.log("n1: " + n1);
-        console.log("n2: " + n2);
-        console.log(n1 < n2 || Math.abs(n1 - n2) < 0.0001);
+function FormInfoRecord({state, id, topicName, localDateTime, formattedAnswerDate, expireDate, gotScore, maxScore}) {
 
+    const less = (n1: number, n2: number): boolean => {
         return n1 < n2 || Math.abs(n1 - n2) < 0.0001;
     }
 
@@ -25,7 +21,7 @@ function FormInfoRecord({state, id, topicName, answerDate, expireDate, gotScore,
                 <div className="form-info-record-title">
                     <h3 id="user-form-text">
                         {state ?
-                            <Link id="user-form-text-link" to={`/form/${id}/view-result`}>
+                            <Link id="user-form-text-link" to={`/form/${id}/${localDateTime}/view-result`}>
                                 {topicName}
                             </Link>
                             :
@@ -38,7 +34,7 @@ function FormInfoRecord({state, id, topicName, answerDate, expireDate, gotScore,
                 <div className="form-info-record-date">
                     <h3 id="user-form-text">
                         {
-                            state ? answerDate : expireDate
+                            state ? formattedAnswerDate : expireDate
                         }
                     </h3>
                 </div>
