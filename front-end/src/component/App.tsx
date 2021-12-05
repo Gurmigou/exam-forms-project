@@ -18,7 +18,7 @@ import '../style/App.css';
 import {useDispatch, useSelector} from "react-redux";
 import {relogin} from "../utils/security/securityUtils";
 import FormUserResults from "./appComponents/formAnalytics/formAnswersStatistics/FormUserResults";
-import FormBuilder from "./appComponents/formConstructor/FormBuilder";
+import FormBuilder from "./appComponents/formConstructor/formBuilder/FormBuilder";
 
 function App() {
     const isAuth = useSelector((state: any) => state.isAuth);

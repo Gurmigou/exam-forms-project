@@ -54,7 +54,7 @@ function MultipleQuestionAnswerBuilder({index}) {
                             flexDirection: `row`,
                             justifyContent: `space-around`
                         }}>
-                            <i className="fas fa-plus fa-2x"/>
+                            <i className="fas fa-plus-circle fa-2x"/>
                             <i className="fas fa-trash-alt fa-2x"/>
                         </div>
                     </div>
