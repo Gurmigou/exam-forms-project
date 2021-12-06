@@ -1,9 +1,9 @@
 import React from "react";
 import {InputText} from "primereact/inputtext";
-import {addAnswer, deleteAnswer, deleteQuestion, isNonNegativeNumber, setAnswerGrade, setAnswerValue}
+import {addAnswer, deleteAnswer, isNonNegativeNumber, setAnswerGrade, setAnswerValue}
     from "../../../../../utils/formConstructor/formConstructorUtils";
 
-function SingleQuestionAnswersBuilder({question, setQuestionList, answer, answerIndex}) {
+function SingleAnswerBuilder({question, setQuestionList, answer, answerIndex}) {
     return (
         <div style={{marginBottom: `25px`, width: `95%`, marginLeft: `20px`}}>
             <div style={{display: `flex`, flexDirection: `row`, justifyContent: `space-between`, alignItems: `center`}}>
@@ -37,4 +37,4 @@ function SingleQuestionAnswersBuilder({question, setQuestionList, answer, answer
     )
 }
 
-export default SingleQuestionAnswersBuilder
+export default SingleAnswerBuilder

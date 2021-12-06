@@ -2,8 +2,8 @@ import React from "react";
 import QuestionTitleBuilder from "./QuestionTitleBuilder";
 import {Card} from "primereact/card";
 import QuestionTypeSelector from "./QuestionTypeSelector";
-import SingleQuestionAnswersBuilder from "./questionTypes/SingleQuestionAnswersBuilder";
-import MultipleQuestionAnswerBuilder from "./questionTypes/MultipleQuestionAnswerBuilder";
+import SingleAnswerBuilder from "./questionTypes/SingleAnswerBuilder";
+import MultipleAnswerBuilder from "./questionTypes/MultipleAnswerBuilder";
 import NonTestAnswerBuilder from "./questionTypes/NonTestAnswerBuilder";
 import SingleQuestionCorrectAnswerSelector from "./questionGrades/SingleQuestionCorrectAnswerSelector";
 import {addNewQuestion, deleteQuestion, questionTypes} from "../../../../utils/formConstructor/formConstructorUtils";
@@ -23,12 +23,15 @@ function QuestionBuilderBlock({questionIndex, questionType, questionList, setQue
                 {
                     questionList[questionIndex].possibleAnswersDto.map((value, index) => {
                         if (questionType.type === "SINGLE")
-                            return <SingleQuestionAnswersBuilder
+                            return <SingleAnswerBuilder
                                 question={questionList[questionIndex]} setQuestionList={setQuestionList}
                                 answer={value} answerIndex={index}/>
 
                         if (questionType.type === "MULTI")
-                            return <MultipleQuestionAnswerBuilder index={index + 1}/>
+                            return <MultipleAnswerBuilder
+                                question={questionList[questionIndex]} setQuestionList={setQuestionList}
+                                answer={value} answerIndex={index}/>
+
                         return <NonTestAnswerBuilder/>
                     })
                 }

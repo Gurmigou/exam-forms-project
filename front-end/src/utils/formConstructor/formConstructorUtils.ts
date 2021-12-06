@@ -102,17 +102,28 @@ export const setAnswerValue = (answer, possibleAnswer, setQuestionList) => {
     setQuestionList(old => [...old]);
 }
 
-export const setCorrectAnswerSingleQuestion = (question, correctAnswerIndex, setQuestionList) => {
+export const setCorrectSingleAnswerQuestion = (question, correctAnswerIndex, setQuestionList) => {
     question.possibleAnswersDto.forEach(answer => answer.answerStatus = "WRONG");
     question.possibleAnswersDto[correctAnswerIndex].answerStatus = "CORRECT";
     setQuestionList(old => [...old]);
 }
 
-export const getCorrectAnswerSingleQuestion = (question): string => {
+export const getCorrectSingleAnswerQuestion = (question): string => {
     const answerList = question.possibleAnswersDto;
     for (let i = 0; i < answerList.length; i++) {
         if (answerList[i].answerStatus === "CORRECT")
             return (i + 1).toString();
     }
     return "";
+}
+
+export const isCorrectMultipleAnswerQuestion = (question, answerIndex): boolean => {
+    const answerList = question.possibleAnswersDto;
+    return answerList[answerIndex].answerStatus === "CORRECT";
+}
+
+export const setCorrectMultipleAnswerQuestion = (question, answerIndex, correct: boolean, setQuestionList) => {
+    const answerList = question.possibleAnswersDto;
+    answerList[answerIndex].answerStatus = (correct) ? "CORRECT" : "WRONG";
+    setQuestionList(old => [...old]);
 }

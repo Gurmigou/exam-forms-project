@@ -1,8 +1,8 @@
 import React from "react";
 import {Dropdown} from "primereact/dropdown";
 import {
-    getCorrectAnswerSingleQuestion,
-    setCorrectAnswerSingleQuestion
+    getCorrectSingleAnswerQuestion,
+    setCorrectSingleAnswerQuestion
 } from "../../../../../utils/formConstructor/formConstructorUtils";
 
 function SingleQuestionCorrectAnswerSelector({numOfAnswers, question, setQuestionList}) {
@@ -21,8 +21,8 @@ function SingleQuestionCorrectAnswerSelector({numOfAnswers, question, setQuestio
                     <p style={{fontSize: `22px`, fontWeight: `bold`}}>Correct answer</p>
                 </div>
                 <Dropdown style={{width: `20%`}}
-                          value={{name : getCorrectAnswerSingleQuestion(question)}} options={createDropdown()}
-                          onChange={(e) => setCorrectAnswerSingleQuestion(
+                          value={{name : getCorrectSingleAnswerQuestion(question)}} options={createDropdown()}
+                          onChange={(e) => setCorrectSingleAnswerQuestion(
                               question, parseInt(e.value.name) - 1, setQuestionList)}
                           optionLabel="name" placeholder="Answer" />
             </div>
