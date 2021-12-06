@@ -1,16 +1,9 @@
-import React, {useState} from "react";
+import React from "react";
 import {Card} from "primereact/card";
 import {Dropdown} from "primereact/dropdown";
+import {setQuestionSelectedType} from "../../../../utils/formConstructor/formConstructorUtils";
 
-function QuestionTypeSelector() {
-    const questionTypes = [
-        { name: 'Single answer question', type: 'SAQ' },
-        { name: 'Multiple answer question', type: 'MAQ' },
-        { name: 'Open-ended question', type: 'OEQ' }
-    ];
-
-    const [questionSelectedType, setQuestionSelectedType] = useState({name: "", type: ""});
-
+function QuestionTypeSelector({questionTypes, questionSelectedType, questionList, setQuestionList, index}) {
     return (
         <Card style={{
             boxShadow: `none`,
@@ -25,7 +18,8 @@ function QuestionTypeSelector() {
                 </div>
                 <Dropdown style={{width: `100%`}}
                           value={questionSelectedType} options={questionTypes}
-                          onChange={(e) => setQuestionSelectedType(e.value)}
+                          onChange={(e) =>
+                              setQuestionSelectedType(questionList, index, e.value, setQuestionList)}
                           optionLabel="name" placeholder="Select question type" />
             </div>
         </Card>

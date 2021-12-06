@@ -1,8 +1,10 @@
 import React, {useState} from "react";
 import {InputText} from "primereact/inputtext";
+import {isNonNegativeNumber} from "../../../../../utils/formConstructor/formConstructorUtils";
 
-function NonTestAnswerBuilder({index}) {
+function NonTestAnswerBuilder() {
     const [value, setValue] = useState("");
+    const [grade, setGrade] = useState("");
 
     return (
         <div style={{
@@ -24,40 +26,23 @@ function NonTestAnswerBuilder({index}) {
                     flexDirection: `row`,
                     alignItems: `center`
                 }}>
-                    <div style={{marginRight: `10px`, fontWeight: `bold`}}>
-                        <p>{`${index}.`}</p>
-                    </div>
-                    <div style={{width: `90%`}}>
-                        <InputText style={{width: `100%`}} placeholder="Question" value={value} onChange={(e) => setValue(e.target.value)} />
+                    <div style={{width: `100%`}}>
+                        <InputText style={{width: `100%`}} placeholder="Possible answer" value={value}
+                                   onChange={(e) => setValue(e.target.value)} />
                     </div>
                 </div>
                 <div style={{
-                    width: `15%`,
+                    width: `25%`,
                     display: `flex`,
                     flexDirection: `row`,
-                    justifyContent: `space-around`
+                    justifyContent: `end`,
+                    alignItems: `center`
                 }}>
-                    <i className="fas fa-plus-circle fa-2x"/>
-                    <i className="fas fa-trash-alt fa-2x"/>
-                </div>
-            </div>
-            <div style={{
-                display: `flex`,
-                flexDirection: `row`,
-                justifyContent: `space-between`,
-                alignItems: `center`,
-                marginTop: `15px`
-            }}>
-                <div style={{
-                    width: `85%`,
-                    display: `flex`,
-                    flexDirection: `row`,
-                    alignItems: `center`,
-                    marginLeft: `1.5rem`
-                }}>
-                    <div style={{width: `90%`}}>
-                        <InputText style={{width: `100%`}} placeholder="Possible answer" value={value} onChange={(e) => setValue(e.target.value)} />
-                    </div>
+                    <InputText style={{width: `50%`}} placeholder="Grade" value={grade}
+                               onChange={(e) => {
+                                   if (isNonNegativeNumber(e.target.value))
+                                       setGrade(e.target.value)
+                               }} />
                 </div>
             </div>
         </div>

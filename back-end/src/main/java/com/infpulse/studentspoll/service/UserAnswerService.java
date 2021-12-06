@@ -44,7 +44,6 @@ public class UserAnswerService {
         this.possibleAnswerRepository = possibleAnswerRepository;
     }
 
-
     public AccountForm submitAnswer(SubmitAnswerDto submitAnswerDto, java.lang.String email) {
         User user = findUserByEmail(email);
         Form form = getForm(submitAnswerDto.getFormId());
