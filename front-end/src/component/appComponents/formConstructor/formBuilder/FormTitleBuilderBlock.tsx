@@ -5,20 +5,9 @@ import {isPositiveNumber} from "../../../../utils/formConstructor/formConstructo
 
 function FormTitleBuilderBlock({formTitle, setFormTitle, maxAttempts, setMaxAttempts, expiresInDays, setExpireInDays}) {
     return (
-        <Card style={{
-            height: `400px`,
-            marginBottom: `50px`,
-            background: `#839be0`,
-            boxShadow: `3px 5px 20px #D0D0D0`
-        }}>
-            <Card style={{
-                boxShadow: `none`,
-                width: `100%`
-            }}>
-                <div style={{
-                    display: `flex`,
-                    flexDirection: `column`
-                }}>
+        <Card style={{height: `400px`, marginBottom: `50px`, background: `#839be0`, boxShadow: `3px 5px 20px #D0D0D0`}}>
+            <Card style={{boxShadow: `none`, width: `100%`}}>
+                <div style={{display: `flex`, flexDirection: `column`}}>
                     <div className="flex justify-content-start" style={{marginBottom: `15px`}}>
                         <p style={{fontSize: `22px`, fontWeight: `bold`}}>Form title</p>
                     </div>
@@ -26,23 +15,10 @@ function FormTitleBuilderBlock({formTitle, setFormTitle, maxAttempts, setMaxAtte
                                onChange={(e) => setFormTitle(e.target.value)} />
                 </div>
             </Card>
-            <div style={{
-                display: `flex`,
-                flexDirection: `row`,
-                justifyContent: `space-between`,
-
-                position: `relative`,
-                bottom: `30px`
-            }}>
-                <Card style={{
-                    boxShadow: `none`,
-                    width: `50%`,
-                    borderBottomRightRadius: 0
-                }}>
-                    <div style={{
-                        display: `flex`,
-                        flexDirection: `column`
-                    }}>
+            <div style={{display: `flex`, flexDirection: `row`, justifyContent: `space-between`,
+                position: `relative`, bottom: `30px`}}>
+                <Card style={{boxShadow: `none`, width: `50%`, borderBottomRightRadius: 0}}>
+                    <div style={{display: `flex`, flexDirection: `column`}}>
                         <div className="flex justify-content-start" style={{marginBottom: `15px`}}>
                             <p style={{fontSize: `22px`, fontWeight: `bold`}}>Max attempts</p>
                         </div>
@@ -53,15 +29,8 @@ function FormTitleBuilderBlock({formTitle, setFormTitle, maxAttempts, setMaxAtte
                                    }} />
                     </div>
                 </Card>
-                <Card style={{
-                    boxShadow: `none`,
-                    width: `50%`,
-                    borderBottomLeftRadius: 0
-                }}>
-                    <div style={{
-                        display: `flex`,
-                        flexDirection: `column`
-                    }}>
+                <Card style={{boxShadow: `none`, width: `50%`, borderBottomLeftRadius: 0}}>
+                    <div style={{display: `flex`, flexDirection: `column`}}>
                         <div className="flex justify-content-start" style={{marginBottom: `15px`}}>
                             <p style={{fontSize: `22px`, fontWeight: `bold`}}>Expires in (days)</p>
                         </div>

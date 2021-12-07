@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {InputText} from "primereact/inputtext";
 import {Button} from "primereact/button";
 import {Link, Redirect} from "react-router-dom";
@@ -7,7 +7,6 @@ import {getErrorMessage, isError, login, user} from "../../utils/security/securi
 import "../../style/login.css"
 
 function Login() {
-    // const [checkbox, setCheckbox] = useState(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [invalidFields, setInvalidFields] = useState([{fieldName: "", reason: ""}]);

@@ -5,14 +5,8 @@ import {setQuestionSelectedType} from "../../../../utils/formConstructor/formCon
 
 function QuestionTypeSelector({questionTypes, questionSelectedType, questionList, setQuestionList, index}) {
     return (
-        <Card style={{
-            boxShadow: `none`,
-            width: `50%`,
-        }}>
-            <div style={{
-                display: `flex`,
-                flexDirection: `column`
-            }}>
+        <Card style={{boxShadow: `none`, width: `50%`,}}>
+            <div style={{display: `flex`, flexDirection: `column`}}>
                 <div className="flex justify-content-start" style={{marginBottom: `15px`}}>
                     <p style={{fontSize: `22px`, fontWeight: `bold`}}>Question type</p>
                 </div>

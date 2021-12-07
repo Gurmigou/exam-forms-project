@@ -29,8 +29,26 @@ function SingleAnswerBuilder({question, setQuestionList, answer, answerIndex}) {
                     </div>
                 </div>
                 <div style={{width: `15%`, display: `flex`, flexDirection: `row`, justifyContent: `space-around`}}>
-                    <i onClick={() => addAnswer(question, setQuestionList)} className="fas fa-plus-circle fa-2x"/>
-                    <i onClick={() => deleteAnswer(question, answerIndex, setQuestionList)} className="fas fa-trash-alt fa-2x"/>
+                    {
+                        (question.possibleAnswersDto.length === 1) &&
+                        <i style={{color: `#4F46E5`}} onClick={() => addAnswer(question, setQuestionList)}
+                           className="fas fa-plus-circle fa-2x"/>
+                    }
+                    {
+                        (answerIndex + 1 !== question.possibleAnswersDto.length) &&
+                        <i style={{color: `#4F46E5`}} onClick={() => deleteAnswer(question, answerIndex, setQuestionList)}
+                           className="fas fa-trash-alt fa-2x"/>
+                    }
+                    {
+                        ((question.possibleAnswersDto.length !== 1) &&
+                            (answerIndex + 1 === question.possibleAnswersDto.length)) &&
+                        <div style={{width: `100%`, display: `flex`, flexDirection: `row`, justifyContent: `space-around`}}>
+                            <i style={{color: `#4F46E5`}} onClick={() => addAnswer(question, setQuestionList)}
+                               className="fas fa-plus-circle fa-2x"/>
+                            <i style={{color: `#4F46E5`}} onClick={() => deleteAnswer(question, answerIndex, setQuestionList)}
+                               className="fas fa-trash-alt fa-2x"/>
+                        </div>
+                    }
                 </div>
             </div>
         </div>

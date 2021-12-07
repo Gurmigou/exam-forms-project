@@ -33,7 +33,7 @@ export const defaultQuestionList = [
             {
                 possibleAnswer: "",
                 answerStatus: "WRONG",
-                answerValue: 0
+                answerValue: ""
             }
         ]
     }
@@ -56,7 +56,7 @@ export const addNewQuestion = (setQuestionList) => {
             {
                 possibleAnswer: "",
                 answerStatus: "WRONG",
-                answerValue: 0
+                answerValue: ""
             }
         ]
     }])
@@ -72,6 +72,7 @@ export const setQuestionName = (question, questionName, setQuestionList) => {
 }
 
 export const setQuestionSelectedType = (questionList, index, newType, setQuestionList) => {
+    console.log(newType)
     const question = questionList[index];
     question.questionType = newType;
     questionList[index] = question;
@@ -82,7 +83,7 @@ export const addAnswer = (question, setQuestionList) => {
     question.possibleAnswersDto.push({
         possibleAnswer: "",
         answerStatus: "WRONG",
-        answerValue: 0
+        answerValue: ""
     });
     setQuestionList(old => [...old]);
 }
@@ -93,12 +94,20 @@ export const deleteAnswer = (question, answerDeleteIndex, setQuestionList) => {
 }
 
 export const setAnswerGrade = (answer, grade, setQuestionList) => {
-    answer.answerValue = grade;
+    if (grade === "")
+        answer.answerValue = "";
+    else
+        answer.answerValue = parseInt(grade);
     setQuestionList(old => [...old]);
 }
 
 export const setAnswerValue = (answer, possibleAnswer, setQuestionList) => {
     answer.possibleAnswer = possibleAnswer;
+    setQuestionList(old => [...old]);
+}
+
+export const setCorrectOpenAnswerQuestion = (answer, setQuestionList) => {
+    answer.answerStatus = "CORRECT";
     setQuestionList(old => [...old]);
 }
 
@@ -126,4 +135,38 @@ export const setCorrectMultipleAnswerQuestion = (question, answerIndex, correct:
     const answerList = question.possibleAnswersDto;
     answerList[answerIndex].answerStatus = (correct) ? "CORRECT" : "WRONG";
     setQuestionList(old => [...old]);
+}
+
+export const validateNewFormDto = (newForm): boolean => {
+    if (newForm.topicName === "" || newForm.attempts === "" || newForm.expireDateTime === "")
+        return false;
+    const questions = newForm.questionDtoList;
+    for (let i = 0; i < questions.length; i++) {
+        const question = questions[i];
+        if (question.questionName === "")
+            return false;
+
+        const answers = question.possibleAnswersDto;
+        for (let j = 0; j < answers.length; j++) {
+            const answer = answers[j];
+            if (answer.possibleAnswer === "" || answer.answerValue === "")
+                return false;
+        }
+    }
+    return true;
+}
+
+const creteExpireDate = (plusDays: number): string => {
+    const date = new Date();
+    date.setDate(date.getDate() + plusDays);
+    return date.toISOString();
+}
+
+export const createNewFormDto = (formTitle, maxAttempts, expiresInDays, questionList): object => {
+    return {
+        topicName: formTitle,
+        attempts: maxAttempts,
+        expireDateTime: creteExpireDate(expiresInDays),
+        questionDtoList: questionList
+    }
 }

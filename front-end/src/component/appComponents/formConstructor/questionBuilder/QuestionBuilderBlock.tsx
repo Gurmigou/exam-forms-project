@@ -4,7 +4,7 @@ import {Card} from "primereact/card";
 import QuestionTypeSelector from "./QuestionTypeSelector";
 import SingleAnswerBuilder from "./questionTypes/SingleAnswerBuilder";
 import MultipleAnswerBuilder from "./questionTypes/MultipleAnswerBuilder";
-import NonTestAnswerBuilder from "./questionTypes/NonTestAnswerBuilder";
+import OpenAnswerBuilder from "./questionTypes/OpenAnswerBuilder";
 import SingleQuestionCorrectAnswerSelector from "./questionGrades/SingleQuestionCorrectAnswerSelector";
 import {addNewQuestion, deleteQuestion, questionTypes} from "../../../../utils/formConstructor/formConstructorUtils";
 
@@ -31,8 +31,8 @@ function QuestionBuilderBlock({questionIndex, questionType, questionList, setQue
                             return <MultipleAnswerBuilder
                                 question={questionList[questionIndex]} setQuestionList={setQuestionList}
                                 answer={value} answerIndex={index}/>
-
-                        return <NonTestAnswerBuilder/>
+                        else
+                            return <OpenAnswerBuilder setQuestionList={setQuestionList} answer={value}/>
                     })
                 }
             </div>
@@ -51,11 +51,11 @@ function QuestionBuilderBlock({questionIndex, questionType, questionList, setQue
                         <div style={{width: `40%`, display: `flex`, justifyContent: `right`}}>
                             {
                                 (questionList.length === 1) &&
-                                <i onClick={() => addNewQuestion(setQuestionList)} className="fas fa-plus-circle fa-2x"/>
+                                <i style={{color: `#4F46E5`}} onClick={() => addNewQuestion(setQuestionList)} className="fas fa-plus-circle fa-2x"/>
                             }
                             {
                                 (questionIndex + 1) !== questionList.length &&
-                                <i onClick={() => deleteQuestion(questionList, questionIndex, setQuestionList)}
+                                <i style={{color: `#4F46E5`}} onClick={() => deleteQuestion(questionList, questionIndex, setQuestionList)}
                                    className="fas fa-trash-alt fa-2x"/>
                             }
                         </div>
@@ -63,8 +63,8 @@ function QuestionBuilderBlock({questionIndex, questionType, questionList, setQue
                     {
                         ((questionIndex + 1) === questionList.length && (questionList.length !== 1)) &&
                         <div style={{width: `40%`, display: `flex`, justifyContent: `space-around`}}>
-                            <i onClick={() => addNewQuestion(setQuestionList)} className="fas fa-plus-circle fa-2x"/>
-                            <i onClick={() => deleteQuestion(questionList, questionIndex, setQuestionList)}
+                            <i style={{color: `#4F46E5`}} onClick={() => addNewQuestion(setQuestionList)} className="fas fa-plus-circle fa-2x"/>
+                            <i style={{color: `#4F46E5`}} onClick={() => deleteQuestion(questionList, questionIndex, setQuestionList)}
                                className="fas fa-trash-alt fa-2x"/>
                         </div>
                     }
