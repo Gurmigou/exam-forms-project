@@ -24,7 +24,7 @@ function UserFormList() {
     const arr1 = [
         {
             answerDate: "2021-11-26T14:08:59.124Z",
-            formScore: 20,
+            formScore: 15,
             formMaxResult: 100,
             id: 1,
             topicName: "Math test"
@@ -38,46 +38,18 @@ function UserFormList() {
         },
         {
             answerDate: "2021-11-26T14:08:59.124Z",
-            formScore: 36,
+            formScore: 98,
             formMaxResult: 100,
             id: 3,
-            topicName: "How to become rich and start investing test"
+            topicName: "Programming test"
         },
         {
             answerDate: "2021-11-26T14:08:59.124Z",
-            formScore: 31,
+            formScore: 92,
             formMaxResult: 100,
             id: 2,
-            topicName: "Algorithms and data structures"
+            topicName: "English test"
         },
-        {
-            answerDate: "2021-11-26T14:08:59.124Z",
-            formScore: 55,
-            formMaxResult: 100,
-            id: 2,
-            topicName: "Algorithms and data structures"
-        },
-        {
-            answerDate: "2021-11-26T14:08:59.124Z",
-            formScore: 95,
-            formMaxResult: 100,
-            id: 2,
-            topicName: "Algorithms and data structures"
-        },
-        {
-            answerDate: "2021-11-26T14:08:59.124Z",
-            formScore: 0,
-            formMaxResult: 100,
-            id: 2,
-            topicName: "Algorithms and data structures"
-        },
-        {
-            answerDate: "2021-11-26T14:08:59.124Z",
-            formScore: 45,
-            formMaxResult: 50,
-            id: 2,
-            topicName: "Algorithms and data structures"
-        }
     ]
 
     const arr2 = [
@@ -85,7 +57,7 @@ function UserFormList() {
             expireDate: "2021-11-30T14:08:59.124Z",
             formState: "PASSED",
             id: 1,
-            topicName: "Nature"
+            topicName: "Algebra and geometry test"
         },
         {
             expireDate: "2021-12-01T14:08:59.124Z",

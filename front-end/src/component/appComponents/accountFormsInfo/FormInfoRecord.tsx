@@ -40,7 +40,7 @@ function FormInfoRecord({state, id, topicName, localDateTime, formattedAnswerDat
                 </div>
             </div>
             <div className="form-info-record-score"
-                 id={!state ? "score-color-blue" : less(gotScore, 0.6) ?
+                 id={!state ? "score-color-blue" : less(gotScore / maxScore, 0.6) ?
                      "score-color-red" : less(gotScore / maxScore, 0.75) ? "score-color-yellow" : "score-color-green"}>
                 <h3 id="user-form-score">
                     {
