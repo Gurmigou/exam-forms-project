@@ -4,11 +4,11 @@ import MainPage from './mainpage/MainPage';
 import Registration from "./security/Registration";
 import Login from "./security/Login";
 import AccountSettings from "./appComponents/account/AccountSettings";
-import UserFormList from "./appComponents/accountFormsInfo/UserFormList";
+import UserFormList from "./appComponents/userFormList/UserFormList";
 import Form from "./appComponents/Form";
 import NotFound from "./info/NotFound";
 import AboutProject from "./info/AboutProject";
-import FormStatistics from "./appComponents/formAnalytics/FormStatistics";
+import FormStatistics from "./appComponents/formAnalytics/ownFormStatistics/FormStatistics";
 
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primereact/resources/primereact.min.css';

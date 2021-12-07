@@ -4,7 +4,8 @@ import Layout from "../../../navbarFooter/Layout";
 import { useParams } from 'react-router-dom'
 import axios from "axios";
 import {getAuthHeader} from "../../../../utils/security/securityUtils";
-import {defaultPassedFormStats} from "../../../../utils/formAnswerStatistics/formAnswerStatistics";
+import {defaultPassedFormStats} from "../../../../utils/formAnalytics/formAnswerStatistics";
+import {Card} from "primereact/card";
 
 function FormUserResults() {
     const [formStats, setFormStats] = useState(defaultPassedFormStats);
@@ -16,7 +17,7 @@ function FormUserResults() {
         }).then(response => setFormStats(response.data))
     }, [id, date, formStats.formScore]);
 
-    /*
+/*
     export const defaultPassedFormStats = {
     topicName: "Topic name",
     formScore: 0,
@@ -35,24 +36,25 @@ function FormUserResults() {
     }
     ]
 }
-    * */
+*/
 
     return (
         <Layout>
             <div className="all-outer-container">
-                {
-                    formStats.formQuestions.map((value, index) =>
-                        <StatisticsBlock id={index + 1} questionName={value.questionName}
-                                         possibleAnswers={value.possibleAnswersDto}/>)
-                }
-
-                {/*<StatisticsBlock/>*/}
-                {/*<StatisticsBlock/>*/}
-                {/*<StatisticsBlock/>*/}
-                {/*<StatisticsBlock/>*/}
-                {/*<StatisticsBlock/>*/}
-                {/*<StatisticsBlock/>*/}
-
+                <div className="form-info-block">
+                    <div className="form-info-block-content">
+                        <Card style={{background: `#8299e0`, marginBottom: `35px`}}>
+                            <h3 style={{fontSize: `26px`, fontWeight: `bold`, color: `black`}}>
+                                {formStats.topicName}
+                            </h3>
+                        </Card>
+                        {
+                            formStats.formQuestions.map((value, index) =>
+                                <StatisticsBlock id={index + 1} questionName={value.questionName}
+                                                 possibleAnswers={value.possibleAnswersDto}/>)
+                        }
+                    </div>
+                </div>
             </div>
         </Layout>
     )
