@@ -123,13 +123,14 @@ public class UserAnswerService {
     }
 
     private AnswerStatus createAnswerStatus(PossibleAnswer qAnswer, UserAnswer userAnswer) {
+        List<Long> userAnswers = (List<Long>) userAnswer.getAnswer().getAnswer();
         if (qAnswer.getIsCorrect()) {
-            if (Objects.equals(qAnswer.getId(), userAnswer.getId())) {
+            if (userAnswers.contains(qAnswer.getId())) {
                 return AnswerStatus.USER_CORRECT;
             }
             return AnswerStatus.CORRECT;
         }
-        if (Objects.equals(qAnswer.getId(), userAnswer.getId())) {
+        if (userAnswers.contains(qAnswer.getId())) {
             return AnswerStatus.WRONG;
         }
         return AnswerStatus.DEFAULT;
@@ -147,14 +148,19 @@ public class UserAnswerService {
 
     @SuppressWarnings("unchecked")
     private boolean checkIsEmpty(UserAnswerObject<?> userAnswerObject) {
-        if (userAnswerObject.getType().equals(QuestionType.SINGLE)) {
-            {
-                OptionalLong optionalLong = (OptionalLong) userAnswerObject.getAnswer();
-                return optionalLong.isEmpty();
-            }
-        } else if (userAnswerObject.getType().equals(QuestionType.MULTI)) {
-            List<Long> longs = (List<Long>) userAnswerObject.getAnswer();
-            return longs.isEmpty();
+//        if (userAnswerObject.getType().equals(QuestionType.SINGLE)) {
+//            {
+//                OptionalLong optionalLong = (OptionalLong) userAnswerObject.getAnswer();
+//                return optionalLong.isEmpty();
+//            }
+//        } else if (userAnswerObject.getType().equals(QuestionType.MULTI)) {
+//            List<Long> longs = (List<Long>) userAnswerObject.getAnswer();
+//            return longs.isEmpty();
+//        }
+        if (userAnswerObject.getType().equals(QuestionType.MULTI) ||
+                userAnswerObject.getType().equals(QuestionType.SINGLE)){
+            List<Long> userAnswers = (List<Long>) userAnswerObject.getAnswer();
+            return userAnswers.isEmpty();
         }
         return false;
     }
@@ -185,17 +191,17 @@ public class UserAnswerService {
         userAnswerRepository.save(userAnswer);
     }
 
-    private UserAnswerObject<OptionalLong> buildSingleUserAnswerObject(long questionId,
+    private UserAnswerObject<List<Long>> buildSingleUserAnswerObject(long questionId,
                                                                        List<PossibleAnswerDto> possibleAnswerDtoList) {
-        UserAnswerObject<OptionalLong> userAnswerObject = new UserAnswerObject<>();
+        UserAnswerObject<List<Long>> userAnswerObject = new UserAnswerObject<>();
         userAnswerObject.setType(QuestionType.SINGLE);
         if (possibleAnswerDtoList.isEmpty()) {
-            userAnswerObject.setAnswer(OptionalLong.empty());
+            userAnswerObject.setAnswer(Collections.emptyList());
         } else {
             PossibleAnswer possibleAnswer = possibleAnswerRepository
                     .findAnswerByQuestionIdAndPossibleAnswer(questionId, possibleAnswerDtoList.get(0)
                             .getPossibleAnswer()).orElseThrow();
-            userAnswerObject.setAnswer(OptionalLong.of(possibleAnswer.getId()));
+            userAnswerObject.setAnswer(List.of(possibleAnswer.getId()));
         }
         return userAnswerObject;
     }
