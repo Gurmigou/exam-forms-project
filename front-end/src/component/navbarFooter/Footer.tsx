@@ -11,7 +11,7 @@ function Footer() {
                         <div className="footer-block-links-inner">
                             <div className="footer-social">
                                 <a id="git-hub-link" href="https://github.com/Gurmigou/infopulse-project">
-                                    <i className="fab fa-github fa-2x"/>
+                                    <i style={{marginLeft: `3px`}} className="fab fa-github fa-2x"/>
                                 </a>
                             </div>
                             <div className="footer-nav">
