@@ -1,5 +1,5 @@
 package com.infpulse.studentspoll.model.state;
 
 public enum AnswerStatus {
-    CORRECT, WRONG
+    CORRECT, USER_CORRECT, WRONG, DEFAULT
 }

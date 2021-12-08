@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.18.1.final using JasperReports Library version 6.18.1-9d75d1969e774d4f179fb3be8401e98a0e6d1611  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="EdulseReport" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0980cc8f-38ee-4faf-9cb7-69af96c597fb">
+    <property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+    <property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="387"/>
+    <property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="601"/>
+    <property name="com.jaspersoft.studio.data.defaultdataadapter" value="Studentsdb"/>
+    <property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="632"/>
+    <property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="356"/>
+    <parameter name="USER_EMAIL" class="java.lang.String">
+        <parameterDescription><![CDATA[User email]]></parameterDescription>
+    </parameter>
+    <parameter name="FORM_ID" class="java.lang.Long">
+        <parameterDescription><![CDATA[Form id]]></parameterDescription>
+    </parameter>
+    <queryString language="SQL">
+        <![CDATA[SELECT us.name AS name,
+	us.surname AS surname,
+	af.answer_date AS answer_date,
+	af.result_score AS score,
+	frm.name AS form_name
+FROM account AS us
+	INNER JOIN account_form AS af ON
+	 us.id = af.account_id
+	INNER JOIN form AS frm ON
+	 af.form_id = frm.id
+WHERE
+	 us.email = $P{USER_EMAIL}
+	 AND frm.id = $P{FORM_ID}]]>
+    </queryString>
+    <field name="name" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.name" value="name"/>
+        <property name="com.jaspersoft.studio.field.label" value="name"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="account"/>
+    </field>
+    <field name="surname" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.name" value="surname"/>
+        <property name="com.jaspersoft.studio.field.label" value="surname"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="account"/>
+    </field>
+    <field name="answer_date" class="java.sql.Timestamp">
+        <property name="com.jaspersoft.studio.field.name" value="answer_date"/>
+        <property name="com.jaspersoft.studio.field.label" value="answer_date"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="account_form"/>
+    </field>
+    <field name="score" class="java.lang.Integer">
+        <property name="com.jaspersoft.studio.field.name" value="score"/>
+        <property name="com.jaspersoft.studio.field.label" value="score"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="account_form"/>
+    </field>
+    <field name="form_name" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.name" value="form_name"/>
+        <property name="com.jaspersoft.studio.field.label" value="form_name"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="form"/>
+    </field>
+    <background>
+        <band/>
+    </background>
+    <title>
+        <band height="72">
+            <frame>
+                <reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699" uuid="8f6dcd7a-674a-42e9-8be5-9968612657bb"/>
+                <staticText>
+                    <reportElement x="20" y="20" width="234" height="43" forecolor="#FFFFFF" uuid="10f44189-ddee-4e86-ba14-de4d822c976a"/>
+                    <textElement>
+                        <font size="34" isBold="true"/>
+                    </textElement>
+                    <text><![CDATA[EDULSE ]]></text>
+                </staticText>
+                <textField>
+                    <reportElement x="180" y="10" width="394" height="68" forecolor="#FFFFFF" backcolor="#FFFFFF" uuid="cc38135d-188f-4f7e-8b21-41407f685875"/>
+                    <textElement textAlignment="Right" verticalAlignment="Middle">
+                        <font size="21"/>
+                    </textElement>
+                    <textFieldExpression><![CDATA[$F{form_name}]]></textFieldExpression>
+                </textField>
+            </frame>
+        </band>
+    </title>
+    <pageHeader>
+        <band height="13"/>
+    </pageHeader>
+    <columnHeader>
+        <band height="23">
+            <frame>
+                <reportElement x="0" y="2" width="555" height="18" uuid="ca40ed1a-ef2e-4811-af1f-bcaef3112b93"/>
+                <rectangle>
+                    <reportElement mode="Opaque" x="0" y="0" width="555" height="18" backcolor="rgba(0, 102, 153, 0.3137255)" uuid="c4e8d820-5284-4adc-9be3-133fe3d0a69d"/>
+                </rectangle>
+                <staticText>
+                    <reportElement x="0" y="0" width="138" height="18" uuid="3b4c6472-5f8d-4931-8c2e-fa7166d51935">
+                        <property name="com.jaspersoft.studio.unit.width" value="px"/>
+                    </reportElement>
+                    <textElement verticalAlignment="Middle"/>
+                    <text><![CDATA[Name]]></text>
+                </staticText>
+                <staticText>
+                    <reportElement x="140" y="0" width="138" height="18" uuid="78f083c8-40d3-4916-b456-00bd30989a6a">
+                        <property name="com.jaspersoft.studio.unit.width" value="px"/>
+                    </reportElement>
+                    <textElement verticalAlignment="Middle"/>
+                    <text><![CDATA[Surname]]></text>
+                </staticText>
+                <staticText>
+                    <reportElement x="278" y="-1" width="138" height="18" uuid="bb344284-c5fc-443d-aae2-5621336a6cca">
+                        <property name="com.jaspersoft.studio.unit.width" value="px"/>
+                    </reportElement>
+                    <textElement verticalAlignment="Middle"/>
+                    <text><![CDATA[Passed Date]]></text>
+                </staticText>
+                <staticText>
+                    <reportElement x="418" y="0" width="136" height="18" uuid="6d7a75af-aaab-4974-8836-580333490f39">
+                        <property name="com.jaspersoft.studio.unit.width" value="px"/>
+                    </reportElement>
+                    <textElement verticalAlignment="Middle"/>
+                    <text><![CDATA[Result score]]></text>
+                </staticText>
+            </frame>
+            <line>
+                <reportElement x="0" y="22" width="555" height="1" forecolor="#666666" uuid="754e858a-7ccc-43dd-882c-0f34ee2ac67d"/>
+            </line>
+        </band>
+    </columnHeader>
+    <detail>
+        <band height="36">
+            <frame>
+                <reportElement x="0" y="2" width="555" height="18" uuid="6c0f7b99-b80a-4ba1-9dab-03bf22096552"/>
+                <textField>
+                    <reportElement x="-1" y="-2" width="138" height="18" uuid="8dbb416d-5644-4647-899d-dfa90bdb6b1a"/>
+                    <textElement textAlignment="Left" verticalAlignment="Middle"/>
+                    <textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+                </textField>
+                <textField>
+                    <reportElement x="140" y="0" width="138" height="18" uuid="f49a0f6c-b2f2-4d46-bb97-e29a7d4da6de"/>
+                    <textElement textAlignment="Left" verticalAlignment="Middle"/>
+                    <textFieldExpression><![CDATA[$F{surname}]]></textFieldExpression>
+                </textField>
+                <textField>
+                    <reportElement x="279" y="-1" width="138" height="18" uuid="d72f58a9-1eaf-4270-989e-a1b8078d7524"/>
+                    <textElement textAlignment="Left" verticalAlignment="Middle"/>
+                    <textFieldExpression><![CDATA[$F{answer_date}.toInstant()]]></textFieldExpression>
+                </textField>
+                <textField>
+                    <reportElement x="417" y="-2" width="138" height="18" uuid="6fc92671-9de5-4f0a-b8cb-baa060bd16df"/>
+                    <textElement textAlignment="Left" verticalAlignment="Middle"/>
+                    <textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+                </textField>
+            </frame>
+            <line>
+                <reportElement positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1" uuid="a5385d1a-a4e9-4cdb-b788-7b88ad690100"/>
+            </line>
+        </band>
+    </detail>
+    <columnFooter>
+        <band/>
+    </columnFooter>
+    <pageFooter>
+        <band height="17">
+            <textField>
+                <reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="8610fb91-1638-45db-a7bb-3bc43ddf7260"/>
+                <textElement textAlignment="Right"/>
+                <textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+            </textField>
+            <textField evaluationTime="Report">
+                <reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="9c7c294d-16c1-4e01-84ef-26159b560129"/>
+                <textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+            </textField>
+            <textField pattern="EEEEE dd MMMMM yyyy">
+                <reportElement x="0" y="4" width="100" height="13" uuid="31d62140-371c-42be-85dd-b8152bd3db82"/>
+                <textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+            </textField>
+        </band>
+    </pageFooter>
+    <summary>
+        <band/>
+    </summary>
+</jasperReport>

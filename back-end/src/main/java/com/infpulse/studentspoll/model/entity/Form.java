@@ -7,7 +7,6 @@ import javax.persistence.*;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Positive;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Entity
@@ -45,5 +44,4 @@ public class Form {
     @Positive
     @Column(name = "max_result")
     protected Integer formMaxResult;
-
 }

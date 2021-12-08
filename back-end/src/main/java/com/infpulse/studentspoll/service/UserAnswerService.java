@@ -6,6 +6,7 @@ import com.infpulse.studentspoll.model.formDto.passedForm.PassedFormDto;
 import com.infpulse.studentspoll.model.formDto.passedForm.PossibleAnswerDto;
 import com.infpulse.studentspoll.model.formDto.passedForm.QuestionDto;
 import com.infpulse.studentspoll.model.formDto.submitForm.SubmitAnswerDto;
+import com.infpulse.studentspoll.model.state.AnswerStatus;
 import com.infpulse.studentspoll.model.state.FormState;
 import com.infpulse.studentspoll.model.state.QuestionType;
 import com.infpulse.studentspoll.repository.*;
@@ -13,10 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.OptionalLong;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -44,7 +42,7 @@ public class UserAnswerService {
         this.possibleAnswerRepository = possibleAnswerRepository;
     }
 
-    public AccountForm submitAnswer(SubmitAnswerDto submitAnswerDto, java.lang.String email) {
+    public AccountForm submitAnswer(SubmitAnswerDto submitAnswerDto, String email) {
         User user = findUserByEmail(email);
         Form form = getForm(submitAnswerDto.getFormId());
         AccountForm accountForm = AccountForm.builder()
@@ -57,7 +55,7 @@ public class UserAnswerService {
         return accountForm;
     }
 
-    public PassedFormDto getAnswer(long formId, java.lang.String email, LocalDateTime date) {
+    public PassedFormDto getAnswer(long formId, String email, LocalDateTime date) {
         AccountForm accountForm = accountFormRepository
                 .findAccountFormByEmailAndFormIdAndDate(email, formId, date)
                 .orElseThrow(() -> new NotFoundException("Account form for user - " + email + " and form "
@@ -91,57 +89,79 @@ public class UserAnswerService {
     private List<PossibleAnswerDto> buildUserAnswers(long accountFormId, Question question) {
         UserAnswer userAnswer = userAnswerRepository
                 .findAnswerByAccountFormIdAndParentQuestionId(accountFormId, question.getId());
-        List<PossibleAnswerDto> possibleAnswerDtoList;
+        List<PossibleAnswer> questionAnswers = possibleAnswerRepository.findAllByQuestion(question);
+        List<PossibleAnswerDto> possibleAnswerDtoList = new ArrayList<>();
         switch (question.getQuestionType()) {
-            case SINGLE -> {
-                if (checkIsEmpty(userAnswer.getAnswer())) {
-                    possibleAnswerDtoList = Collections.emptyList();
-                } else {
-                    Long answerId = ((OptionalLong) userAnswer.getAnswer().getAnswer()).getAsLong();
-                    PossibleAnswer answer = possibleAnswerRepository
-                            .findPossibleAnswerByQuestionIdAndAnswerId(question.getId(), answerId);
-                    PossibleAnswerDto possibleAnswerDto = new PossibleAnswerDto();
-                    possibleAnswerDto.setAnswerValue(answer.getAnswerValue());
-                    possibleAnswerDto.setPossibleAnswer(answer.getPossibleAnswer());
-                    possibleAnswerDtoList = List.of(possibleAnswerDto);
-                }
-            }
-            case MULTI -> {
-                if (checkIsEmpty(userAnswer.getAnswer())) {
-                    possibleAnswerDtoList = Collections.emptyList();
-                } else {
-                    List<Long> answersId = (List<Long>) userAnswer.getAnswer().getAnswer();
-                    possibleAnswerDtoList = new ArrayList<>(answersId.size());
-                    for (long answerId : answersId) {
-                        PossibleAnswer answer = possibleAnswerRepository
-                                .findPossibleAnswerByQuestionIdAndAnswerId(question.getId(), answerId);
-                        PossibleAnswerDto possibleAnswerDto = new PossibleAnswerDto();
-                        possibleAnswerDto.setAnswerValue(answer.getAnswerValue());
-                        possibleAnswerDto.setPossibleAnswer(answer.getPossibleAnswer());
-                        possibleAnswerDtoList.add(possibleAnswerDto);
-                    }
-                }
-            }
-            case OPEN -> {
-                PossibleAnswerDto possibleAnswerDto = new PossibleAnswerDto();
-                possibleAnswerDto.setPossibleAnswer((java.lang.String) userAnswer.getAnswer().getAnswer());
-                possibleAnswerDtoList = List.of(possibleAnswerDto);
-            }
+            case SINGLE, MULTI -> getFromSingleMultiAnswers(userAnswer, questionAnswers, possibleAnswerDtoList);
+            case OPEN -> getFromOpen(userAnswer, questionAnswers, possibleAnswerDtoList);
             default -> possibleAnswerDtoList = Collections.emptyList();
         }
         return possibleAnswerDtoList;
     }
 
+    private void getFromOpen(UserAnswer userAnswer,
+                             List<PossibleAnswer> questionAnswers,
+                             List<PossibleAnswerDto> possibleAnswerDtoList) {
+        questionAnswers.stream().map(qAnswer -> PossibleAnswerDto.builder()
+                .answerStatus(createOpenAnswerStatus(qAnswer, userAnswer))
+                .possibleAnswer((String) userAnswer.getAnswer().getAnswer())
+                .answerValue(qAnswer.getAnswerValue())
+                .build())
+                .forEach(possibleAnswerDtoList::add);
+    }
+
+    private void getFromSingleMultiAnswers(UserAnswer userAnswer,
+                                           List<PossibleAnswer> questionAnswers,
+                                           List<PossibleAnswerDto> possibleAnswerDtoList) {
+        if (checkIsEmpty(userAnswer.getAnswer())) {
+            getEmptyAnswerDtoList(questionAnswers, possibleAnswerDtoList);
+        } else {
+            questionAnswers.stream().map(qAnswer -> PossibleAnswerDto.builder()
+                            .answerStatus(createAnswerStatus(qAnswer, userAnswer))
+                            .answerValue(qAnswer.getAnswerValue())
+                            .possibleAnswer(qAnswer.getPossibleAnswer())
+                            .build())
+                    .forEach(possibleAnswerDtoList::add);
+        }
+    }
+
+    private AnswerStatus createOpenAnswerStatus(PossibleAnswer qAnswer, UserAnswer userAnswer) {
+        String usersAnswer = (String) userAnswer.getAnswer().getAnswer();
+        return Objects.equals(qAnswer.getPossibleAnswer().toLowerCase().trim(),
+                usersAnswer.toLowerCase().trim()) ? AnswerStatus.USER_CORRECT : AnswerStatus.WRONG;
+    }
+
+    @SuppressWarnings("unchecked")
+    private AnswerStatus createAnswerStatus(PossibleAnswer qAnswer, UserAnswer userAnswer) {
+        var userAnswers = (List<Long>) userAnswer.getAnswer().getAnswer();
+        if (qAnswer.getIsCorrect()) {
+            if (userAnswers.contains(qAnswer.getId())) {
+                return AnswerStatus.USER_CORRECT;
+            }
+            return AnswerStatus.CORRECT;
+        }
+        if (userAnswers.contains(qAnswer.getId())) {
+            return AnswerStatus.WRONG;
+        }
+        return AnswerStatus.DEFAULT;
+    }
+
+    private void getEmptyAnswerDtoList(List<PossibleAnswer> questionAnswers,
+                                       List<PossibleAnswerDto> possibleAnswerDtoList) {
+        questionAnswers.stream().map(qAnswer -> PossibleAnswerDto.builder()
+                        .answerStatus(qAnswer.getIsCorrect() ? AnswerStatus.CORRECT : AnswerStatus.DEFAULT)
+                        .answerValue(qAnswer.getAnswerValue())
+                        .possibleAnswer(qAnswer.getPossibleAnswer())
+                        .build())
+                .forEach(possibleAnswerDtoList::add);
+    }
+
     @SuppressWarnings("unchecked")
     private boolean checkIsEmpty(UserAnswerObject<?> userAnswerObject) {
-        if (userAnswerObject.getType().equals(QuestionType.SINGLE)) {
-            {
-                OptionalLong optionalLong = (OptionalLong) userAnswerObject.getAnswer();
-                return optionalLong.isEmpty();
-            }
-        } else if (userAnswerObject.getType().equals(QuestionType.MULTI)) {
-            List<Long> longs = (List<Long>) userAnswerObject.getAnswer();
-            return longs.isEmpty();
+        if (userAnswerObject.getType().equals(QuestionType.MULTI) ||
+                userAnswerObject.getType().equals(QuestionType.SINGLE)){
+            var userAnswers = (List<Long>) userAnswerObject.getAnswer();
+            return userAnswers.isEmpty();
         }
         return false;
     }
@@ -172,17 +192,17 @@ public class UserAnswerService {
         userAnswerRepository.save(userAnswer);
     }
 
-    private UserAnswerObject<OptionalLong> buildSingleUserAnswerObject(long questionId,
+    private UserAnswerObject<List<Long>> buildSingleUserAnswerObject(long questionId,
                                                                        List<PossibleAnswerDto> possibleAnswerDtoList) {
-        UserAnswerObject<OptionalLong> userAnswerObject = new UserAnswerObject<>();
+        UserAnswerObject<List<Long>> userAnswerObject = new UserAnswerObject<>();
         userAnswerObject.setType(QuestionType.SINGLE);
         if (possibleAnswerDtoList.isEmpty()) {
-            userAnswerObject.setAnswer(OptionalLong.empty());
+            userAnswerObject.setAnswer(Collections.emptyList());
         } else {
             PossibleAnswer possibleAnswer = possibleAnswerRepository
                     .findAnswerByQuestionIdAndPossibleAnswer(questionId, possibleAnswerDtoList.get(0)
                             .getPossibleAnswer()).orElseThrow();
-            userAnswerObject.setAnswer(OptionalLong.of(possibleAnswer.getId()));
+            userAnswerObject.setAnswer(List.of(possibleAnswer.getId()));
         }
         return userAnswerObject;
     }
@@ -194,7 +214,7 @@ public class UserAnswerService {
         if (possibleAnswerDtoList.isEmpty()) {
             userAnswerObject.setAnswer(Collections.emptyList());
         } else {
-            List<java.lang.String> possibleAnswersNames = possibleAnswerDtoList.stream()
+            List<String> possibleAnswersNames = possibleAnswerDtoList.stream()
                     .map(PossibleAnswerDto::getPossibleAnswer).collect(Collectors.toList());
             userAnswerObject.setAnswer(answerRepository
                     .findPossibleAnswersIdsByQuestionIdAndByPossibleAnswers(questionId, possibleAnswersNames));
@@ -202,14 +222,14 @@ public class UserAnswerService {
         return userAnswerObject;
     }
 
-    private Question getQuestion(long formId, java.lang.String questionName) {
+    private Question getQuestion(long formId, String questionName) {
         return questionRepository
                 .findQuestionByFormIdAndQuestionName(formId, questionName)
                 .orElseThrow(() -> new NotFoundException("Question - " +
                         questionName + "for form - " + formId));
     }
 
-    private User findUserByEmail(java.lang.String userName) {
+    private User findUserByEmail(String userName) {
         return userRepository.findByEmail(userName).orElseThrow(() -> new NotFoundException("User " + userName));
     }
 
