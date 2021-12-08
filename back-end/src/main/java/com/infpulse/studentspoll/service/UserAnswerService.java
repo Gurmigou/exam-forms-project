@@ -6,6 +6,7 @@ import com.infpulse.studentspoll.model.formDto.passedForm.PassedFormDto;
 import com.infpulse.studentspoll.model.formDto.passedForm.PossibleAnswerDto;
 import com.infpulse.studentspoll.model.formDto.passedForm.QuestionDto;
 import com.infpulse.studentspoll.model.formDto.submitForm.SubmitAnswerDto;
+import com.infpulse.studentspoll.model.state.AnswerStatus;
 import com.infpulse.studentspoll.model.state.FormState;
 import com.infpulse.studentspoll.model.state.QuestionType;
 import com.infpulse.studentspoll.repository.*;
@@ -13,10 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.OptionalLong;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -92,45 +90,59 @@ public class UserAnswerService {
     private List<PossibleAnswerDto> buildUserAnswers(long accountFormId, Question question) {
         UserAnswer userAnswer = userAnswerRepository
                 .findAnswerByAccountFormIdAndParentQuestionId(accountFormId, question.getId());
-        List<PossibleAnswerDto> possibleAnswerDtoList;
+        List<PossibleAnswer> questionAnswers = possibleAnswerRepository.findAllByQuestion(question);
+        List<PossibleAnswerDto> possibleAnswerDtoList = new ArrayList<>();
         switch (question.getQuestionType()) {
-            case SINGLE -> {
+            case SINGLE, MULTI -> {
                 if (checkIsEmpty(userAnswer.getAnswer())) {
-                    possibleAnswerDtoList = Collections.emptyList();
+                    getEmptyAnswerDtoList(questionAnswers, possibleAnswerDtoList);
                 } else {
-                    Long answerId = ((OptionalLong) userAnswer.getAnswer().getAnswer()).getAsLong();
-                    PossibleAnswer answer = possibleAnswerRepository
-                            .findPossibleAnswerByQuestionIdAndAnswerId(question.getId(), answerId);
-                    PossibleAnswerDto possibleAnswerDto = new PossibleAnswerDto();
-                    possibleAnswerDto.setAnswerValue(answer.getAnswerValue());
-                    possibleAnswerDto.setPossibleAnswer(answer.getPossibleAnswer());
-                    possibleAnswerDtoList = List.of(possibleAnswerDto);
+                    questionAnswers.stream().map(qAnswer -> PossibleAnswerDto.builder()
+                                    .answerStatus(createAnswerStatus(qAnswer, userAnswer))
+                                    .answerValue(qAnswer.getAnswerValue())
+                                    .possibleAnswer(qAnswer.getPossibleAnswer())
+                                    .build())
+                            .forEach(possibleAnswerDtoList::add);
                 }
             }
-            case MULTI -> {
-                if (checkIsEmpty(userAnswer.getAnswer())) {
-                    possibleAnswerDtoList = Collections.emptyList();
-                } else {
-                    List<Long> answersId = (List<Long>) userAnswer.getAnswer().getAnswer();
-                    possibleAnswerDtoList = new ArrayList<>(answersId.size());
-                    for (long answerId : answersId) {
-                        PossibleAnswer answer = possibleAnswerRepository
-                                .findPossibleAnswerByQuestionIdAndAnswerId(question.getId(), answerId);
-                        PossibleAnswerDto possibleAnswerDto = new PossibleAnswerDto();
-                        possibleAnswerDto.setAnswerValue(answer.getAnswerValue());
-                        possibleAnswerDto.setPossibleAnswer(answer.getPossibleAnswer());
-                        possibleAnswerDtoList.add(possibleAnswerDto);
-                    }
-                }
-            }
-            case OPEN -> {
-                PossibleAnswerDto possibleAnswerDto = new PossibleAnswerDto();
-                possibleAnswerDto.setPossibleAnswer((java.lang.String) userAnswer.getAnswer().getAnswer());
-                possibleAnswerDtoList = List.of(possibleAnswerDto);
-            }
+            case OPEN -> questionAnswers.stream().map(qAnswer -> PossibleAnswerDto.builder()
+                    .answerStatus(createOpenAnswerStatus(qAnswer, userAnswer))
+                    .possibleAnswer((String) userAnswer.getAnswer().getAnswer())
+                    .answerValue(qAnswer.getAnswerValue())
+                    .build())
+                    .forEach(possibleAnswerDtoList::add);
             default -> possibleAnswerDtoList = Collections.emptyList();
         }
         return possibleAnswerDtoList;
+    }
+
+    private AnswerStatus createOpenAnswerStatus(PossibleAnswer qAnswer, UserAnswer userAnswer) {
+        String usersAnswer = (String) userAnswer.getAnswer().getAnswer();
+        return Objects.equals(qAnswer.getPossibleAnswer().toLowerCase().trim(),
+                usersAnswer.toLowerCase().trim()) ? AnswerStatus.USER_CORRECT : AnswerStatus.WRONG;
+    }
+
+    private AnswerStatus createAnswerStatus(PossibleAnswer qAnswer, UserAnswer userAnswer) {
+        if (qAnswer.getIsCorrect()) {
+            if (Objects.equals(qAnswer.getId(), userAnswer.getId())) {
+                return AnswerStatus.USER_CORRECT;
+            }
+            return AnswerStatus.CORRECT;
+        }
+        if (Objects.equals(qAnswer.getId(), userAnswer.getId())) {
+            return AnswerStatus.WRONG;
+        }
+        return AnswerStatus.DEFAULT;
+    }
+
+    private void getEmptyAnswerDtoList(List<PossibleAnswer> questionAnswers,
+                                       List<PossibleAnswerDto> possibleAnswerDtoList) {
+        questionAnswers.stream().map(qAnswer -> PossibleAnswerDto.builder()
+                        .answerStatus(qAnswer.getIsCorrect() ? AnswerStatus.CORRECT : AnswerStatus.DEFAULT)
+                        .answerValue(qAnswer.getAnswerValue())
+                        .possibleAnswer(qAnswer.getPossibleAnswer())
+                        .build())
+                .forEach(possibleAnswerDtoList::add);
     }
 
     @SuppressWarnings("unchecked")

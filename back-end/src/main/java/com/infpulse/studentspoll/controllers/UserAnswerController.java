@@ -52,7 +52,4 @@ public class UserAnswerController {
 			return ResponseEntity.notFound().build();
 		}
 	}
-
-
-
 }
