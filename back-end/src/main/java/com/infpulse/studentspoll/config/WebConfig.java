@@ -14,11 +14,12 @@ public class WebConfig {
     @Bean(name = "db")
     @ConfigurationProperties(prefix = "spring.datasource")
     public DataSource dataSource() {
-        return DataSourceBuilder.create().build();
+        return DataSourceBuilder.create()
+                .build();
     }
 
     @Bean(name = "jdbcTemplate")
-    public JdbcTemplate jdbcTemplate(@Qualifier("db") DataSource ds) {
-        return new JdbcTemplate(ds);
+    public JdbcTemplate jdbcTemplate(@Qualifier("db") DataSource dataSource) {
+        return new JdbcTemplate(dataSource);
     }
 }
