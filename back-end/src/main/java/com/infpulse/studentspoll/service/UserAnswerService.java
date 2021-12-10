@@ -60,7 +60,6 @@ public class UserAnswerService {
                 .findAccountFormByEmailAndFormIdAndDate(email, formId, date)
                 .orElseThrow(() -> new NotFoundException("Account form for user - " + email + " and form "
                         + formId + " and date " + date));
-
         return buildPassedForm(accountForm);
     }
 

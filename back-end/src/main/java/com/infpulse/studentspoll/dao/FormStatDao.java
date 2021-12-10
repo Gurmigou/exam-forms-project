@@ -15,12 +15,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-@Transactional
+@Transactional()
 @Repository
 public class FormStatDao {
 
     public static final String FORM_STATS_PATH = "classpath:resources/jasperReports/formStats.jrxml";
     private final JdbcTemplate jdbcTemplate;
+
     private final ResourceLoader resourceLoader;
 
     @Autowired

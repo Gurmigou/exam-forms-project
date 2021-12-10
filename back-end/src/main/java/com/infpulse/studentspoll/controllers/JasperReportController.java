@@ -24,7 +24,7 @@ public class JasperReportController {
         this.jasperService = jasperService;
     }
 
-    @GetMapping("/report/{id}")
+    @PostMapping("/report/{id}")
     public void export(HttpServletResponse response, Principal principal, @PathVariable Long id)
             throws IOException, JRException, SQLException {
 

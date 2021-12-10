@@ -7,7 +7,6 @@ import com.infpulse.studentspoll.service.EmailService;
 import com.infpulse.studentspoll.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
