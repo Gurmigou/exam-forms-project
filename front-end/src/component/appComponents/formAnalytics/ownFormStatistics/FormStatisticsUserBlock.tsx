@@ -5,10 +5,11 @@ import {formatDate} from "../../../../utils/formList/userFormList";
 function FormStatisticsUserBlock({userName, surname, answerDate, resultScore, formMaxResult, index}) {
     const cardBlockStyle: any = {
         width: `100%`,
+        height: `70px`,
         borderRadius: 0,
         boxShadow: `none`,
         display: `flex`,
-        justifyContent: `start`
+        justifyContent: `start`,
     }
 
     const cardContentStyle: any = {
@@ -28,7 +29,11 @@ function FormStatisticsUserBlock({userName, surname, answerDate, resultScore, fo
     }
 
     return (
-        <Card style={{background: `#DEEBFE`, marginBottom: `35px`}}>
+        <Card className="p-shadow-5" style={{
+            background: `#DEEBFE`,
+            marginBottom: `35px`,
+            boxShadow: `5px 5px 12px 3px #dcdcdc`
+        }}>
             <div className="flex justify-content-center">
                 <p style={{fontSize: `22px`, fontWeight: `bold`}}>{`User ${index}`}</p>
             </div>
