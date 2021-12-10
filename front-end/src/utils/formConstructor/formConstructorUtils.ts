@@ -163,6 +163,11 @@ const creteExpireDate = (plusDays: number): string => {
 }
 
 export const createNewFormDto = (formTitle, maxAttempts, expiresInDays, questionList): object => {
+    for (let i = 0; i < questionList.length; i++) {
+
+    }
+    
+    
     return {
         topicName: formTitle,
         attempts: maxAttempts,

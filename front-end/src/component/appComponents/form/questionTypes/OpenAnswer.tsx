@@ -1,13 +1,15 @@
 import React from "react";
-import {Checkbox} from "primereact/checkbox";
 import {InputText} from "primereact/inputtext";
+import {setOpenAnswer} from "../../../../utils/form/formUtils";
 
-function OpenAnswer({answerTitle}) {
+function OpenAnswer({answerList, answerIndex, setRender}) {
     return (
-        <div className="flex justify-content-center" style={{width: `100%`, margin: `30px`}}>
-            <div style={{width: `90%`, display: `flex`, flexDirection: `row`}}>
-                <InputText value={"value"} /*onChange={(e) => setValue(e.target.value)}*/ />
-            </div>
+        <div className="flex justify-content-start" style={{width: `100%`, margin: `30px`}}>
+            <InputText style={{width: `90%`, fontSize: `20px`}}
+                       placeholder={"My answer"}
+                       value={answerList[answerIndex].possibleAnswer}
+                       onChange={(e) => setOpenAnswer(
+                           answerList[answerIndex], e.target.value, setRender)} />
         </div>
     )
 }
