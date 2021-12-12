@@ -72,7 +72,6 @@ export const setQuestionName = (question, questionName, setQuestionList) => {
 }
 
 export const setQuestionSelectedType = (questionList, index, newType, setQuestionList) => {
-    console.log(newType)
     const question = questionList[index];
     question.questionType = newType;
     questionList[index] = question;
@@ -163,11 +162,9 @@ const creteExpireDate = (plusDays: number): string => {
 }
 
 export const createNewFormDto = (formTitle, maxAttempts, expiresInDays, questionList): object => {
-    for (let i = 0; i < questionList.length; i++) {
+    for (let i = 0; i < questionList.length; i++)
+        questionList[i].questionType = questionList[i].questionType.type;
 
-    }
-    
-    
     return {
         topicName: formTitle,
         attempts: maxAttempts,
