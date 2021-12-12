@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useRef, useState} from "react";
 import Layout from "../../../navbarFooter/Layout";
 import QuestionBuilderBlock from "../questionBuilder/QuestionBuilderBlock";
 import FormTitleBuilderBlock from "./FormTitleBuilderBlock";
@@ -35,10 +35,6 @@ function FormBuilder() {
             headers: getAuthHeader()
         }).then(() => setRedirect(true));
     }
-
-    useEffect(() => {
-        console.log(questionList);
-    }, [questionList])
 
     if (redirect)
         return <Redirect to="/user/form-list"/>

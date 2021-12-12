@@ -21,65 +21,18 @@ function UserFormList() {
         topicName: ""
     }])
 
-    const arr1 = [
-        {
-            answerDate: "2021-11-26T14:08:59.124Z",
-            formScore: 15,
-            formMaxResult: 100,
-            id: 1,
-            topicName: "Math test"
-        },
-        {
-            answerDate: "2021-11-26T14:08:59.124Z",
-            formScore: 75,
-            formMaxResult: 100,
-            id: 2,
-            topicName: "Algorithms and data structures"
-        },
-        {
-            answerDate: "2021-11-26T14:08:59.124Z",
-            formScore: 98,
-            formMaxResult: 100,
-            id: 3,
-            topicName: "Programming test"
-        },
-        {
-            answerDate: "2021-11-26T14:08:59.124Z",
-            formScore: 92,
-            formMaxResult: 100,
-            id: 2,
-            topicName: "English test"
-        },
-    ]
-
-    const arr2 = [
-        {
-            expireDate: "2021-11-30T14:08:59.124Z",
-            formState: "PASSED",
-            id: 1,
-            topicName: "Algebra and geometry test"
-        },
-        {
-            expireDate: "2021-12-01T14:08:59.124Z",
-            formState: "CLOSED",
-            id: 2,
-            topicName: "English module 1 test"
-        }
-    ]
-
     useEffect(() => {
-        // axios.get("http://localhost:8080/api/forms/available", {
-        //     headers: getAuthHeader()
-        // }).then(response => {
-        //     console.log("AAdasdasdasd")
-        //     setPassedForms(arr1)
-        // }/*setPassedForms(response.data)*/);
-        //
-        // axios.get("http://localhost:8080/api/forms/owned", {
-        //     headers: getAuthHeader()
-        // }).then(response => setOwnedForms(arr2)/*setOwnedForms(response.data)*/);
-        setPassedForms(arr1);
-        setOwnedForms(arr2);
+        axios.get("http://localhost:8080/api/forms/available", {
+            headers: getAuthHeader()
+        }).then(response => setPassedForms(response.data));
+
+        axios.get("http://localhost:8080/api/forms/owned", {
+            headers: getAuthHeader()
+        }).then(response => {
+            console.log("owned")
+            console.log(response.data)
+            setOwnedForms(response.data)
+        });
     }, []);
 
     return (

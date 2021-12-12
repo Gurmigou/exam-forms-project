@@ -17,27 +17,6 @@ function FormUserResults() {
         }).then(response => setFormStats(response.data))
     }, [id, date, formStats.formScore]);
 
-/*
-    export const defaultPassedFormStats = {
-    topicName: "Topic name",
-    formScore: 0,
-    answerDate: "2021-11-26T14:08:59.124Z",
-    formQuestions: [
-        {
-        questionName: "Question 1",
-        questionType: "TYPE",
-        possibleAnswersDto: [
-            {
-                possibleAnswer: "Answer 1",
-                answerStatus: "CORRECT",
-                answerValue: 0
-            }
-        ]
-    }
-    ]
-}
-*/
-
     return (
         <Layout>
             <div className="all-outer-container">
