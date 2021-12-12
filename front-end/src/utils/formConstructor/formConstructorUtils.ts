@@ -167,7 +167,7 @@ export const createNewFormDto = (formTitle, maxAttempts, expiresInDays, question
 
     return {
         topicName: formTitle,
-        attempts: maxAttempts,
+        attempts: parseInt(maxAttempts),
         expireDateTime: creteExpireDate(expiresInDays),
         questionDtoList: questionList
     }
