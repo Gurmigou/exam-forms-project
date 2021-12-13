@@ -1,10 +1,7 @@
 package com.infpulse.studentspoll.model.formDto.passedForm;
 
 import com.infpulse.studentspoll.model.state.QuestionType;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
@@ -15,6 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 public class QuestionDto {
     @NotBlank

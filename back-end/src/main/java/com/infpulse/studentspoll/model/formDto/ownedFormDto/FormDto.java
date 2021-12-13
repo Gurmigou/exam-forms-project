@@ -1,10 +1,7 @@
 package com.infpulse.studentspoll.model.formDto.ownedFormDto;
 
 import com.infpulse.studentspoll.model.formDto.passedForm.QuestionDto;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.validation.constraints.*;
 import java.time.LocalDateTime;
@@ -12,6 +9,7 @@ import java.util.List;
 
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class FormDto {

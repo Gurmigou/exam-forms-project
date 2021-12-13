@@ -17,7 +17,8 @@ public interface FormRepository extends JpaRepository<Form, Long> {
     @Query(value = "SELECT new com.infpulse.studentspoll.model.formDto.formHeaders.OwnedFormHeader " +
             "(f.id, f.topicName, f.expireDateTime, f.formState) " +
             "FROM Form f " +
-            "WHERE f.owner.email = :email ")
+            "WHERE f.owner.email = :email " +
+            "AND f.formState != 'DELETED'")
     List<OwnedFormHeader> getOwnedFormHeaders(@Param("email") String email);
 
     @Query(value = "SELECT new com.infpulse.studentspoll.model.formDto.formHeaders.AvailableFormHeader " +

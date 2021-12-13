@@ -22,9 +22,11 @@ import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class FormService {
@@ -50,9 +52,18 @@ public class FormService {
         Form form = mapper.map(formDto, Form.class);
         form.setOwner(user);
         form.setFormState(FormState.CREATED);
+        form.setFormMaxResult(countMaxResultFromTheFormDto(formDto));
         form = formsRepository.save(form);
         saveQuestions(formDto.getQuestionDtoList(), form);
         return Optional.of(form);
+    }
+
+    private Integer countMaxResultFromTheFormDto(FormDto formDto) {
+        return formDto.getQuestionDtoList().stream()
+                .flatMap(questionDto -> questionDto.getPossibleAnswersDto().stream())
+                .filter(possibleAnswerDto -> possibleAnswerDto.getAnswerStatus() == AnswerStatus.CORRECT)
+                .mapToInt(PossibleAnswerDto::getAnswerValue)
+                .sum();
     }
 
     public void saveQuestions(List<QuestionDto> questionsDto, Form form) {
@@ -79,29 +90,35 @@ public class FormService {
         if (form.isPresent()) {
             if (form.get().getFormState() != FormState.DELETED ||
                     form.get().getFormState() != FormState.SUSPENDED) {
-                FormDto formDto = mapper.map(form.get(), FormDto.class);
-                formDto.setQuestionDtoList(getQuestions(form.get().getId()));
-                return Optional.of(formDto);
+                FormDto formDto1 = FormDto.builder()
+                        .attempts(form.get().getAttempts())
+                        .expireDateTime(form.get().getExpireDateTime())
+                        .topicName(form.get().getTopicName())
+                        .questionDtoList(getQuestions(form.get().getId()))
+                        .build();
+                return Optional.of(formDto1);
             }
         }
         return Optional.empty();
     }
 
     public List<QuestionDto> getQuestions(long formId) {
-        List<QuestionDto> questionsDto = new LinkedList<>();
+        List<QuestionDto> questionsDto = new ArrayList<>();
         List<Question> questions = questionRepository.findAllByOwnerForm(formId);
         for (Question question : questions) {
-            QuestionDto questionDto = mapper.map(question, QuestionDto.class);
-            questionDto.setPossibleAnswersDto(getPossibleAnswers(question));
+            QuestionDto questionDto = QuestionDto.builder()
+                    .questionName(question.getQuestionName())
+                    .questionType(question.getQuestionType())
+                    .possibleAnswersDto(answerRepository.findAllByQuestion(question).stream()
+                            .map(possibleAnswer -> PossibleAnswerDto.builder()
+                                    .answerStatus(AnswerStatus.DEFAULT)
+                                    .possibleAnswer(possibleAnswer.getPossibleAnswer())
+                                    .answerValue(possibleAnswer.getAnswerValue())
+                                    .build()).collect(Collectors.toList()))
+                    .build();
             questionsDto.add(questionDto);
         }
         return questionsDto;
-    }
-
-    public List<PossibleAnswerDto> getPossibleAnswers(Question question) {
-        List<PossibleAnswer> possibleAnswers = answerRepository.findAllByQuestion(question);
-        return mapper.map(possibleAnswers, new TypeToken<PossibleAnswerDto>() {
-        }.getType());
     }
 
     public List<OwnedFormHeader> getOwnedForms(java.lang.String email) {
