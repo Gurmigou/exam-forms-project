@@ -17,7 +17,7 @@ public interface PossibleAnswerRepository extends JpaRepository<PossibleAnswer, 
     List<PossibleAnswer> findAllByQuestion(Question question);
 
     @Query("SELECT pa FROM PossibleAnswer pa " +
-            "WHERE pa.id = :id AND pa.possibleAnswer = :possibleAnswer")
+            "WHERE pa.question.id = :id AND pa.possibleAnswer = :possibleAnswer")
     Optional<PossibleAnswer> findAnswerByQuestionIdAndPossibleAnswer(@Param("id") Long id,
                                                      @Param("possibleAnswer") String possibleAnswer);
 
