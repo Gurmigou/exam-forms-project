@@ -32,13 +32,13 @@ function FormBlock() {
     useEffect(() => {
         console.log(id)
 
-        axios.get(`http://localhost:8080/forms/${id}`, {
+        axios.get(`http://localhost:8080/api/forms/${id}`, {
             headers: getAuthHeader()
         }).then(response => setForm(response.data))
     }, [])
 
     const sendAnswer = (submitFormDto) => {
-        axios.post(`http://localhost:8080/answers/new`, submitFormDto, {
+        axios.post(`http://localhost:8080/api/answers/new`, submitFormDto, {
             headers: getAuthHeader()
         }).then(() => setRedirect(true));
     }
