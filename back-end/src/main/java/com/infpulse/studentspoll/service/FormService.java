@@ -109,16 +109,20 @@ public class FormService {
             QuestionDto questionDto = QuestionDto.builder()
                     .questionName(question.getQuestionName())
                     .questionType(question.getQuestionType())
-                    .possibleAnswersDto(answerRepository.findAllByQuestion(question).stream()
-                            .map(possibleAnswer -> PossibleAnswerDto.builder()
-                                    .answerStatus(AnswerStatus.DEFAULT)
-                                    .possibleAnswer(possibleAnswer.getPossibleAnswer())
-                                    .answerValue(possibleAnswer.getAnswerValue())
-                                    .build()).collect(Collectors.toList()))
+                    .possibleAnswersDto(getPossibleAnswerDtoFromTheQuestion(question))
                     .build();
             questionsDto.add(questionDto);
         }
         return questionsDto;
+    }
+
+    private List<PossibleAnswerDto> getPossibleAnswerDtoFromTheQuestion(Question question) {
+        return answerRepository.findAllByQuestion(question).stream()
+                .map(possibleAnswer -> PossibleAnswerDto.builder()
+                        .answerStatus(AnswerStatus.DEFAULT)
+                        .possibleAnswer(possibleAnswer.getPossibleAnswer())
+                        .answerValue(possibleAnswer.getAnswerValue())
+                        .build()).collect(Collectors.toList());
     }
 
     public List<OwnedFormHeader> getOwnedForms(java.lang.String email) {
