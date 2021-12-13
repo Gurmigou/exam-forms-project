@@ -12,7 +12,7 @@ import {Redirect} from "react-router-dom";
 
 function FormBlock() {
     const [render, setRender] = useState(false);
-    const [form, setForm] = useState(defaultForm);
+    const [form, setForm]: any = useState(defaultForm);
 
     const [redirect, setRedirect] = useState(false);
     const { id } = useParams();
@@ -30,6 +30,8 @@ function FormBlock() {
     }
 
     useEffect(() => {
+        console.log(id)
+
         axios.get(`http://localhost:8080/forms/${id}`, {
             headers: getAuthHeader()
         }).then(response => setForm(response.data))

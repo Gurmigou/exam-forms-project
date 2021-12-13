@@ -155,10 +155,14 @@ export const validateNewFormDto = (newForm): boolean => {
     return true;
 }
 
-const creteExpireDate = (plusDays: number): string => {
+const createExpireDate = (plusDays: number): string => {
     const date = new Date();
+    console.log("Before: " + date.toISOString())
+    console.log("Plus: " + plusDays)
     date.setDate(date.getDate() + plusDays);
-    return date.toISOString();
+    const s = date.toISOString();
+    console.log("After: " + s)
+    return s;
 }
 
 export const createNewFormDto = (formTitle, maxAttempts, expiresInDays, questionList): object => {
@@ -168,7 +172,7 @@ export const createNewFormDto = (formTitle, maxAttempts, expiresInDays, question
     return {
         topicName: formTitle,
         attempts: parseInt(maxAttempts),
-        expireDateTime: creteExpireDate(expiresInDays),
+        expireDateTime: createExpireDate(expiresInDays),
         questionDtoList: questionList
     }
 }
