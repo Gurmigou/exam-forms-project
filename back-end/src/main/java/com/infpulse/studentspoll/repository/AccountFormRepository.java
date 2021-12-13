@@ -13,7 +13,7 @@ import java.util.Optional;
 public interface AccountFormRepository extends JpaRepository<AccountForm, Long> {
 
     @Query("SELECT ac FROM AccountForm ac " +
-            "WHERE ac.id = :id AND ac.user.email = :email AND ac.answerDate = :date")
+            "WHERE ac.form.id = :id AND ac.user.email = :email AND ac.answerDate = :date")
     Optional<AccountForm> findAccountFormByEmailAndFormIdAndDate(@Param("email") String email,
                                                                  @Param("id") Long id,
                                                                  @Param("date") LocalDateTime date);
