@@ -45,7 +45,10 @@ function FormInfoRecord({state, id, topicName, localDateTime, formattedAnswerDat
                      less(gotScore / maxScore, 0.75) ? "score-color-yellow" : "score-color-green"}>
                 <h3 id="user-form-score">
                     {
-                        state ? gotScore : <i className="fas fa-copy"/>
+                        state ? gotScore : <i onClick={() => {
+                                console.log("Clicked")
+                            }
+                        } className="fas fa-copy"/>
                     }
                 </h3>
             </div>

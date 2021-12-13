@@ -11,18 +11,18 @@ function UserFormList() {
     const [ownedForms, setOwnedForms] = useState([])
 
     useEffect(() => {
-        // axios.get("http://localhost:8080/api/forms/available", {
-        //     headers: getAuthHeader()
-        // }).then(response => {
-        //     console.log("available")
-        //     console.log(response)
-        //     setPassedForms(response.data)
-        // });
+        axios.get("http://localhost:8080/api/forms/available", {
+            headers: getAuthHeader()
+        }).then(response => {
+            console.log("Available")
+            console.log(response)
+            setPassedForms(response.data)
+        });
 
         axios.get("http://localhost:8080/api/forms/owned", {
             headers: getAuthHeader()
         }).then(response => {
-            console.log("owned")
+            console.log("Owned")
             console.log(response)
             setOwnedForms(response.data)
         });

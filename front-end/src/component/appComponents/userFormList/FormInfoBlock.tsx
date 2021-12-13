@@ -27,7 +27,7 @@ function FormInfoBlock({state, formsPassed, formsOwned}) {
                                     key={uuid()} state={true} id={record.id}
                                     topicName={record.topicName}
                                     localDateTime={record.answerDate}
-                                    formattedAnswerDate={formatDate(record.expireDateTime)}
+                                    formattedAnswerDate={formatDate(record.answerDate)}
                                     expireDate={null} gotScore={record.formScore}
                                     maxScore={record.formMaxResult}/>)
                             :
