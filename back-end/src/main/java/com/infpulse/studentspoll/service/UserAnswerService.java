@@ -52,8 +52,8 @@ public class UserAnswerService {
                 .user(user)
                 .form(form)
                 .build();
-        accountForm = accountFormRepository.save(accountForm);
         parseAnswersList(submitAnswerDto.getQuestionDtoList(), form, accountForm);
+        accountForm = accountFormRepository.save(accountForm);
         return accountForm;
     }
 

@@ -28,7 +28,7 @@ public interface PossibleAnswerRepository extends JpaRepository<PossibleAnswer, 
 
     //should find id's of possible answers by question id and possibleAnswer
     @Query("SELECT pa.id FROM PossibleAnswer pa " +
-            "WHERE pa.id = :qid AND pa.possibleAnswer IN :pNames")
+            "WHERE pa.question.id = :qid AND pa.possibleAnswer IN :pNames")
     List<Long> findPossibleAnswersIdsByQuestionIdAndByPossibleAnswers(@Param("qid") long questionId,
                                                                       @Param("pNames") List<String> possibleAnswersNames);
 }

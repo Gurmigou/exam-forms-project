@@ -35,4 +35,8 @@ public class AccountForm {
     @Column(name = "answer_date")
     @CreationTimestamp
     protected LocalDateTime answerDate;
+
+    public void increaseResultScore(Integer resultScore) {
+        this.resultScore += resultScore;
+    }
 }
