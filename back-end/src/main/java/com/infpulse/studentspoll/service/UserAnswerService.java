@@ -136,14 +136,14 @@ public class UserAnswerService {
 
     @SuppressWarnings("unchecked")
     private AnswerStatus createAnswerStatus(PossibleAnswer qAnswer, UserAnswer userAnswer) {
-        var userAnswers = (List<Long>) userAnswer.getAnswer().getAnswer();
+        var userAnswers = (List<Integer>) userAnswer.getAnswer().getAnswer();
         if (qAnswer.getIsCorrect()) {
-            if (userAnswers.contains(qAnswer.getId())) {
+            if (userAnswers.contains(Math.toIntExact(qAnswer.getId()))) {
                 return AnswerStatus.USER_CORRECT;
             }
             return AnswerStatus.CORRECT;
         }
-        if (userAnswers.contains(qAnswer.getId())) {
+        if (userAnswers.contains(Math.toIntExact(qAnswer.getId()))) {
             return AnswerStatus.WRONG;
         }
         return AnswerStatus.DEFAULT;
