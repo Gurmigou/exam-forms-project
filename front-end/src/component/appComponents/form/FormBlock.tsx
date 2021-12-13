@@ -38,6 +38,8 @@ function FormBlock() {
     }, [])
 
     const sendAnswer = (submitFormDto) => {
+        console.log("skldajfhsadkjlfhsalkdfhklj")
+        console.log(submitFormDto)
         axios.post(`http://localhost:8080/api/answers/new`, submitFormDto, {
             headers: getAuthHeader()
         }).then(() => setRedirect(true));

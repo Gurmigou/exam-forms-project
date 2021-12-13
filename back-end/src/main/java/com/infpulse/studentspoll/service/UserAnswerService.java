@@ -184,7 +184,7 @@ public class UserAnswerService {
             case MULTI -> userAnswer
                     .setAnswer(buildMultiUserAnswerObject(question.getId(), questionDto.getPossibleAnswersDto()));
             case OPEN -> {
-                UserAnswerObject<java.lang.String> userAnswerObject = new UserAnswerObject<>();
+                UserAnswerObject<String> userAnswerObject = new UserAnswerObject<>();
                 userAnswerObject.setType(QuestionType.OPEN);
                 userAnswerObject.setAnswer(questionDto.getPossibleAnswersDto().get(0).getPossibleAnswer());
                 userAnswer.setAnswer(userAnswerObject);
@@ -225,9 +225,9 @@ public class UserAnswerService {
 
     private Question getQuestion(long formId, String questionName) {
         return questionRepository
-                .findQuestionByFormIdAndQuestionName(formId, questionName)
+                .findQuestionByFormIdAndQuestionName(formId, questionName.trim())
                 .orElseThrow(() -> new NotFoundException("Question - " +
-                        questionName + "for form - " + formId));
+                        questionName + " for form - " + formId));
     }
 
     private User findUserByEmail(String userName) {

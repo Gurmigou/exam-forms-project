@@ -18,7 +18,7 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
 
     //should find question by owner form id and question name
     @Query("SELECT q FROM Question q " +
-            "WHERE q.id = :qId AND q.questionName = :qName")
+            "WHERE q.ownerForm.id = :qId AND q.questionName = :qName")
     Optional<Question> findQuestionByFormIdAndQuestionName(@Param("qId") Long id,
                                                            @Param("qName") String questionName);
 }
