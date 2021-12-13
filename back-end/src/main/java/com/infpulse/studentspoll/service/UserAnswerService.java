@@ -51,19 +51,12 @@ public class UserAnswerService {
         AccountForm accountForm = AccountForm.builder()
                 .user(user)
                 .form(form)
-                .resultScore(getResultScore(submitAnswerDto, form))
+                .resultScore(0)
                 .build();
         accountForm = accountFormRepository.save(accountForm);
         parseAnswersList(submitAnswerDto.getQuestionDtoList(), form, accountForm);
+        accountFormRepository.save(accountForm);
         return accountForm;
-    }
-
-    private Integer getResultScore(SubmitAnswerDto submitAnswerDto, Form form) {
-//        List<PossibleAnswer> correctAnswers = possibleAnswerRepository.findAllCorrectPossibleAnswers(form);
-//        return submitAnswerDto.getQuestionDtoList().stream()
-//                .flatMap(a -> a.getPossibleAnswersDto().stream())
-//                .filter(a -> a.g)
-        return null;
     }
 
     public PassedFormDto getAnswer(long formId, String email, LocalDateTime date) {
@@ -113,10 +106,10 @@ public class UserAnswerService {
                              List<PossibleAnswer> questionAnswers,
                              List<PossibleAnswerDto> possibleAnswerDtoList) {
         questionAnswers.stream().map(qAnswer -> PossibleAnswerDto.builder()
-                .answerStatus(createOpenAnswerStatus(qAnswer, userAnswer))
-                .possibleAnswer((String) userAnswer.getAnswer().getAnswer())
-                .answerValue(qAnswer.getAnswerValue())
-                .build())
+                        .answerStatus(createOpenAnswerStatus(qAnswer, userAnswer))
+                        .possibleAnswer((String) userAnswer.getAnswer().getAnswer())
+                        .answerValue(qAnswer.getAnswerValue())
+                        .build())
                 .forEach(possibleAnswerDtoList::add);
     }
 
@@ -169,7 +162,7 @@ public class UserAnswerService {
     @SuppressWarnings("unchecked")
     private boolean checkIsEmpty(UserAnswerObject<?> userAnswerObject) {
         if (userAnswerObject.getType().equals(QuestionType.MULTI) ||
-                userAnswerObject.getType().equals(QuestionType.SINGLE)){
+                userAnswerObject.getType().equals(QuestionType.SINGLE)) {
             var userAnswers = (List<Long>) userAnswerObject.getAnswer();
             return userAnswers.isEmpty();
         }
@@ -179,6 +172,16 @@ public class UserAnswerService {
     private void parseAnswersList(List<QuestionDto> questionDtoList, Form form, AccountForm accountForm) {
         for (QuestionDto questionDto : questionDtoList) {
             Question question = getQuestion(form.getId(), questionDto.getQuestionName());
+            accountForm.increaseResultScore(
+                    possibleAnswerRepository.findAllByQuestion(question).stream()
+                            .filter(que -> que.getIsCorrect() &&
+                                    questionDto.getPossibleAnswersDto()
+                                            .stream()
+                                            .map(PossibleAnswerDto::getPossibleAnswer)
+                                            .anyMatch(queDto -> queDto.equals(que.getPossibleAnswer())))
+                            .mapToInt(PossibleAnswer::getAnswerValue)
+                            .parallel()
+                            .sum());
             saveUserAnswer(questionDto, question, accountForm);
         }
     }
@@ -203,7 +206,7 @@ public class UserAnswerService {
     }
 
     private UserAnswerObject<List<Long>> buildSingleUserAnswerObject(long questionId,
-                                                                       List<PossibleAnswerDto> possibleAnswerDtoList) {
+                                                                     List<PossibleAnswerDto> possibleAnswerDtoList) {
         UserAnswerObject<List<Long>> userAnswerObject = new UserAnswerObject<>();
         userAnswerObject.setType(QuestionType.SINGLE);
         if (possibleAnswerDtoList.isEmpty()) {

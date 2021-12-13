@@ -13,6 +13,7 @@ import com.infpulse.studentspoll.model.formDto.passedForm.PossibleAnswerDto;
 import com.infpulse.studentspoll.model.formDto.passedForm.QuestionDto;
 import com.infpulse.studentspoll.model.state.AnswerStatus;
 import com.infpulse.studentspoll.model.state.FormState;
+import com.infpulse.studentspoll.model.state.QuestionType;
 import com.infpulse.studentspoll.repository.FormRepository;
 import com.infpulse.studentspoll.repository.PossibleAnswerRepository;
 import com.infpulse.studentspoll.repository.QuestionRepository;
@@ -118,7 +119,8 @@ public class FormService {
         return answerRepository.findAllByQuestion(question).stream()
                 .map(possibleAnswer -> PossibleAnswerDto.builder()
                         .answerStatus(AnswerStatus.DEFAULT)
-                        .possibleAnswer(possibleAnswer.getPossibleAnswer())
+                        .possibleAnswer(question.getQuestionType() == QuestionType.OPEN ? "DON`T CHEAT" :
+                                        possibleAnswer.getPossibleAnswer())
                         .answerValue(possibleAnswer.getAnswerValue())
                         .build()).collect(Collectors.toList());
     }
