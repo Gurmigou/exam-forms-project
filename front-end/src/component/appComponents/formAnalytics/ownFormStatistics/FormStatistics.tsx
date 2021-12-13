@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from "react";
 import Layout from "../../../navbarFooter/Layout";
-import {passedOwnedFormsStatisticsList} from "../../../../utils/formAnalytics/formStatisticsByUsers";
+// import {passedOwnedFormsStatisticsList} from "../../../../utils/formAnalytics/formStatisticsByUsers";
 import axios from "axios";
 import { useParams } from 'react-router-dom';
 import {getAuthHeader} from "../../../../utils/security/securityUtils";
 import FormStatisticsUserBlock from "./FormStatisticsUserBlock";
 
 function FormStatistics() {
-    const [ownedFormsStats, setOwnedFormsStats] = useState(passedOwnedFormsStatisticsList);
+    const [ownedFormsStats, setOwnedFormsStats] = useState([]);
     const { id } = useParams()
 
     useEffect(() => {
@@ -23,7 +23,7 @@ function FormStatistics() {
                     <div className="form-info-block">
                         <div className="form-info-block-content">
                             {
-                                ownedFormsStats.map(((value, index) =>
+                                ownedFormsStats.map(((value: any, index) =>
                                     <FormStatisticsUserBlock
                                         index={index + 1}
                                         userName={value.userName}

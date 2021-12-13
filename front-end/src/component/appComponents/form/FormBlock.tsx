@@ -12,7 +12,7 @@ import {Redirect} from "react-router-dom";
 
 function FormBlock() {
     const [render, setRender] = useState(false);
-    const [form, setForm] = useState(defaultForm);
+    const [form, setForm]: any = useState(defaultForm);
 
     const [redirect, setRedirect] = useState(false);
     const { id } = useParams();
@@ -30,13 +30,15 @@ function FormBlock() {
     }
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/forms/${id}`, {
+        console.log(id)
+
+        axios.get(`http://localhost:8080/api/forms/${id}`, {
             headers: getAuthHeader()
         }).then(response => setForm(response.data))
     }, [])
 
     const sendAnswer = (submitFormDto) => {
-        axios.post(`http://localhost:8080/answers/new`, submitFormDto, {
+        axios.post(`http://localhost:8080/api/answers/new`, submitFormDto, {
             headers: getAuthHeader()
         }).then(() => setRedirect(true));
     }

@@ -6,31 +6,24 @@ import "../../../style/accauntFormInfo.css"
 import axios from "axios";
 
 function UserFormList() {
-    const [passedForms, setPassedForms] = useState([{
-        answerDate: "",
-        formScore: 0,
-        formMaxResult: 0,
-        id: 0,
-        topicName: ""
-    }])
+    const [passedForms, setPassedForms] = useState([])
 
-    const [ownedForms, setOwnedForms] = useState([{
-        expireDate: "",
-        formState: "",
-        id: 0,
-        topicName: ""
-    }])
+    const [ownedForms, setOwnedForms] = useState([])
 
     useEffect(() => {
-        axios.get("http://localhost:8080/api/forms/available", {
-            headers: getAuthHeader()
-        }).then(response => setPassedForms(response.data));
+        // axios.get("http://localhost:8080/api/forms/available", {
+        //     headers: getAuthHeader()
+        // }).then(response => {
+        //     console.log("available")
+        //     console.log(response)
+        //     setPassedForms(response.data)
+        // });
 
         axios.get("http://localhost:8080/api/forms/owned", {
             headers: getAuthHeader()
         }).then(response => {
             console.log("owned")
-            console.log(response.data)
+            console.log(response)
             setOwnedForms(response.data)
         });
     }, []);
