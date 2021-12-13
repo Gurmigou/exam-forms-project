@@ -5,7 +5,6 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Entity
@@ -36,8 +35,4 @@ public class AccountForm {
     @Column(name = "answer_date")
     @CreationTimestamp
     protected LocalDateTime answerDate;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "state", nullable = false)
-    protected FormState formState;
 }

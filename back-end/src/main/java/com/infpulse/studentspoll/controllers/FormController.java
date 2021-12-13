@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
-import java.util.Objects;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -30,12 +30,8 @@ public class FormController {
     @PostMapping("/forms/new")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<?> newForm(@RequestBody @Valid FormDto formDto, Principal principal) {
-        Form form = formService.saveForm(formDto, principal.getName());
-        if (Objects.nonNull(form)) {
-            return new ResponseEntity<>(HttpStatus.CREATED);
-        } else {
-            return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT).build();
-        }
+        Optional<Form> form = formService.saveForm(formDto, principal.getName());
+        return ResponseEntity.of(form);
     }
 
     /**
@@ -67,12 +63,8 @@ public class FormController {
      */
     @GetMapping("/forms/{formId}")
     public ResponseEntity<?> getForm(@PathVariable long formId) {
-        FormDto formDto = formService.getForm(formId);
-        if (Objects.nonNull(formDto)) {
-            return ResponseEntity.ok(formDto);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        Optional<FormDto> formDto = formService.getForm(formId);
+        return ResponseEntity.of(formDto);
     }
 
     /**

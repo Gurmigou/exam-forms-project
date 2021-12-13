@@ -26,7 +26,7 @@ class AccountFormRepositoryTest extends DBTestSetup {
         this.accountFormRepository = accountFormRepository;
     }
 
-//    @Test
+    @Test
     public void itShouldReturnAccountForm() {
         User owner = User.builder()
                 .name("ownerName")
@@ -48,6 +48,7 @@ class AccountFormRepositoryTest extends DBTestSetup {
                 .topicName("testTopic")
                 .owner(owner)
                 .expireDateTime(LocalDateTime.now().plusWeeks(1))
+                .formState(FormState.PASSED)
                 .attempts(99)
                 .build();
 
@@ -55,6 +56,7 @@ class AccountFormRepositoryTest extends DBTestSetup {
                 .topicName("testTopic2")
                 .owner(owner)
                 .expireDateTime(LocalDateTime.now().plusWeeks(1))
+                .formState(FormState.PASSED)
                 .attempts(99)
                 .build();
 
@@ -62,28 +64,24 @@ class AccountFormRepositoryTest extends DBTestSetup {
                 .form(form)
                 .user(owner)
                 .resultScore(25)
-                .formState(FormState.PASSED)
                 .build();
 
         AccountForm accountForm4 = AccountForm.builder()
                 .form(secondForm)
                 .user(owner)
                 .resultScore(30)
-                .formState(FormState.PASSED)
                 .build();
 
         AccountForm accountForm2 = AccountForm.builder()
                 .form(secondForm)
                 .user(owner)
                 .resultScore(30)
-                .formState(FormState.PASSED)
                 .build();
 
         AccountForm accountForm3 = AccountForm.builder()
                 .form(secondForm)
                 .user(secondOwner)
                 .resultScore(30)
-                .formState(FormState.PASSED)
                 .build();
 
     }

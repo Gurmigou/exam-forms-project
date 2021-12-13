@@ -52,36 +52,34 @@ class FormRepositoryTest extends DBTestSetup {
                 .owner(owner)
                 .topicName("testTopic")
                 .attempts(120)
+                .formState(FormState.CREATED)
                 .expireDateTime(LocalDateTime.now().plusWeeks(1))
                 .build();
         Form secondForm = Form.builder()
                 .owner(owner)
                 .topicName("testTopic2")
                 .attempts(120)
+                .formState(FormState.CREATED)
                 .expireDateTime(LocalDateTime.now().plusWeeks(1))
                 .build();
         AccountForm accountForm = AccountForm.builder()
                 .form(form)
                 .resultScore(123)
-                .formState(FormState.PASSED)
                 .user(owner)
                 .build();
         AccountForm accountForm1 = AccountForm.builder()
                 .form(form)
                 .resultScore(100)
-                .formState(FormState.PASSED)
                 .user(owner)
                 .build();
         AccountForm accountForm3 = AccountForm.builder()
                 .form(secondForm)
                 .resultScore(123)
-                .formState(FormState.PASSED)
                 .user(owner)
                 .build();
         AccountForm accountForm4 = AccountForm.builder()
                 .form(secondForm)
                 .resultScore(100)
-                .formState(FormState.PASSED)
                 .user(owner)
                 .build();
 
