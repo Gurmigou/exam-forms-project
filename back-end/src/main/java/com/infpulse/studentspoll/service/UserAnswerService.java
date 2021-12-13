@@ -45,10 +45,12 @@ public class UserAnswerService {
     public AccountForm submitAnswer(SubmitAnswerDto submitAnswerDto, String email) {
         User user = findUserByEmail(email);
         Form form = getForm(submitAnswerDto.getFormId());
+        if (form.getFormState() == FormState.CREATED) {
+            form.setFormState(FormState.PASSED);
+        }
         AccountForm accountForm = AccountForm.builder()
                 .user(user)
                 .form(form)
-                .formState(FormState.CREATED)
                 .build();
         accountForm = accountFormRepository.save(accountForm);
         parseAnswersList(submitAnswerDto.getQuestionDtoList(), form, accountForm);

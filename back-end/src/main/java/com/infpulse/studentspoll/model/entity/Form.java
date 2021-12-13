@@ -1,6 +1,7 @@
 package com.infpulse.studentspoll.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonTypeId;
+import com.infpulse.studentspoll.model.state.FormState;
 import lombok.*;
 
 import javax.persistence.*;
@@ -40,6 +41,10 @@ public class Form {
     @Future
     @Column(name = "expire_date")
     protected LocalDateTime expireDateTime;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "state", nullable = false)
+    protected FormState formState;
 
     @Positive
     @Column(name = "max_result")

@@ -15,10 +15,9 @@ import java.util.List;
 public interface FormRepository extends JpaRepository<Form, Long> {
 
     @Query(value = "SELECT new com.infpulse.studentspoll.model.formDto.formHeaders.OwnedFormHeader " +
-            "(f.id, f.topicName, f.expireDateTime, a.formState) " +
-            "FROM Form f INNER JOIN AccountForm a " +
-            "ON f.id = a.form.id " +
-            "WHERE f.owner.email = :email")
+            "(f.id, f.topicName, f.expireDateTime, f.formState) " +
+            "FROM Form f " +
+            "WHERE f.owner.email = :email ")
     List<OwnedFormHeader> getOwnedFormHeaders(@Param("email") String email);
 
     @Query(value = "SELECT new com.infpulse.studentspoll.model.formDto.formHeaders.AvailableFormHeader " +
