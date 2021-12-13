@@ -1,5 +1,6 @@
 package com.infpulse.studentspoll.repository;
 
+import com.infpulse.studentspoll.model.entity.Form;
 import com.infpulse.studentspoll.model.entity.PossibleAnswer;
 import com.infpulse.studentspoll.model.entity.Question;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,6 +16,10 @@ public interface PossibleAnswerRepository extends JpaRepository<PossibleAnswer, 
 
     //Should return all possible answers that belong to question
     List<PossibleAnswer> findAllByQuestion(Question question);
+    @Query("SELECT pa FROM PossibleAnswer pa " +
+            "WHERE pa.question.ownerForm = :form " +
+            "AND pa.isCorrect = TRUE")
+    List<PossibleAnswer> findAllCorrectPossibleAnswers(Form form);
 
     @Query("SELECT pa FROM PossibleAnswer pa " +
             "WHERE pa.question.id = :id AND pa.possibleAnswer = :possibleAnswer")

@@ -51,10 +51,19 @@ public class UserAnswerService {
         AccountForm accountForm = AccountForm.builder()
                 .user(user)
                 .form(form)
+                .resultScore(getResultScore(submitAnswerDto, form))
                 .build();
         accountForm = accountFormRepository.save(accountForm);
         parseAnswersList(submitAnswerDto.getQuestionDtoList(), form, accountForm);
         return accountForm;
+    }
+
+    private Integer getResultScore(SubmitAnswerDto submitAnswerDto, Form form) {
+//        List<PossibleAnswer> correctAnswers = possibleAnswerRepository.findAllCorrectPossibleAnswers(form);
+//        return submitAnswerDto.getQuestionDtoList().stream()
+//                .flatMap(a -> a.getPossibleAnswersDto().stream())
+//                .filter(a -> a.g)
+        return null;
     }
 
     public PassedFormDto getAnswer(long formId, String email, LocalDateTime date) {

@@ -30,5 +30,4 @@ public class Question {
     @ManyToOne
     @JoinColumn(name = "form_id")
     protected Form ownerForm;
-
 }
