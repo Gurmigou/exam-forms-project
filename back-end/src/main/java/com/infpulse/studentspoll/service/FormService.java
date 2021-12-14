@@ -8,6 +8,7 @@ import com.infpulse.studentspoll.model.formDto.formHeaders.OwnedFormHeader;
 import com.infpulse.studentspoll.model.formDto.ownedFormDto.FormDto;
 import com.infpulse.studentspoll.model.formDto.passedForm.PossibleAnswerDto;
 import com.infpulse.studentspoll.model.formDto.passedForm.QuestionDto;
+import com.infpulse.studentspoll.model.formDto.submitForm.SubmitFormDto;
 import com.infpulse.studentspoll.model.state.AnswerStatus;
 import com.infpulse.studentspoll.model.state.FormState;
 import com.infpulse.studentspoll.model.state.QuestionType;
@@ -16,6 +17,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +44,7 @@ public class FormService {
         this.mapper = mapper;
     }
 
-    public Optional<Form> saveForm(FormDto formDto, String email) {
+    public Optional<Form> saveForm(SubmitFormDto formDto, String email) {
         User user = findUserByEmail(email);
         Form form = mapper.map(formDto, Form.class);
         form.setOwner(user);
@@ -54,7 +56,7 @@ public class FormService {
         return Optional.of(form);
     }
 
-    private Integer countMaxResultFromTheFormDto(FormDto formDto) {
+    private Integer countMaxResultFromTheFormDto(SubmitFormDto formDto) {
         return formDto.getQuestionDtoList().stream()
                 .flatMap(questionDto -> questionDto.getPossibleAnswersDto().stream())
                 .filter(possibleAnswerDto -> possibleAnswerDto.getAnswerStatus() == AnswerStatus.CORRECT)
@@ -83,7 +85,6 @@ public class FormService {
 
     public Optional<FormDto> getForm(long formId) {
         Optional<Form> form = formsRepository.findById(formId);
-
         if (form.isPresent()) {
             if (form.get().getFormState() != FormState.DELETED ||
                     form.get().getFormState() != FormState.SUSPENDED) {

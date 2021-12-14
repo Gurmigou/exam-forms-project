@@ -1,7 +1,7 @@
 package com.infpulse.studentspoll.controllers;
 
 import com.infpulse.studentspoll.model.entity.Form;
-import com.infpulse.studentspoll.model.formDto.ownedFormDto.FormDto;
+import com.infpulse.studentspoll.model.formDto.submitForm.SubmitFormDto;
 import com.infpulse.studentspoll.service.FormService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,8 +29,8 @@ public class FormController {
      */
     @PostMapping("/forms/new")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<?> newForm(@RequestBody @Valid FormDto formDto, Principal principal) {
-        Optional<Form> form = formService.saveForm(formDto, principal.getName());
+    public ResponseEntity<?> newForm(@RequestBody @Valid SubmitFormDto submitFormDto, Principal principal) {
+        Optional<Form> form = formService.saveForm(submitFormDto, principal.getName());
         return ResponseEntity.of(form);
     }
 

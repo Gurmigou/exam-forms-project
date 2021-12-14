@@ -1,10 +1,9 @@
-package com.infpulse.studentspoll.model.formDto.ownedFormDto;
+package com.infpulse.studentspoll.model.formDto.submitForm;
 
 import com.infpulse.studentspoll.model.formDto.passedForm.QuestionDto;
 import lombok.*;
 
 import javax.validation.constraints.*;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -12,8 +11,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class FormDto {
-
+public class SubmitFormDto {
     @Size(max = 2000)
     @NotBlank
     private String topicName;
@@ -21,8 +19,8 @@ public class FormDto {
     @Positive
     private Integer attempts;
 
-    @Future
-    private LocalDateTime expireDateTime;
+    @Positive
+    private Integer plusDays;
 
     @NotEmpty
     List<QuestionDto> questionDtoList;
