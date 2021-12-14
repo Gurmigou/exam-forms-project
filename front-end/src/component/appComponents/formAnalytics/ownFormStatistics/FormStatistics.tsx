@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import Layout from "../../../navbarFooter/Layout";
 import axios from "axios";
 import { useParams } from 'react-router-dom';
+import { saveAs } from 'file-saver';
 import {getAuthHeader} from "../../../../utils/security/securityUtils";
 import FormStatisticsUserBlock from "./FormStatisticsUserBlock";
 import {Button} from "primereact/button";
@@ -17,16 +18,18 @@ function FormStatistics() {
     }, []);
 
     const getReport = () => {
-        console.log(`http://localhost:8080/api/report/${id}`)
-        axios.post(`http://localhost:8080/api/report/${id}`, {
+        axios.post(`http://localhost:8080/api/report/${id}`, {}, {
             headers: getAuthHeader()
         }).then(response => {
-            const url = window.URL.createObjectURL(new Blob([response.data]));
-            const link = document.createElement('a');
-            link.href = url;
-            link.setAttribute('download', 'file.pdf'); //or any other extension
-            document.body.appendChild(link);
-            link.click();
+            console.log(response)
+            const pdfFile = new Blob([response.data], {type: "application/pdf;charset=utf-8"});
+            saveAs(pdfFile, "report.pdf")
+            // const url = window.URL.createObjectURL(new Blob([response.data]));
+            // const link = document.createElement('a');
+            // link.href = url;
+            // link.setAttribute('download', 'file.pdf'); //or any other extension
+            // document.body.appendChild(link);
+            // link.click();
         });
     }
 
