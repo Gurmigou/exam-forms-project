@@ -14,11 +14,7 @@ function FormUserResults() {
     useEffect(() => {
         axios.get(`http://localhost:8080/api/answers/${id}/${date}`, {
             headers: getAuthHeader()
-        }).then(response => {
-            console.log("STATS")
-            console.log(response)
-            setFormStats(response.data)
-        })
+        }).then(response => setFormStats(response.data))
     }, [id, date]);
 
     return (

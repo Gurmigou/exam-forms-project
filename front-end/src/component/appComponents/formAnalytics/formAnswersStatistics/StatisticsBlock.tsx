@@ -22,18 +22,18 @@ function StatisticsBlock({id, questionName, possibleAnswers}) {
     const calculateQuestionScore = (possibleAnswers): number => {
         let gotScore: number = 0;
         for (let i = 0; i < possibleAnswers.length; i++) {
-            const answer = possibleAnswers[i].answerValue;
-            if (answer.status === "USER_CORRECT")
+            const answer = possibleAnswers[i];
+            if (answer.answerStatus === "USER_CORRECT")
                 gotScore += answer.answerValue;
         }
         return gotScore;
     }
 
     const calculateMaxScore = (possibleAnswers) => {
-        let gotScore: number = 0;
+        let max: number = 0;
         for (let i = 0; i < possibleAnswers.length; i++)
-            gotScore += possibleAnswers[i].answerValue;
-        return gotScore;
+            max += possibleAnswers[i].answerValue;
+        return max;
     }
 
     return (
@@ -41,15 +41,15 @@ function StatisticsBlock({id, questionName, possibleAnswers}) {
             <Card style={{background: `#8299e0`, marginBottom: `20px`, fontWeight: `bold`,
                 color: `black`, fontSize: `22px`}}>
                 <p style={{textAlign: "left"}}>
-                    {`${id}. ${questionName}`}
+                    {`${id}) ${questionName}`}
                 </p>
             </Card>
             <Card style={{background: `rgba(184, 213, 252, 0.68)`, marginBottom: `45px`}}>
                 {
                     possibleAnswers.map((record, index) => <StatisticsRecord
-                        color={getAnswerColor(record.answerStatus)}
-                        index={index + 1}
-                        text={record.possibleAnswer}/>)
+                            color={getAnswerColor(record.answerStatus)}
+                            index={index + 1}
+                            text={record.possibleAnswer}/>)
                 }
                 <div className="flex justify-content-end">
                     <div style={{marginRight: `10px`, marginTop: `10px`}}>

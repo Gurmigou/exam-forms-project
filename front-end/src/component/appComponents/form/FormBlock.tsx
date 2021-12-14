@@ -32,6 +32,16 @@ function FormBlock() {
         });
     }
 
+    const showFormLimitNotification = () => {
+        // @ts-ignore
+        toast.current.show({
+            severity:'error',
+            summary: 'Invalid action',
+            detail:'You have exceeded the number of attempts to pass this form',
+            life: 3000
+        });
+    }
+
     useEffect(() => {
         axios.get(`http://localhost:8080/api/forms/${id}`, {
             headers: getAuthHeader()
@@ -45,7 +55,8 @@ function FormBlock() {
     const sendAnswer = (submitFormDto) => {
         axios.post(`http://localhost:8080/api/answers/new`, submitFormDto, {
             headers: getAuthHeader()
-        }).then(() => setRedirectToFormList(true));
+        }).then(() => setRedirectToFormList(true))
+          .catch(() => showFormLimitNotification())
     }
 
     if (redirect404)
@@ -71,8 +82,6 @@ function FormBlock() {
                                     onClick={() => {
                                         const formIsValid: boolean = validateUserAnswersForm(form);
                                         const submitFormDto = createSubmitFormDto(id, form);
-
-                                        console.log(submitFormDto);
 
                                         if (formIsValid)
                                             sendAnswer(submitFormDto);
