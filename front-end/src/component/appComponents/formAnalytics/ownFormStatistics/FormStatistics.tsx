@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from "react";
 import Layout from "../../../navbarFooter/Layout";
-// import {passedOwnedFormsStatisticsList} from "../../../../utils/formAnalytics/formStatisticsByUsers";
 import axios from "axios";
 import { useParams } from 'react-router-dom';
 import {getAuthHeader} from "../../../../utils/security/securityUtils";
 import FormStatisticsUserBlock from "./FormStatisticsUserBlock";
+import {Button} from "primereact/button";
 
 function FormStatistics() {
     const [ownedFormsStats, setOwnedFormsStats] = useState([]);
@@ -16,12 +16,30 @@ function FormStatistics() {
         }).then(response => setOwnedFormsStats(response.data))
     }, []);
 
+    const getReport = () => {
+        console.log(`http://localhost:8080/api/report/${id}`)
+        axios.post(`http://localhost:8080/api/report/${id}`, {
+            headers: getAuthHeader()
+        }).then(response => {
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'file.pdf'); //or any other extension
+            document.body.appendChild(link);
+            link.click();
+        });
+    }
+
     return (
         <Layout>
             <div className="all-outer-container">
                 <div className="all-outer-container">
                     <div className="form-info-block">
                         <div className="form-info-block-content">
+                            <div className="flex" style={{marginBottom: `20px`}}>
+                                <Button style={{fontSize: `20px`}}
+                                        onClick={() => getReport()}>Create a report</Button>
+                            </div>
                             {
                                 ownedFormsStats.map(((value: any, index) =>
                                     <FormStatisticsUserBlock

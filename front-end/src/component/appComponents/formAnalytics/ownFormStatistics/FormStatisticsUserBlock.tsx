@@ -34,9 +34,6 @@ function FormStatisticsUserBlock({userName, surname, answerDate, resultScore, fo
             marginBottom: `35px`,
             boxShadow: `5px 5px 12px 3px #dcdcdc`
         }}>
-            <div className="flex justify-content-center">
-                <p style={{fontSize: `22px`, fontWeight: `bold`}}>{`User ${index}`}</p>
-            </div>
             <Card style={cardBlockStyle}>
                 <div style={cardContentStyle}>
                     <p style={titleStyle}>{`Name: `}</p>

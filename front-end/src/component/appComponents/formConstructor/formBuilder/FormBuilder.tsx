@@ -58,8 +58,6 @@ function FormBuilder() {
                                         const newForm = createNewFormDto(formTitle, maxAttempts,
                                             expiresInDays, questionList);
                                         const formIsValid: boolean = validateNewFormDto(newForm);
-                                        console.log(newForm);
-
                                         if (formIsValid)
                                             sendNewFormDto(newForm);
                                         else

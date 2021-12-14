@@ -118,6 +118,10 @@
 #score-color-blue {
     background: #6568f4;
 }
+
+#score-color-blue:hover {
+    background: #8183f3;
+}
 /*--- form-info-record ---*/
 
 @media screen and (max-width: 960px) {

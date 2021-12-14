@@ -30,20 +30,12 @@ function FormBlock() {
     }
 
     useEffect(() => {
-        console.log(id)
-
         axios.get(`http://localhost:8080/api/forms/${id}`, {
             headers: getAuthHeader()
-        }).then(response => {
-            console.log(response)
-            setForm(response.data)
-        })
+        }).then(response => setForm(response.data))
     }, [])
 
     const sendAnswer = (submitFormDto) => {
-        console.log("SEND 1")
-        console.log(submitFormDto)
-        console.log("SEND 2")
         axios.post(`http://localhost:8080/api/answers/new`, submitFormDto, {
             headers: getAuthHeader()
         }).then(() => setRedirect(true));
@@ -77,7 +69,7 @@ function FormBlock() {
                                         else
                                             showBottomRight();
                                     }}/>
-                            <Toast ref={toast} position="bottom-right" />
+                            <Toast ref={toast} position="bottom-right"/>
                         </Card>
                     </div>
                 </div>
