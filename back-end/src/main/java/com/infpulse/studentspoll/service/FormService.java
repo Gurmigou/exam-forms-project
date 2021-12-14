@@ -16,6 +16,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -47,6 +48,7 @@ public class FormService {
         form.setOwner(user);
         form.setFormState(FormState.CREATED);
         form.setFormMaxResult(countMaxResultFromTheFormDto(formDto));
+        form.setExpireDateTime(LocalDateTime.now().plusDays(formDto.getPlusDays()));
         form = formsRepository.save(form);
         saveQuestions(formDto.getQuestionDtoList(), form);
         return Optional.of(form);

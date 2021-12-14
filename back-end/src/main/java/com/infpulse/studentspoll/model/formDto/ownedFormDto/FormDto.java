@@ -21,8 +21,8 @@ public class FormDto {
     @Positive
     private Integer attempts;
 
-    @Future
-    private LocalDateTime expireDateTime;
+    @Positive
+    private Integer plusDays;
 
     @NotEmpty
     List<QuestionDto> questionDtoList;

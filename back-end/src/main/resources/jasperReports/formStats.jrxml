@@ -143,7 +143,7 @@ WHERE
                 <textField>
                     <reportElement x="417" y="-2" width="138" height="18" uuid="6fc92671-9de5-4f0a-b8cb-baa060bd16df"/>
                     <textElement textAlignment="Left" verticalAlignment="Middle"/>
-                    <textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+                    <textFieldExpression><![CDATA[$F{score}]]></textFieldExpression>
                 </textField>
             </frame>
             <line>

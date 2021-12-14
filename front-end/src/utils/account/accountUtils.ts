@@ -12,8 +12,6 @@ export const updateProfile = (newName: string, newSurname: string, oldPassword: 
                               setName, setSurname, setErrorOld, setMessageOld, setErrorNew, setMessageNew) => {
     const valid = validateNewPassword(oldPassword, newPassword, setErrorOld, setMessageOld, setErrorNew, setMessageNew);
 
-    console.log("Valid: " + valid);
-
     if (newName !== "" || newSurname !== "" || (oldPassword !== "" && newPassword !== "")) {
 
         if (valid) {
@@ -41,9 +39,6 @@ const validateNewPassword = (oldPassword: string, newPassword: string,
                              setErrorOld, setMessageOld,
                              serErrorNew, setMessageNew): boolean =>
 {
-    console.log(oldPassword);
-    console.log(newPassword)
-
 
     let error = false;
     if (newPassword !== "" && oldPassword === "") {

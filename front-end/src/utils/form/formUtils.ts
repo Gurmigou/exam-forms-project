@@ -55,9 +55,6 @@ export const validateUserAnswersForm = (form): boolean => {
 
 export const createSubmitFormDto = (formId: number, form) => {
 
-    console.log("FORM: ")
-    console.log(form)
-
     const submitFormDto = {
         formId: formId,
         questionDtoList: [] as any
@@ -68,7 +65,6 @@ export const createSubmitFormDto = (formId: number, form) => {
     for (let i = 0; i < questionList.length; i++) {
         const question = questionList[i];
 
-        console.log(submitFormDto)
 
         if (question.questionType === "OPEN")
             submitFormDto.questionDtoList.push(question)

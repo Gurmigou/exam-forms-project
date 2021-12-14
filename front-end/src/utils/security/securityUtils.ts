@@ -115,7 +115,6 @@ export const login = (user, dispatch, setRedirect, setInvalidFields) => {
 
         axios.post("http://localhost:8080/api/login", user)
              .then(response => {
-                 console.log(response)
                  dispatch(setUser({
                      email: user.email,
                  }));
@@ -131,13 +130,11 @@ export const relogin = (dispatch) => {
     axios.get("http://localhost:8080/api/auth", {
         headers: getAuthHeader()
     }).then(response => {
-        console.log("RELOGIN")
         dispatch(setUser({
             email: response.data.email
         }))
         localStorage.setItem("token", response.data.jwtToken);
     }).catch(e => {
-        console.log(e);
         localStorage.removeItem("token");
     })
 }
