@@ -2,10 +2,7 @@ package com.infpulse.studentspoll.service;
 
 import com.infpulse.studentspoll.exceptions.NoPermissionException;
 import com.infpulse.studentspoll.exceptions.NotFoundException;
-import com.infpulse.studentspoll.model.entity.Form;
-import com.infpulse.studentspoll.model.entity.PossibleAnswer;
-import com.infpulse.studentspoll.model.entity.Question;
-import com.infpulse.studentspoll.model.entity.User;
+import com.infpulse.studentspoll.model.entity.*;
 import com.infpulse.studentspoll.model.formDto.formHeaders.AvailableFormHeader;
 import com.infpulse.studentspoll.model.formDto.formHeaders.OwnedFormHeader;
 import com.infpulse.studentspoll.model.formDto.ownedFormDto.FormDto;
@@ -14,10 +11,7 @@ import com.infpulse.studentspoll.model.formDto.passedForm.QuestionDto;
 import com.infpulse.studentspoll.model.state.AnswerStatus;
 import com.infpulse.studentspoll.model.state.FormState;
 import com.infpulse.studentspoll.model.state.QuestionType;
-import com.infpulse.studentspoll.repository.FormRepository;
-import com.infpulse.studentspoll.repository.PossibleAnswerRepository;
-import com.infpulse.studentspoll.repository.QuestionRepository;
-import com.infpulse.studentspoll.repository.UserRepository;
+import com.infpulse.studentspoll.repository.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,15 +28,18 @@ public class FormService {
     private final QuestionRepository questionRepository;
     private final FormRepository formsRepository;
     private final UserRepository userRepository;
+    private final AccountFormRepository accountFormRepository;
     private final ModelMapper mapper;
 
     @Autowired
     public FormService(PossibleAnswerRepository answerRepository, QuestionRepository questionRepository,
-                       FormRepository formsRepository, UserRepository userRepository, ModelMapper mapper) {
+                       FormRepository formsRepository, UserRepository userRepository,
+                       AccountFormRepository accountFormRepository, ModelMapper mapper) {
         this.answerRepository = answerRepository;
         this.questionRepository = questionRepository;
         this.formsRepository = formsRepository;
         this.userRepository = userRepository;
+        this.accountFormRepository = accountFormRepository;
         this.mapper = mapper;
     }
 
@@ -84,8 +81,11 @@ public class FormService {
         }
     }
 
-    public Optional<FormDto> getForm(long formId) {
+    public Optional<FormDto> getForm(long formId, String userName) {
         Optional<Form> form = formsRepository.findById(formId);
+        if (!accountFormRepository.checkIfEnoughAttempts(formId, userName)) {
+            throw new NoPermissionException("this form");
+        }
         if (form.isPresent()) {
             if (form.get().getFormState() != FormState.DELETED ||
                     form.get().getFormState() != FormState.SUSPENDED) {

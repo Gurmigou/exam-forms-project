@@ -62,9 +62,12 @@ public class FormController {
      * @return a form as a test for the students
      */
     @GetMapping("/forms/{formId}")
-    public ResponseEntity<?> getForm(@PathVariable long formId) {
-        Optional<FormDto> formDto = formService.getForm(formId);
-        return ResponseEntity.of(formDto);
+    public ResponseEntity<?> getForm(@PathVariable long formId, Principal principal) {
+        try {
+            return ResponseEntity.of(formService.getForm(formId, principal.getName()));
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.LOCKED);
+        }
     }
 
     /**

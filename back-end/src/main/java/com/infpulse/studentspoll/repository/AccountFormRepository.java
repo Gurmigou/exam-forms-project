@@ -17,4 +17,10 @@ public interface AccountFormRepository extends JpaRepository<AccountForm, Long> 
     Optional<AccountForm> findAccountFormByEmailAndFormIdAndDate(@Param("email") String email,
                                                                  @Param("id") Long id,
                                                                  @Param("date") LocalDateTime date);
+
+    @Query("SELECT CASE WHEN (COUNT(ac) < AVG(ac.form.attempts)) THEN TRUE ELSE FALSE END " +
+            "FROM AccountForm ac " +
+            "WHERE ac.form.id = :formId AND ac.user.email = :userName ")
+    boolean checkIfEnoughAttempts(@Param("formId") long formId,
+                                  @Param("userName") String userName);
 }
