@@ -157,12 +157,8 @@ export const validateNewFormDto = (newForm): boolean => {
 
 const createExpireDate = (plusDays: number): string => {
     const date = new Date();
-    console.log("Before: " + date.toISOString())
-    console.log("Plus: " + plusDays)
     date.setDate(date.getDate() + plusDays);
-    const s = date.toISOString();
-    console.log("After: " + s)
-    return s;
+    return date.toISOString();
 }
 
 export const createNewFormDto = (formTitle, maxAttempts, expiresInDays, questionList): object => {

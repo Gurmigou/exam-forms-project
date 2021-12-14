@@ -42,21 +42,33 @@ function FormBlock() {
         });
     }
 
+    const showDateLimitNotification = () => {
+        // @ts-ignore
+        toast.current.show({
+            severity:'error',
+            summary: 'Invalid action',
+            detail:'You can\'t submit this form because it has expired',
+            life: 3000
+        });
+    }
+
     useEffect(() => {
         axios.get(`http://localhost:8080/api/forms/${id}`, {
             headers: getAuthHeader()
         }).then(response => setForm(response.data))
-          .catch(() => {
-              console.log("404 redirect")
-              setRedirect404(true)
-          })
+          .catch(() => setRedirect404(true))
     }, [])
 
     const sendAnswer = (submitFormDto) => {
         axios.post(`http://localhost:8080/api/answers/new`, submitFormDto, {
             headers: getAuthHeader()
         }).then(() => setRedirectToFormList(true))
-          .catch(() => showFormLimitNotification())
+          .catch(e => {
+              if (e.response.status === 423)
+                  showFormLimitNotification();
+              else
+                  showDateLimitNotification();
+          })
     }
 
     if (redirect404)
