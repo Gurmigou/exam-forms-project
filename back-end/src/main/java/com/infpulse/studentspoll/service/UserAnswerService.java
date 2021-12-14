@@ -49,7 +49,7 @@ public class UserAnswerService {
         if (!isAllowed(submitAnswerDto.getFormId(), email)) {
             throw new NoPermissionException("this form");
         }
-        if (isExpired(submitAnswerDto.getFormId())) {
+        if (form.getExpireDateTime().isBefore(LocalDateTime.now())) {
             throw new IllegalArgumentException();
         }
         if (form.getFormState() == FormState.CREATED) {
@@ -64,11 +64,6 @@ public class UserAnswerService {
         parseAnswersList(submitAnswerDto.getQuestionDtoList(), form, accountForm);
         accountFormRepository.save(accountForm);
         return accountForm;
-    }
-
-    private boolean isExpired(Long formId) {
-        Form form = formsRepository.getById(formId);
-        return form.getExpireDateTime().isBefore(LocalDateTime.now());
     }
 
     private boolean isAllowed(Long formId, String email) {
