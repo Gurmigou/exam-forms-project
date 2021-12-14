@@ -62,8 +62,8 @@ public class FormController {
      * @return a form as a test for the students
      */
     @GetMapping("/forms/{formId}")
-    public ResponseEntity<?> getForm(@PathVariable long formId, Principal principal) {
-        return ResponseEntity.of(formService.getForm(formId, principal.getName()));
+    public ResponseEntity<?> getForm(@PathVariable long formId) {
+        return ResponseEntity.of(formService.getForm(formId));
     }
 
     /**
