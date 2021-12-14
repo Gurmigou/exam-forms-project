@@ -15,6 +15,7 @@ import java.sql.SQLException;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin("*")
 public class JasperReportController {
 
     private final JasperService jasperService;
