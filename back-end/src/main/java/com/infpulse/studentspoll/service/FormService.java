@@ -117,7 +117,7 @@ public class FormService {
         return answerRepository.findAllByQuestion(question).stream()
                 .map(possibleAnswer -> PossibleAnswerDto.builder()
                         .answerStatus(AnswerStatus.DEFAULT)
-                        .possibleAnswer(question.getQuestionType() == QuestionType.OPEN ? "DON`T CHEAT" :
+                        .possibleAnswer(question.getQuestionType() == QuestionType.OPEN ? "" :
                                         possibleAnswer.getPossibleAnswer())
                         .answerValue(possibleAnswer.getAnswerValue())
                         .build()).collect(Collectors.toList());
