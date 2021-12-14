@@ -33,10 +33,8 @@ public class FormStatDao {
     public JasperPrint exportFormStatPdf(String email, Long formId)
             throws SQLException, JRException, IOException {
         Connection conn = Objects.requireNonNull(jdbcTemplate.getDataSource()).getConnection();
-        System.out.println(conn);
         String path = resourceLoader.getResource(FORM_STATS_PATH)
                 .getURI().getPath();
-        System.out.println(path);
         JasperReport jasperReport = JasperCompileManager.compileReport(path);
 
         Map<String, Object> parameters = new HashMap<>();

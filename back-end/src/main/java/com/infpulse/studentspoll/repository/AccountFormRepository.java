@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -17,11 +18,8 @@ public interface AccountFormRepository extends JpaRepository<AccountForm, Long> 
     Optional<AccountForm> findAccountFormByEmailAndFormIdAndDate(@Param("email") String email,
                                                                  @Param("id") Long id,
                                                                  @Param("date") LocalDateTime date);
+    @Query("SELECT ac FROM AccountForm ac " +
+            "WHERE ac.user.email = :email AND ac.form.id = :formId")
+    List<AccountForm> findAccountFormByEmailAndFormId(String email, long formId);
 
-    @Query("SELECT COUNT(af.form.id) < af.form.attempts " +
-            "FROM AccountForm af " +
-            "WHERE af.form.id = :formId AND af.user.email = :userName " +
-            "GROUP BY af.form.attempts")
-    boolean checkIfEnoughAttempts(@Param("formId") long formId,
-                                  @Param("userName") String userName);
 }
