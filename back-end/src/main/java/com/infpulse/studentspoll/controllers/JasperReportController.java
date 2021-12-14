@@ -5,15 +5,16 @@ import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.security.Principal;
 import java.sql.SQLException;
 
-@RestController
+@Controller
 @RequestMapping("/api")
 @CrossOrigin("*")
 public class JasperReportController {
@@ -30,15 +31,15 @@ public class JasperReportController {
      * @param principal from Spring Security
      * @param id        unique formID
      */
-    @PostMapping("/report/{id}")
-    public void export(HttpServletResponse response, Principal principal, @PathVariable Long id)
+
+    @RequestMapping(value = "/report/{id}", method = RequestMethod.POST)
+    public ResponseEntity<byte[]> export(HttpServletResponse response, Principal principal, @PathVariable Long id)
             throws IOException, JRException, SQLException {
 
-        response.setContentType("application/x-download");
+        response.setContentType("application/pdf");
         response.setHeader("Content-Disposition", "attachment; filename=\"usersAnswers.pdf\"");
 
-        OutputStream out = response.getOutputStream();
         JasperPrint jasperPrint = jasperService.exportPdfFile(principal.getName(), id);
-        JasperExportManager.exportReportToPdfStream(jasperPrint, out);
+        return ResponseEntity.ok(JasperExportManager.exportReportToPdf(jasperPrint));
     }
 }

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fontFamilies>
+	<fontFamily name="Arial">
+		<normal><![CDATA[fonts/Arial/arial.ttf]]></normal>
+		<bold><![CDATA[fonts/Arial/arialbd.ttf]]></bold>
+		<italic><![CDATA[fonts/Arial/ariali.ttf]]></italic>
+		<boldItalic><![CDATA[fonts/Arial/arialbi.ttf]]></boldItalic>
+		<pdfEncoding><![CDATA[Identity-H]]></pdfEncoding>
+		<pdfEmbedded><![CDATA[true]]></pdfEmbedded>
+	</fontFamily>
+	<fontFamily name="Arial Narrow">
+		<normal><![CDATA[fonts/ArialNarrow/ARIALN.TTF]]></normal>
+		<bold><![CDATA[fonts/ArialNarrow/ARIALNB.TTF]]></bold>
+		<italic><![CDATA[fonts/ArialNarrow/ARIALNI.TTF]]></italic>
+		<boldItalic><![CDATA[fonts/ArialNarrow/ARIALNBI.TTF]]></boldItalic>
+		<pdfEncoding><![CDATA[Identity-H]]></pdfEncoding>
+		<pdfEmbedded><![CDATA[true]]></pdfEmbedded>
+	</fontFamily>
+	<fontFamily name="Arial Black">
+		<normal><![CDATA[fonts/ArialBlack/ariblk.ttf]]></normal>
+		<pdfEncoding><![CDATA[Identity-H]]></pdfEncoding>
+		<pdfEmbedded><![CDATA[true]]></pdfEmbedded>
+	</fontFamily>
+	<fontFamily name="Calibri">
+		<normal><![CDATA[fonts/Calibri/calibri.ttf]]></normal>
+		<bold><![CDATA[fonts/Calibri/calibrib.ttf]]></bold>
+		<italic><![CDATA[fonts/Calibri/calibrii.ttf]]></italic>
+		<boldItalic><![CDATA[fonts/Calibri/calibriz.ttf]]></boldItalic>
+		<pdfEncoding><![CDATA[Identity-H]]></pdfEncoding>
+		<pdfEmbedded><![CDATA[true]]></pdfEmbedded>
+	</fontFamily>
+	<fontFamily name="Calibri Light">
+		<normal><![CDATA[fonts/CalibriLight/calibril.ttf]]></normal>
+		<italic><![CDATA[fonts/CalibriLight/calibrili.ttf]]></italic>
+		<pdfEncoding><![CDATA[Identity-H]]></pdfEncoding>
+		<pdfEmbedded><![CDATA[true]]></pdfEmbedded>
+	</fontFamily>
+	<fontFamily name="Helvetica">
+		<normal><![CDATA[fonts/Helvetica/helvetica_bold.ttf]]></normal>
+		<pdfEncoding><![CDATA[Identity-H]]></pdfEncoding>
+		<pdfEmbedded><![CDATA[true]]></pdfEmbedded>
+	</fontFamily>
+	<fontFamily name="Microsoft Sans Serif">
+		<normal><![CDATA[fonts/MicrosoftSansSerif/micross.ttf]]></normal>
+		<pdfEncoding><![CDATA[Identity-H]]></pdfEncoding>
+		<pdfEmbedded><![CDATA[true]]></pdfEmbedded>
+	</fontFamily>
+	<fontFamily name="MS Reference Sans Serif">
+		<normal><![CDATA[fonts/MSReferenceSansSerif/REFSAN.TTF]]></normal>
+		<pdfEncoding><![CDATA[Identity-H]]></pdfEncoding>
+        <pdfEmbedded><![CDATA[true]]></pdfEmbedded>
+	</fontFamily>
+	<fontFamily name="Tempus Sans ITC">
+		<normal><![CDATA[fonts/TempusSansITC/TEMPSITC.TTF]]></normal>
+		<pdfEncoding><![CDATA[Identity-H]]></pdfEncoding>
+        <pdfEmbedded><![CDATA[true]]></pdfEmbedded>
+	</fontFamily>
+	<fontFamily name="Times">
+		<normal><![CDATA[fonts/Times/times_roman.ttf]]></normal>
+		<pdfEncoding><![CDATA[Identity-H]]></pdfEncoding>
+        <pdfEmbedded><![CDATA[true]]></pdfEmbedded>
+	</fontFamily>
+	<fontFamily name="Times New Roman">
+		<normal><![CDATA[fonts/TimesNewRoman/times.ttf]]></normal>
+		<bold><![CDATA[fonts/TimesNewRoman/timesbd.ttf]]></bold>
+		<italic><![CDATA[fonts/TimesNewRoman/timesi.ttf]]></italic>
+		<boldItalic><![CDATA[fonts/TimesNewRoman/timesbi.ttf]]></boldItalic>
+		<pdfEncoding><![CDATA[Identity-H]]></pdfEncoding>
+        <pdfEmbedded><![CDATA[true]]></pdfEmbedded>
+	</fontFamily>
+	<fontFamily name="Verdana">
+		<normal><![CDATA[fonts/Verdana/verdana.ttf]]></normal>
+		<bold><![CDATA[fonts/Verdana/verdanab.ttf]]></bold>
+		<italic><![CDATA[fonts/Verdana/verdanai.ttf]]></italic>
+		<boldItalic><![CDATA[fonts/Verdana/verdanaz.ttf]]></boldItalic>
+		<pdfEncoding><![CDATA[Identity-H]]></pdfEncoding>
+        <pdfEmbedded><![CDATA[true]]></pdfEmbedded>
+	</fontFamily>
+	<fontSet name="ScmFontSet">
+		<family familyName="Arial" primary="true"/>
+		<family familyName="Arial Narrow"/>
+		<family familyName="Arial Black"/>
+		<family familyName="Calibri"/>
+		<family familyName="Calibri Light"/>
+		<family familyName="Helvetica"/>
+		<family familyName="Microsoft Sans Serif"/>
+		<family familyName="MS Reference Sans Serif"/>
+		<family familyName="Tempus Sans ITC"/>
+		<family familyName="Times"/>
+		<family familyName="Times New Roman"/>
+		<family familyName="Verdana"/>
+	</fontSet>
+</fontFamilies>
