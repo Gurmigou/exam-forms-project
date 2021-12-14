@@ -19,7 +19,7 @@ import java.util.Objects;
 @Repository
 public class FormStatDao {
 
-    public static final String FORM_STATS_PATH = "classpath:resources/jasperReports/formStats.jrxml";
+    public static final String FORM_STATS_PATH = "classpath:jasperReports/formStats.jrxml";
     private final JdbcTemplate jdbcTemplate;
 
     private final ResourceLoader resourceLoader;
