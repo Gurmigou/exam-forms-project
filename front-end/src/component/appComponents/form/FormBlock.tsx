@@ -9,6 +9,7 @@ import {Button} from "primereact/button";
 import {Toast} from "primereact/toast";
 import {Card} from "primereact/card";
 import {Redirect} from "react-router-dom";
+import Footer from "../../navbarFooter/Footer";
 
 function FormBlock() {
     const [render, setRender] = useState(false);
@@ -65,7 +66,7 @@ function FormBlock() {
                                                question={value}
                                                setRender={setRender}/>)
                         }
-                        <Card style={{marginTop: `30px`, boxShadow: `3px 3px 12px 2px #bebebe`}}>
+                        <Card style={{marginTop: `30px`, marginBottom: `10px`, boxShadow: `3px 3px 12px 2px #bebebe`}}>
                             <Button style={{width: `20%`, fontSize: `20px`}} label={"Send"}
                                     onClick={() => {
                                         const formIsValid: boolean = validateUserAnswersForm(form);
@@ -83,6 +84,7 @@ function FormBlock() {
                     </div>
                 </div>
             </div>
+            <Footer/>
         </div>
     )
 }

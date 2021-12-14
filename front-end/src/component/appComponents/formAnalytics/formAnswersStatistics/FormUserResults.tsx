@@ -8,7 +8,7 @@ import {defaultPassedFormStats} from "../../../../utils/formAnalytics/formAnswer
 import {Card} from "primereact/card";
 
 function FormUserResults() {
-    const [formStats, setFormStats] = useState(defaultPassedFormStats);
+    const [formStats, setFormStats]: any = useState(defaultPassedFormStats);
     const { id, date } = useParams()
 
     useEffect(() => {
@@ -32,6 +32,7 @@ function FormUserResults() {
                             </h3>
                         </Card>
                         {
+                            formStats.formQuestions.length !== 0 &&
                             formStats.formQuestions.map((value, index) =>
                                 <StatisticsBlock id={index + 1} questionName={value.questionName}
                                                  possibleAnswers={value.possibleAnswersDto}/>)

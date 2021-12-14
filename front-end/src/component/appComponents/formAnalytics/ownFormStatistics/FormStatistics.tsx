@@ -22,7 +22,7 @@ function FormStatistics() {
             headers: getAuthHeader()
         }).then(response => {
             console.log(response)
-            const pdfFile = new Blob([response.data], {type: "application/pdf;charset=utf-8"});
+            const pdfFile = new Blob([response.data]);
             saveAs(pdfFile, "report.pdf")
             // const url = window.URL.createObjectURL(new Blob([response.data]));
             // const link = document.createElement('a');
