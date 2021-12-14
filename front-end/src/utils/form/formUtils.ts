@@ -1,62 +1,8 @@
 export const defaultForm = {
-    topicName: "Algebra test",
+    topicName: "",
     attempts: 0,
     expireDateTime: "",
-    questionDtoList: [
-        {
-            questionName: "2 + 2 is",
-            questionType: "SINGLE",
-            possibleAnswersDto: [
-                {
-                    possibleAnswer: "4",
-                    answerStatus: "",
-                    answerValue: 0
-                },
-                {
-                    possibleAnswer: "5",
-                    answerStatus: "",
-                    answerValue: 0
-                },
-                {
-                    possibleAnswer: "6",
-                    answerStatus: "",
-                    answerValue: 0
-                }
-            ]
-        },
-        {
-            questionName: "PI is between",
-            questionType: "MULTI",
-            possibleAnswersDto: [
-                {
-                    possibleAnswer: "2 and 3",
-                    answerStatus: "",
-                    answerValue: 0
-                },
-                {
-                    possibleAnswer: "3 and 4",
-                    answerStatus: "",
-                    answerValue: 0
-                },
-                {
-                    possibleAnswer: "2.5 and 3.5",
-                    answerStatus: "",
-                    answerValue: 0
-                }
-            ]
-        },
-        {
-            questionName: "Multiply and enter the answer: 25 * 25",
-            questionType: "OPEN",
-            possibleAnswersDto: [
-                {
-                    possibleAnswer: "",
-                    answerStatus: "",
-                    answerValue: 0
-                }
-            ]
-        }
-    ]
+    questionDtoList: []
 }
 
 export const setSingleAnswer = (answerList, answerIndex, setRender) => {

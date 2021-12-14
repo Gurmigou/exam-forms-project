@@ -14,7 +14,9 @@ function FormBlock() {
     const [render, setRender] = useState(false);
     const [form, setForm]: any = useState(defaultForm);
 
-    const [redirect, setRedirect] = useState(false);
+    const [redirectToFormList, setRedirectToFormList] = useState(false);
+    const [redirect404, setRedirect404] = useState(false);
+
     const { id } = useParams();
 
     const toast = useRef(null);
@@ -33,15 +35,22 @@ function FormBlock() {
         axios.get(`http://localhost:8080/api/forms/${id}`, {
             headers: getAuthHeader()
         }).then(response => setForm(response.data))
+          .catch(() => {
+              console.log("404 redirect")
+              setRedirect404(true)
+          })
     }, [])
 
     const sendAnswer = (submitFormDto) => {
         axios.post(`http://localhost:8080/api/answers/new`, submitFormDto, {
             headers: getAuthHeader()
-        }).then(() => setRedirect(true));
+        }).then(() => setRedirectToFormList(true));
     }
 
-    if (redirect)
+    if (redirect404)
+        return <Redirect to="/not-found"/>
+
+    if (redirectToFormList)
         return <Redirect to="/user/form-list"/>
 
     return (
