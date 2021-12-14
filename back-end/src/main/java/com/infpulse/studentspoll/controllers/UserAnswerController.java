@@ -1,6 +1,7 @@
 package com.infpulse.studentspoll.controllers;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.infpulse.studentspoll.exceptions.NoPermissionException;
 import com.infpulse.studentspoll.model.entity.AccountForm;
 import com.infpulse.studentspoll.model.formDto.passedForm.PassedFormDto;
 import com.infpulse.studentspoll.model.formDto.submitForm.SubmitAnswerDto;
@@ -38,9 +39,12 @@ public class UserAnswerController {
      */
     @PostMapping("/answers/new")
     public ResponseEntity<?> saveAnswer(@RequestBody @Valid SubmitAnswerDto submitAnswerDto, Principal principal) {
-        AccountForm accountForm = userAnswerService.submitAnswer(submitAnswerDto, principal.getName());
+        AccountForm accountForm;
         try {
+            accountForm = userAnswerService.submitAnswer(submitAnswerDto, principal.getName());
             emailService.sendFormResult(accountForm);
+        } catch (NoPermissionException e) {
+            return new ResponseEntity<>(HttpStatus.LOCKED);
         } catch (MessagingException e) {
             e.printStackTrace();
         }

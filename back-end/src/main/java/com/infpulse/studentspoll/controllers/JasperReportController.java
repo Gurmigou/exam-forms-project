@@ -25,6 +25,11 @@ public class JasperReportController {
         this.jasperService = jasperService;
     }
 
+    /**
+     * @param response  returns stream of the report in the .pdf format
+     * @param principal from Spring Security
+     * @param id        unique formID
+     */
     @PostMapping("/report/{id}")
     public void export(HttpServletResponse response, Principal principal, @PathVariable Long id)
             throws IOException, JRException, SQLException {

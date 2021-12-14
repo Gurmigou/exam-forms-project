@@ -63,11 +63,7 @@ public class FormController {
      */
     @GetMapping("/forms/{formId}")
     public ResponseEntity<?> getForm(@PathVariable long formId, Principal principal) {
-        try {
-            return ResponseEntity.of(formService.getForm(formId, principal.getName()));
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.LOCKED);
-        }
+        return ResponseEntity.of(formService.getForm(formId, principal.getName()));
     }
 
     /**
@@ -76,6 +72,6 @@ public class FormController {
     @DeleteMapping("/forms/{formId}")
     public ResponseEntity<?> deleteForm(@PathVariable long formId, Principal principal) {
         formService.deleteForm(formId, principal.getName());
-        return ResponseEntity.ok().build();
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
