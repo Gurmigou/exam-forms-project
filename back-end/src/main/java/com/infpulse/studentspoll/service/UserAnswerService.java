@@ -1,5 +1,6 @@
 package com.infpulse.studentspoll.service;
 
+import com.infpulse.studentspoll.exceptions.NoPermissionException;
 import com.infpulse.studentspoll.exceptions.NotFoundException;
 import com.infpulse.studentspoll.model.entity.*;
 import com.infpulse.studentspoll.model.formDto.passedForm.PassedFormDto;
@@ -43,6 +44,9 @@ public class UserAnswerService {
     }
 
     public AccountForm submitAnswer(SubmitAnswerDto submitAnswerDto, String email) {
+        if (!accountFormRepository.checkIfEnoughAttempts(submitAnswerDto.getFormId(), email)) {
+            throw new NoPermissionException("this form");
+        }
         User user = findUserByEmail(email);
         Form form = getForm(submitAnswerDto.getFormId());
         if (form.getFormState() == FormState.CREATED) {

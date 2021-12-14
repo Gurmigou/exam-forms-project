@@ -83,9 +83,7 @@ public class FormService {
 
     public Optional<FormDto> getForm(long formId, String userName) {
         Optional<Form> form = formsRepository.findById(formId);
-        if (!accountFormRepository.checkIfEnoughAttempts(formId, userName)) {
-            throw new NoPermissionException("this form");
-        }
+
         if (form.isPresent()) {
             if (form.get().getFormState() != FormState.DELETED ||
                     form.get().getFormState() != FormState.SUSPENDED) {

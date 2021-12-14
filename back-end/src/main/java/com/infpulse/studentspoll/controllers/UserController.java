@@ -21,6 +21,10 @@ public class UserController {
         this.userService = userService;
     }
 
+    /**
+     * @param principal gets from Spring-security
+     * @return User entity from the userService
+     */
     @GetMapping("/user")
     public ResponseEntity<?> getUserInfo(Principal principal) {
         try {
@@ -33,6 +37,10 @@ public class UserController {
         }
     }
 
+    /**
+     * @param principal from Spring Security
+     * @param editUser  dto with the new user-information
+     */
     @PutMapping("/user")
     public ResponseEntity<?> editUser(Principal principal, @RequestBody @Valid EditUserDto editUser) {
         try {
