@@ -47,6 +47,8 @@ public class UserAnswerController {
             return new ResponseEntity<>(HttpStatus.LOCKED);
         } catch (MessagingException e) {
             e.printStackTrace();
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
         }
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

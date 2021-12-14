@@ -28,18 +28,16 @@ public class FormService {
     private final QuestionRepository questionRepository;
     private final FormRepository formsRepository;
     private final UserRepository userRepository;
-    private final AccountFormRepository accountFormRepository;
     private final ModelMapper mapper;
 
     @Autowired
     public FormService(PossibleAnswerRepository answerRepository, QuestionRepository questionRepository,
                        FormRepository formsRepository, UserRepository userRepository,
-                       AccountFormRepository accountFormRepository, ModelMapper mapper) {
+                       ModelMapper mapper) {
         this.answerRepository = answerRepository;
         this.questionRepository = questionRepository;
         this.formsRepository = formsRepository;
         this.userRepository = userRepository;
-        this.accountFormRepository = accountFormRepository;
         this.mapper = mapper;
     }
 
@@ -81,7 +79,7 @@ public class FormService {
         }
     }
 
-    public Optional<FormDto> getForm(long formId, String userName) {
+    public Optional<FormDto> getForm(long formId) {
         Optional<Form> form = formsRepository.findById(formId);
 
         if (form.isPresent()) {
@@ -118,7 +116,7 @@ public class FormService {
                 .map(possibleAnswer -> PossibleAnswerDto.builder()
                         .answerStatus(AnswerStatus.DEFAULT)
                         .possibleAnswer(question.getQuestionType() == QuestionType.OPEN ? "" :
-                                        possibleAnswer.getPossibleAnswer())
+                                possibleAnswer.getPossibleAnswer())
                         .answerValue(possibleAnswer.getAnswerValue())
                         .build()).collect(Collectors.toList());
     }

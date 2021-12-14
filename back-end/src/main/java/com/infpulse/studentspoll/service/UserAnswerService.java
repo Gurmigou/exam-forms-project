@@ -49,6 +49,9 @@ public class UserAnswerService {
         if (!isAllowed(submitAnswerDto.getFormId(), email)) {
             throw new NoPermissionException("this form");
         }
+        if (form.getExpireDateTime().isBefore(LocalDateTime.now())) {
+            throw new IllegalArgumentException();
+        }
         if (form.getFormState() == FormState.CREATED) {
             form.setFormState(FormState.PASSED);
         }
