@@ -44,9 +44,6 @@ public class UserAnswerService {
     }
 
     public AccountForm submitAnswer(SubmitAnswerDto submitAnswerDto, String email) {
-        if (!accountFormRepository.checkIfEnoughAttempts(submitAnswerDto.getFormId(), email)) {
-            throw new NoPermissionException("this form");
-        }
         User user = findUserByEmail(email);
         Form form = getForm(submitAnswerDto.getFormId());
         if (form.getFormState() == FormState.CREATED) {
@@ -60,6 +57,9 @@ public class UserAnswerService {
         accountForm = accountFormRepository.save(accountForm);
         parseAnswersList(submitAnswerDto.getQuestionDtoList(), form, accountForm);
         accountFormRepository.save(accountForm);
+        if (!accountFormRepository.checkIfEnoughAttempts(submitAnswerDto.getFormId(), email)) {
+            throw new NoPermissionException("this form");
+        }
         return accountForm;
     }
 
