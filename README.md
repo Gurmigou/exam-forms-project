@@ -16,3 +16,33 @@ This a survey administration software. The app allows users to create and answer
 1. [**Yehor Bukhanets**](https://www.linkedin.com/in/yehor-bukhanets-b4421b217/): Full-stack developer
 2. **Bohdan Labudiak**: Back-end developer
 3. **blender17**: Back-end developer
+
+## 🖥️ Technologies used
+- **Back-end**: 
+  - Java
+  - Spring (Boot, Data, Security)
+  - Java Mail 
+  - Thymeleaf (server-side template engine)
+  - Jasper Reports
+  - JWT
+- **Persistance**:
+  - Hibernate
+  - PostgreSQL
+- **Front-end**:
+  - TypeScript  
+  - React.js
+  - Redux
+  - Primereact (material ui)
+  - HTML & CSS
+- **CI / CD**:
+  - git 
+  - GitHub
+  - JUnit
+  - Docker
+  - Heroku (cloud provider)
+- **Other**
+  - npm
+  - Maven
+  - IntelliJ IDEA
+
+## 😃 Application demonstration
