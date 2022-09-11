@@ -1,4 +1,4 @@
-# 🔬 Exam forms project
+# 🔬 **Exam forms project**
 Welcome to Exam forms project! Exam forms - create tests easily! Hope you will enjoy the project!
 
 ## 🔎 About 
