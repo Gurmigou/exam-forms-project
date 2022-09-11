@@ -46,3 +46,14 @@ This a survey administration software. The app allows users to create and answer
   - IntelliJ IDEA
 
 ## 😃 Application demonstration
+- Main Screen
+- Sing-up
+- Sing-in
+
+## 📨 Contacts
+1. **Yehor Bukhanets**:
+    - [LinkedIn](https://www.linkedin.com/in/yehor-bukhanets-b4421b217/)
+    - [Email](yehor.bukhanets@gmail.com)
+    - [GitHub](https://github.com/Gurmigou)
+2. **Bohdan Labudiak**
+3. **blender17**
